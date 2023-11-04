@@ -1,0 +1,27 @@
+body{
+    background-color: #2b2b2b;
+
+}
+
+.search{
+    border: solid;
+    border-radius: 12px;
+    
+}
+
+img{
+    border-radius:14px;
+    width: 100%;
+
+    
+}
+
+.waterfall_folw{
+    column-gap: 5mm;
+    column-count: 2;
+    margin:80px;
+    line-height: 3rem;
+    align-items: center;
+
+    
+}
