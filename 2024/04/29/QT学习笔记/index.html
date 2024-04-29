@@ -17,26 +17,26 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9fafb">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   
-  <title>这是一个文章模版 - quincy的日记</title>
+  <title>QT学习笔记 - quincy的日记</title>
 
   
     <meta name="description" content="这是简介">
 <meta property="og:type" content="article">
-<meta property="og:title" content="这是一个文章模版">
-<meta property="og:url" content="http://example.com/2024/04/28/%E6%96%87%E7%AB%A0%E6%A8%A1%E7%89%88/index.html">
+<meta property="og:title" content="QT学习笔记">
+<meta property="og:url" content="http://example.com/2024/04/29/QT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="quincy的日记">
 <meta property="og:description" content="这是简介">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-04-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-28T16:00:00.000Z">
+<meta property="article:published_time" content="2024-04-29T02:35:27.453Z">
+<meta property="article:modified_time" content="2024-04-29T02:37:09.624Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="博客模版">
-<meta property="article:tag" content="YAML">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="QT">
 <meta name="twitter:card" content="summary">
   
   
   
-  <meta name="keywords" content="博客模版,YAML">
+  <meta name="keywords" content="C++,QT">
 
   <!-- feed -->
   
@@ -85,78 +85,85 @@
 <div class="article banner top">
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
-<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-04-27T16:00:00.000Z">2024-04-28</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-04-28T16:00:00.000Z">2024-04-29</time></span></div></div></div>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/QT/">QT</a> <span class="sep"></span> <a class="cap breadcrumb-link" href="/categories/QT/C/">C++</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-04-29T02:35:27.453Z">2024-04-29</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-04-29T02:37:09.624Z">2024-04-29</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>这是一个文章模版</span></h1>
+        <h1 class="text title"><span>QT学习笔记</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><!-- % image https://s.xaox.cc/xaoxuu/posts/202401131914137.jpg-hd 图片由 xaoxuu 拍摄于一个普通的阳光明媚的下午 download:https://s.xaox.cc/xaoxuu/posts/202401131914137.jpg-hd %}-->
+  </div><article class="md-text content"><h1 id="第一部分：C-基础知识"><a href="#第一部分：C-基础知识" class="headerlink" title="第一部分：C++基础知识"></a>第一部分：C++基础知识</h1><h2 id="1-什么是C"><a href="#1-什么是C" class="headerlink" title="1. 什么是C++"></a>1. 什么是C++</h2><p>C++是C语言的升级版，在C的基础上增加了很多功能，是一种高级的语言</p>
+<h2 id="2-什么是面向过程，什么又是面向对象"><a href="#2-什么是面向过程，什么又是面向对象" class="headerlink" title="2. 什么是面向过程，什么又是面向对象"></a>2. 什么是面向过程，什么又是面向对象</h2><p>C语言就是面向过程的，而C++是面向对象的</p>
+<p>举例：a+b</p>
+<p>直接计算a+b就是面向过程的</p>
+<p>面向对象就是给a+b穿上了一层衣服，而不是直接计算a+b。</p>
+<h2 id="3-C-的灵魂，C-的类"><a href="#3-C-的灵魂，C-的类" class="headerlink" title="3. C++的灵魂，C++的类"></a>3. C++的灵魂，C++的类</h2><p>类可以看作C语言结构体的升级版，类的成员不仅可以是变量，也可以是函数。</p>
+<h2 id="4-如何定义一个类"><a href="#4-如何定义一个类" class="headerlink" title="4. 如何定义一个类"></a>4. 如何定义一个类</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student<br>&#123;<br>public: <span class="hljs-comment">// 修饰符</span><br>	char name[<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h1 id="常用的YAML参数"><a href="#常用的YAML参数" class="headerlink" title="常用的YAML参数"></a>常用的YAML参数</h1><table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th>描述</th>
-<th>默认值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">layout</td>
-<td>布局</td>
-<td>config.default_layout</td>
-</tr>
-<tr>
-<td align="left">title</td>
-<td>标题</td>
-<td>文章的文件名，同时也是网页标题</td>
-</tr>
-<tr>
-<td align="left">date</td>
-<td>建立时间</td>
-<td>文件建立时间</td>
-</tr>
-<tr>
-<td align="left">updated</td>
-<td>更新时间</td>
-<td>文件更新时间</td>
-</tr>
-<tr>
-<td align="left">comments</td>
-<td>开启评论功能</td>
-<td>true</td>
-</tr>
-<tr>
-<td align="left">tags</td>
-<td>标签</td>
-<td></td>
-</tr>
-<tr>
-<td align="left">categories</td>
-<td>分类</td>
-<td></td>
-</tr>
-<tr>
-<td align="left">permalink</td>
-<td>覆盖文章的永久链接，应该用&#x2F;或.html结尾</td>
-<td></td>
-</tr>
-<tr>
-<td align="left">excerpt</td>
-<td>纯文本的页面摘要</td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="这里是一个基本的示例"><a href="#这里是一个基本的示例" class="headerlink" title="这里是一个基本的示例"></a>这里是一个基本的示例</h1><blockquote>
-<p>&#x2F;# 基本信息<br>title: 这是一个文章模版 						# 标题<br>date: 		2024.4.28						# 时间<br>tags: 		[模版]							# 标签<br>categories: [  ]							# 分类<br>description: 这是简介						# excerpt 也可<br>&#x2F;# 封面<br>cover: 										# 填入页面外部的封面<br>banner: 									# 填入页面内部的封面<br>poster: 									# 海报（可选，全图封面卡片）<br>  topic: 									# 标题上方的小字<br>  headline: 								# 大标题<br>  caption: 									# 标题下方的小字 	<br>  color: 									# 标题颜色<br>&#x2F;# 插件<br>sticky: 									# 数字越大越靠前<br>mermaid:<br>katex:<br>mathjax:<br>leftbar: [ghuser, 朋友圈, tagcloud, timeline, welcome,]</p>
-</blockquote>
+<h2 id="5-什么是对象"><a href="#5-什么是对象" class="headerlink" title="5. 什么是对象"></a>5. 什么是对象</h2><p>对象是类的实例化</p>
+<h2 id="6-如何定义一个对象"><a href="#6-如何定义一个对象" class="headerlink" title="6. 如何定义一个对象"></a>6. 如何定义一个对象</h2><p>直接定义</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">student my <span class="hljs-comment">// student 就是类， my 就是对象</span><br></code></pre></td></tr></table></figure>
 
+<p>在堆里面定义</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">stdent *my1 = <span class="hljs-keyword">new</span> student; <span class="hljs-comment">// 指针类型的</span><br></code></pre></td></tr></table></figure>
+
+<p>删除对象</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">delete my1; <span class="hljs-comment">// 只能删除在堆里面定义的对象，目的是释放内存</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="7-如何访问类的成员"><a href="#7-如何访问类的成员" class="headerlink" title="7. 如何访问类的成员"></a>7. 如何访问类的成员</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">student *my = <span class="hljs-keyword">new</span> student;<br>my<span class="hljs-variable">.age</span> = <span class="hljs-number">18</span>;<br>my -&gt; age = <span class="hljs-number">19</span>;<br><br>cout &lt;&lt; my<span class="hljs-variable">.age</span> &lt;&lt; emdl;<br>cout &lt;&lt; my1 -&gt; age &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+
+<p>访问方法和C语言一样，普通变量直接通过 “.” 来访问，指针通过“- &gt;”访问</p>
+<h2 id="8-类的函数成员"><a href="#8-类的函数成员" class="headerlink" title="8. 类的函数成员"></a>8. 类的函数成员</h2><p>因为类的成员不仅可以是变量，也可以是函数</p>
+<p>第一步：在类里面声明</p>
+<p>第二步：实现这个函数。我们可以直接在类的里面写，也可以写在类的外面</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">// 在类里面实现函数</span><br><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	char name [<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age ;<br>	<br>	<span class="hljs-keyword">void</span> test()<br>	&#123;<br>	cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;<br>	&#125;;<br>&#125;;<br><span class="hljs-comment">// 在类的外面实现函数</span><br><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	char name [<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age ;<br>	<span class="hljs-keyword">void</span> test();<br>&#125;;<br><br><span class="hljs-keyword">void</span> student::test() <span class="hljs-comment">// student:: 表示属于这个类里面的函数，不加的话会被识别为普通的函数</span><br>&#123;<br>	cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<h2 id="9-类的访问修饰符"><a href="#9-类的访问修饰符" class="headerlink" title="9. 类的访问修饰符"></a>9. 类的访问修饰符</h2><p>类的访问修饰符就是对类的成员进行权限管理</p>
+<p>public：表示函数和变量是公开的，任何人都能访问。</p>
+<p>private： 表示函数和变量只能在自己的类里面自己访问自己，不能通过对象来访问。</p>
+<p>当强行访问private修饰的变量时，需要绕一个弯，也就是通过类里面的函数访问私有的变量，然后通过对象来访问这个函数（通过公有来访问私有）</p>
+<p>protected：表示函数和变量只能在自己的类里面自己访问自己，但是可以被派生类来访问的。</p>
+<h2 id="10-类函数的重载特性"><a href="#10-类函数的重载特性" class="headerlink" title="10. 类函数的重载特性"></a>10. 类函数的重载特性</h2><p>类函数的重载特性就是说我们可以在类里面定义同名的函数，但是参数不同的函数。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	<span class="hljs-keyword">void</span> test();<br>	<span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>&#125;;<br><br><span class="hljs-keyword">void</span> student::test()&#123;&#125;;<br><span class="hljs-keyword">void</span> student::test()&#123;&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>重载函数在调用的时候，会自动判断函数的类型从而匹配调用不同的函数</p>
+<h2 id="11-构造函数和析构函数"><a href="#11-构造函数和析构函数" class="headerlink" title="11. 构造函数和析构函数"></a>11. 构造函数和析构函数</h2><p>析构函数：假如我们定义了析构函数，那么当对象被删除或者生命周期结束的时候，就会触发析构函数。</p>
+<p>构造函数：假如我们定义了构造函数，那么当对象被调用的时候就会触发这个函数，类似与python类中的<strong>def init(self)</strong></p>
+<p><strong>在定义析构函数和构造函数时：</strong></p>
+<ol>
+<li>析构函数和构造函数的名字必须和类名一模一样。</li>
+<li>析构函数要在前面加上一个”~“</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><br><span class="hljs-comment">// 构造函数</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中构造函数是可以被重载的，而析构函数不可以被重载</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;<br><br>using namespace std;<br><br><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    student(<span class="hljs-keyword">int</span> a);<br><br>    <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><br><span class="hljs-comment">// 构造函数1</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 构造函数2</span><br>student::student(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">void</span> student::test()&#123;<br>    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100</span>;<br>    cout &lt;&lt; haha &lt;&lt; endl;<br>&#125;<br><span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">int</span> main()<br>&#123;<br>    student my;<br>    student *my1 = <span class="hljs-keyword">new</span> student(<span class="hljs-number">10</span>);<span class="hljs-comment">// 使用指针来构造对象，传入参数就可以来实现重载构造函数的功能</span><br>    my<span class="hljs-variable">.test</span>(<span class="hljs-number">50</span>);<br>    my<span class="hljs-variable">.test</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="12-类的继承"><a href="#12-类的继承" class="headerlink" title="12. 类的继承"></a>12. 类的继承</h2><p>什么是类的继承？</p>
+<p>类的继承允许我们在新的类里面继承父类的public还有protected部分，而private是不能继承的。</p>
+<p>当我们觉得这个类不好的时候，就可以使用类的继承，添加我们的功能。</p>
+<p>格式：</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> 儿子 : public 爸爸&#123;<br>public:<br>	.......<br>	<br><br>&#125;;<br><br>例如：<br><span class="hljs-keyword">class</span> mystudent : public student&#123;<br>public:<br>	<span class="hljs-keyword">int</span> grade;<br>	<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>如何在子类里面访问父类里面的成员？</p>
+<p>也是通过“.”或者“- &gt;”来访问的</p>
+<h2 id="13-虚函数和纯虚函数"><a href="#13-虚函数和纯虚函数" class="headerlink" title="13. 虚函数和纯虚函数"></a>13. 虚函数和纯虚函数</h2><p>虚函数：有实际定义的，允许派生类对他进行覆盖式的替换，virtual来修饰</p>
+<p>纯虚函数：没有实际定义的虚函数就是纯虚函数</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test(); <span class="hljs-comment">// 虚函数</span><br><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test1()&#123;&#125;; <span class="hljs-comment">//  纯虚函数</span><br></code></pre></td></tr></table></figure>
+
+<p>怎么定义一个虚函数</p>
+<p>用virtual来修饰，虚函数是用在类的继承上的。</p>
+<p>例子：</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;<br><br>using namespace std;<br><br><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    student(<span class="hljs-keyword">int</span> a);<br><br>    <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><span class="hljs-keyword">class</span> mystudent : public student&#123;<br>public:<br>    <span class="hljs-keyword">void</span> test()&#123;<br>        cout &lt;&lt; <span class="hljs-number">123456</span> &lt;&lt; endl;<br>    &#125;<br><br>&#125;;<br><span class="hljs-comment">// 构造函数1</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 构造函数2</span><br>student::student(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">void</span> student::test()&#123;<br>    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100000</span>;<br>    cout &lt;&lt; haha &lt;&lt; endl;<br>&#125;<br><span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">int</span> main()<br>&#123;<br>    student my;<br>    mystudent my2;<br>    my2<span class="hljs-variable">.test</span>();<br>    my<span class="hljs-variable">.test</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br>输出部分：<br>Hello<br>Hello<br><span class="hljs-number">123456</span><br><span class="hljs-number">100000</span><br>Bye<br>Bye<br><br>可以看到在my2的对象上，test打印出来的内容被覆盖成<span class="hljs-number">123456</span>，原本父类的test打印的内容是<span class="hljs-number">100000</span><br></code></pre></td></tr></table></figure>
+
+<p>虚函数的优点？</p>
+<p>可以使用虚函数预留接口，实现分工合作！</p>
+<h1 id="第二部分：QT部分"><a href="#第二部分：QT部分" class="headerlink" title="第二部分：QT部分"></a>第二部分：QT部分</h1>
 <div class="article-footer fs14">
     <section id="license">
       <div class="header"><span>许可协议</span></div>
@@ -165,7 +172,7 @@
     </section>
     </div>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/04/28/%E6%99%BA%E6%85%A7%E5%A4%A7%E6%A3%9A%E9%A1%B9%E7%9B%AE/">智慧大棚项目</a></div><div class="item" id="next"></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/04/29/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">FPGA学习笔记</a></div></section></div>
 
 
 
@@ -179,7 +186,7 @@
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84YAML%E5%8F%82%E6%95%B0"><span class="toc-text">常用的YAML参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E5%9F%BA%E6%9C%AC%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="toc-text">这里是一个基本的示例</span></a></li></ol></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9AC-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">第一部分：C++基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFC"><span class="toc-text">1. 什么是C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%EF%BC%8C%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">2. 什么是面向过程，什么又是面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-C-%E7%9A%84%E7%81%B5%E9%AD%82%EF%BC%8CC-%E7%9A%84%E7%B1%BB"><span class="toc-text">3. C++的灵魂，C++的类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E7%B1%BB"><span class="toc-text">4. 如何定义一个类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BB%80%E4%B9%88%E6%98%AF%E5%AF%B9%E8%B1%A1"><span class="toc-text">5. 什么是对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="toc-text">6. 如何定义一个对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%A6%82%E4%BD%95%E8%AE%BF%E9%97%AE%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98"><span class="toc-text">7. 如何访问类的成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E7%B1%BB%E7%9A%84%E5%87%BD%E6%95%B0%E6%88%90%E5%91%98"><span class="toc-text">8. 类的函数成员</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%B1%BB%E7%9A%84%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-text">9. 类的访问修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%B1%BB%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E7%89%B9%E6%80%A7"><span class="toc-text">10. 类函数的重载特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">11. 构造函数和析构函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="toc-text">12. 类的继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">13. 虚函数和纯虚函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9AQT%E9%83%A8%E5%88%86"><span class="toc-text">第二部分：QT部分</span></a></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.46 1.25h3.08c1.603 0 2.86 0 3.864.095c1.023.098 1.861.3 2.6.752a5.75 5.75 0 0 1 1.899 1.899c.452.738.654 1.577.752 2.6c.095 1.004.095 2.261.095 3.865v1.067c0 1.141 0 2.036-.05 2.759c-.05.735-.153 1.347-.388 1.913a5.75 5.75 0 0 1-3.112 3.112c-.805.334-1.721.408-2.977.43a10.81 10.81 0 0 0-.929.036c-.198.022-.275.054-.32.08c-.047.028-.112.078-.224.232c-.121.166-.258.396-.476.764l-.542.916c-.773 1.307-2.69 1.307-3.464 0l-.542-.916a10.605 10.605 0 0 0-.476-.764c-.112-.154-.177-.204-.224-.232c-.045-.026-.122-.058-.32-.08c-.212-.023-.49-.03-.93-.037c-1.255-.021-2.171-.095-2.976-.429A5.75 5.75 0 0 1 1.688 16.2c-.235-.566-.338-1.178-.389-1.913c-.049-.723-.049-1.618-.049-2.76v-1.066c0-1.604 0-2.86.095-3.865c.098-1.023.3-1.862.752-2.6a5.75 5.75 0 0 1 1.899-1.899c.738-.452 1.577-.654 2.6-.752C7.6 1.25 8.857 1.25 10.461 1.25M6.739 2.839c-.914.087-1.495.253-1.959.537A4.25 4.25 0 0 0 3.376 4.78c-.284.464-.45 1.045-.537 1.96c-.088.924-.089 2.11-.089 3.761v1c0 1.175 0 2.019.046 2.685c.045.659.131 1.089.278 1.441a4.25 4.25 0 0 0 2.3 2.3c.515.214 1.173.294 2.429.316h.031c.398.007.747.013 1.037.045c.311.035.616.104.909.274c.29.17.5.395.682.645c.169.232.342.525.538.856l.559.944a.52.52 0 0 0 .882 0l.559-.944c.196-.331.37-.624.538-.856c.182-.25.392-.476.682-.645c.293-.17.598-.24.909-.274c.29-.032.639-.038 1.037-.045h.032c1.255-.022 1.913-.102 2.428-.316a4.25 4.25 0 0 0 2.3-2.3c.147-.352.233-.782.278-1.441c.046-.666.046-1.51.046-2.685v-1c0-1.651 0-2.837-.089-3.762c-.087-.914-.253-1.495-.537-1.959a4.25 4.25 0 0 0-1.403-1.403c-.464-.284-1.045-.45-1.96-.537c-.924-.088-2.11-.089-3.761-.089h-3c-1.651 0-2.837 0-3.762.089" clip-rule="evenodd"/><path fill="currentColor" d="M9 11a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>参与讨论</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
