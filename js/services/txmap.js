@@ -1,8 +1,3 @@
-添加腾讯地图定位并制作个性欢迎 。我稍微做了一点调整：
-
-新建 source/js/services/txmap.js，并添加以下代码：
-
-点击展开代码
 //get请求  
 $.ajax({  
     type: 'get',  

@@ -1,1 +1,0 @@
-{"tagcloud":{"layout":"tagcloud","title":"标签云","min_font":12,"max_font":24,"amount":100,"orderby":"name","order":1,"color":false,"start_color":null,"end_color":null,"show_count":false},"timeline":{"layout":"timeline","title":"近期动态","api":"https://api.github.com/repos/xaoxuu/hexo-theme-stellar/issues","user":null,"hide":null}}

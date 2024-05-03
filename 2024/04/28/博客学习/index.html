@@ -64,14 +64,36 @@
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
 
 
-<nav class="menu dis-select"></nav>
+<nav class="menu dis-select"><a class="nav-item active" title="博客" href="/"><span>博客</span></a><a class="nav-item" title="文档" href="/wiki/"><span>文档</span></a><a class="nav-item" title="探索" href="/explore/"><span>探索</span></a><a class="nav-item" title="社交" href="/friends/"><span>社交</span></a></nav>
 </div>
 <div class="widgets">
+<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">🎉欢迎,旅行者</span></div><div class="widget-body fs14"><p><span class="hitokoto">一言加载中…</span></p>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+    const response = await fetch('https://v1.hitokoto.cn');
+    const data = await response.json();
+    // 获取页面上用于显示一言的元素
+    const dom = document.querySelector('.hitokoto');
+    // 设置一言内容
+    if (dom && typeof data.hitokoto === 'string') {
+        let res = data.from ?? false ? "—— 《" + data.from + "》":""
+        dom.innerText = data.hitokoto +" "+ res;
+    } else {
+        console.error('未能获取或解析一言数据，或者找不到目标 DOM 元素');
+    }
+    } catch (error) {
+    console.error('请求过程中发生错误：', error);
+    }
+});
+</script>
+</div></widget>
 
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签云</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 12px;" class="tag -0">C++</a> <a href="/tags/FPGA/" style="font-size: 12px;" class="tag -0">FPGA</a> <a href="/tags/QT/" style="font-size: 12px;" class="tag -0">QT</a> <a href="/tags/YAML/" style="font-size: 12px;" class="tag -0">YAML</a> <a href="/tags/esp32/" style="font-size: 12px;" class="tag -0">esp32</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%A8%A1%E7%89%88/" style="font-size: 12px;" class="tag -0">博客模版</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 12px;" class="tag -0">教程</a> <a href="/tags/%E9%87%8E%E7%81%AB/" style="font-size: 12px;" class="tag -0">野火</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 12px;" class="tag -0">项目</a></div></widget>
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/04/29/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="title">FPGA学习笔记</span></a><a class="item title" href="/2024/04/29/QT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="title">QT学习笔记</span></a><a class="item title" href="/2024/04/28/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/"><span class="title">Hello 开箱全新博客！</span></a><a class="item title" href="/2024/04/28/%E6%96%87%E7%AB%A0%E6%A8%A1%E7%89%88/"><span class="title">这是一个文章模版</span></a><a class="item title" href="/2024/04/28/%E6%99%BA%E6%85%A7%E5%A4%A7%E6%A3%9A%E9%A1%B9%E7%9B%AE/"><span class="title">智慧大棚项目</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/04/28/%E6%99%BA%E6%85%A7%E5%A4%A7%E6%A3%9A%E9%A1%B9%E7%9B%AE/"><span class="title">智慧大棚项目</span></a><a class="item title" href="/2024/04/29/QT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="title">QT学习笔记</span></a><a class="item title" href="/2024/04/29/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><span class="title">FPGA学习笔记</span></a><a class="item title" href="/2024/04/28/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0/"><span class="title">Hello 开箱全新博客！</span></a><a class="item title" href="/2024/04/28/%E6%96%87%E7%AB%A0%E6%A8%A1%E7%89%88/"><span class="title">这是一个文章模版</span></a></div></widget>
 </div>
-
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/zikwq" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/github-logo2.png"/></a><a class="social" href="https://space.bilibili.com/500610348" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/bilibili-icon.png"/></a><a class="social" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/38eb2fb5178a08723f3f1dd2974fd73.jpg" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/weChat.png"/></a><a class="social" href="javaScript:void('永夜');" rel="noopener noreferrer"><img class="lazy" id="ThemeM" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Moon.png"/></a><a class="social" href="javaScript:void('永昼');" rel="noopener noreferrer"><img class="lazy" id="ThemeL" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Sun.png"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
 
 
@@ -103,14 +125,16 @@
     </section>
     </div>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/04/29/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">FPGA学习笔记</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/04/28/%E6%99%BA%E6%85%A7%E5%A4%A7%E6%A3%9A%E9%A1%B9%E7%9B%AE/">智慧大棚项目</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/04/29/FPGA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">FPGA学习笔记</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/04/28/%E6%96%87%E7%AB%A0%E6%A8%A1%E7%89%88/">这是一个文章模版</a></div></section></div>
 
 
 
 
 
 
-<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">John Doe</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.28.1">Stellar 1.28.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<footer class="page-footer footnote"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs15">博客</span><a href="/">近期</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archives/">归档</a></div><div class="sitemap-group"><span class="fs15">项目</span><a href="/">开源库</a></div><div class="sitemap-group"><span class="fs15">社交</span><a href="/">友链</a><a href="/">留言板</a></div><div class="sitemap-group"><span class="fs15">更多</span><a href="/">关于本站</a><a href="/">GitHub</a></div></div><div class="text"><p>本站由 <a href="/">John Doe</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.28.1">Stellar 1.28.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。<br><span class="jinrishici-sentence"></span></p>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+<p>  <span id="runtime_span"></span><br>  <script type="text/javascript"><br>  function show_runtime() {<br>      window.setTimeout("show_runtime()", 1000);<br>      X = new Date("2024/04/28 19:00:00"); // 网站开始运行的日期和时间<br>      Y = new Date(); // 当前日期和时间<br>      T = (Y.getTime() - X.getTime()); // 网站运行的总毫秒数<br>      M = 24 * 60 * 60 * 1000; // 一天的毫秒数<br>      a = T / M; // 总天数<br>      A = Math.floor(a); // 总天数的整数部分<br>      b = (a - A) * 24; // 总小时数<br>      B = Math.floor(b); // 总小时数的整数部分<br>      c = (b - B) * 60; // 总分钟数<br>      C = Math.floor((b - B) * 60); // 总分钟数的整数部分<br>      D = Math.floor((c - C) * 60); // 总秒数<br>      runtime_span.innerHTML = "⏱️勉强运行 <span class='runtime'>" + A + "天" + B + "小时" + C + "分" + D + "秒</span>";<br>  }<br>  show_runtime();<br>  </script> </p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 </aside><div class='float-panel blur'>
@@ -138,7 +162,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"codeblock":true,"placeholder":"在 Stellar 中搜索...","sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
