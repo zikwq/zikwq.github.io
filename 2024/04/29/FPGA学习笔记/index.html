@@ -179,7 +179,14 @@
 <p>D触发器的工作原理：在一个脉冲信号（一般为晶振产生的时钟脉冲）上升沿或者下降沿的作用下，将信号从输入端D送到输出端Q，如果时钟脉冲信号的边沿信号未出现，即使输入信号改变，输出信号仍然保持原值，且寄存器应用复位清零功能，其复位又分为同步复位和异步复位</p>
 <p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/Untitled.png"></p>
 <h1 id="第九章，阻塞赋值与非阻塞赋值"><a href="#第九章，阻塞赋值与非阻塞赋值" class="headerlink" title="第九章，阻塞赋值与非阻塞赋值"></a>第九章，阻塞赋值与非阻塞赋值</h1><h2 id="1-相关知识-6"><a href="#1-相关知识-6" class="headerlink" title="1. 相关知识"></a>1. 相关知识</h2><h3 id="1-1-阻塞赋值"><a href="#1-1-阻塞赋值" class="headerlink" title="1.1 阻塞赋值"></a>1.1 阻塞赋值</h3><p>阻塞赋值的赋值号用“&#x3D;”表示，对应的电路结构往往与触发沿没有关系，只与输入电平的变化有关系。它的操作可以认为是只有一个步骤的操作，即计算赋值号右边的语句并更新赋值号左边的语句，此时不允许有来自任何其他Verilog语句的干扰，直到现行的赋值完成，才允许下一条赋值语句的执行。</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">a = <span class="hljs-number">1</span>,b = <span class="hljs-number">2</span>,c = <span class="hljs-number">3</span>,<br><span class="hljs-keyword">begin</span><br>	a = b+<span class="hljs-number">1</span>;<br>	b = a+<span class="hljs-number">1</span>;<br>	c = a+<span class="hljs-number">1</span>;<br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">// 结果：a=3,b=4,c=4</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">a = <span class="hljs-number">1</span>,b = <span class="hljs-number">2</span>,c = <span class="hljs-number">3</span>,
+<span class="hljs-keyword">begin</span>
+    a = b+<span class="hljs-number">1</span>;
+    b = a+<span class="hljs-number">1</span>;
+    c = a+<span class="hljs-number">1</span>;
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment">// 结果：a=3,b=4,c=4</span></code></pre>
 
 <h3 id="1-2-非阻塞赋值"><a href="#1-2-非阻塞赋值" class="headerlink" title="1.2 非阻塞赋值"></a>1.2 非阻塞赋值</h3><p>非阻塞赋值的赋值号用“≤”表示，对应的电路结构往往与触发沿有关系，只有在触发沿的时刻才能进行非阻塞赋值，它的操作可以看作为两个步骤的过程：在赋值开始时刻，计算赋值号右边的语句，在赋值结束时刻，更新赋值号左边的语句。</p>
 <p>在计算非阻塞赋值语句赋值号右边的语句和更新赋值号左边的语句期间，允许其他的verilog语句同时进行操作</p>
@@ -199,7 +206,8 @@
 <li>也可以在模块的端口声明中使用，表示该端口是一个输出端口，其值由<code>always</code>块控制。</li>
 <li>当使用<code>initial</code>语句进行初始化时，必须声明为<code>reg</code>类型，因为<code>initial</code>用于初始化时序逻辑。</li>
 </ul>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> led_out;<br><span class="hljs-keyword">initial</span> led_out = <span class="hljs-number">1&#x27;b0</span>;<span class="hljs-comment">// 正确的初始化reg类型变量</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> led_out;
+<span class="hljs-keyword">initial</span> led_out = <span class="hljs-number">1&#x27;b0</span>;<span class="hljs-comment">// 正确的初始化reg类型变量</span></code></pre>
 </li>
 <li><p><strong>wire（线网）类型</strong>：</p>
 <ul>
@@ -207,7 +215,8 @@
 <li>不能在<code>always</code>块中赋值，只能由连续赋值语句（如<code>assign</code>）或模块端口驱动。</li>
 <li>适用于表示组合逻辑的输出，如多个逻辑门的连接。</li>
 </ul>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> net1;<br><span class="hljs-keyword">assign</span> net1 = a &amp; b;<span class="hljs-comment">// 使用assign语句连续赋值给线网类型变量</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> net1;
+<span class="hljs-keyword">assign</span> net1 = a &amp; b;<span class="hljs-comment">// 使用assign语句连续赋值给线网类型变量</span></code></pre>
 </li>
 <li><p><strong>integer（整数）类型</strong>：</p>
 <ul>
@@ -215,7 +224,8 @@
 <li>可以在<code>initial</code>或<code>always</code>块中声明和初始化。</li>
 <li>通常用于描述非位宽可变的值，如地址计数器。</li>
 </ul>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">integer</span> i;<br><span class="hljs-keyword">initial</span> i = <span class="hljs-number">0</span>;<span class="hljs-comment">// 正确的初始化integer类型变量</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">integer</span> i;
+<span class="hljs-keyword">initial</span> i = <span class="hljs-number">0</span>;<span class="hljs-comment">// 正确的初始化integer类型变量</span></code></pre>
 </li>
 <li><p><strong>real（实数）类型</strong>：</p>
 <ul>
@@ -230,7 +240,7 @@
 <li>只能在模块的声明部分使用，不能在<code>always</code>块中声明。</li>
 <li>一旦赋值，其值在仿真过程中不可更改。</li>
 </ul>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">parameter</span> DELAY = <span class="hljs-number">10</span>;<span class="hljs-comment">// 定义一个常量参数</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">parameter</span> DELAY = <span class="hljs-number">10</span>;<span class="hljs-comment">// 定义一个常量参数</span></code></pre>
 </li>
 <li><p><strong>localparam（局部参数）类型</strong>：</p>
 <ul>
@@ -238,7 +248,7 @@
 <li>只能在<code>initial</code>或<code>always</code>块中声明，用于在特定作用域内定义常量。</li>
 <li>其值在仿真过程中不可更改。</li>
 </ul>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">localparam</span> COUNTER_MAX = <span class="hljs-number">100</span>;<span class="hljs-comment">// 定义一个局部参数</span><br></code></pre></td></tr></table></figure></li>
+<pre><code class="hljs verilog"><span class="hljs-keyword">localparam</span> COUNTER_MAX = <span class="hljs-number">100</span>;<span class="hljs-comment">// 定义一个局部参数</span></code></pre></li>
 </ol>
 <p>在选择变量类型时，还需要考虑以下因素：</p>
 <ul>

@@ -103,25 +103,59 @@
 <p>直接计算a+b就是面向过程的</p>
 <p>面向对象就是给a+b穿上了一层衣服，而不是直接计算a+b。</p>
 <h2 id="3-C-的灵魂，C-的类"><a href="#3-C-的灵魂，C-的类" class="headerlink" title="3. C++的灵魂，C++的类"></a>3. C++的灵魂，C++的类</h2><p>类可以看作C语言结构体的升级版，类的成员不仅可以是变量，也可以是函数。</p>
-<h2 id="4-如何定义一个类"><a href="#4-如何定义一个类" class="headerlink" title="4. 如何定义一个类"></a>4. 如何定义一个类</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student<br>&#123;<br>public: <span class="hljs-comment">// 修饰符</span><br>	char name[<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="4-如何定义一个类"><a href="#4-如何定义一个类" class="headerlink" title="4. 如何定义一个类"></a>4. 如何定义一个类</h2><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student
+&#123;
+public: <span class="hljs-comment">// 修饰符</span>
+    char name[<span class="hljs-number">64</span>];
+    <span class="hljs-keyword">int</span> age;
+&#125;</code></pre>
 
 <h2 id="5-什么是对象"><a href="#5-什么是对象" class="headerlink" title="5. 什么是对象"></a>5. 什么是对象</h2><p>对象是类的实例化</p>
 <h2 id="6-如何定义一个对象"><a href="#6-如何定义一个对象" class="headerlink" title="6. 如何定义一个对象"></a>6. 如何定义一个对象</h2><p>直接定义</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">student my <span class="hljs-comment">// student 就是类， my 就是对象</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">student my <span class="hljs-comment">// student 就是类， my 就是对象</span></code></pre>
 
 <p>在堆里面定义</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">stdent *my1 = <span class="hljs-keyword">new</span> student; <span class="hljs-comment">// 指针类型的</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">stdent *my1 = <span class="hljs-keyword">new</span> student; <span class="hljs-comment">// 指针类型的</span></code></pre>
 
 <p>删除对象</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">delete my1; <span class="hljs-comment">// 只能删除在堆里面定义的对象，目的是释放内存</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">delete my1; <span class="hljs-comment">// 只能删除在堆里面定义的对象，目的是释放内存</span></code></pre>
 
-<h2 id="7-如何访问类的成员"><a href="#7-如何访问类的成员" class="headerlink" title="7. 如何访问类的成员"></a>7. 如何访问类的成员</h2><figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">student *my = <span class="hljs-keyword">new</span> student;<br>my<span class="hljs-variable">.age</span> = <span class="hljs-number">18</span>;<br>my -&gt; age = <span class="hljs-number">19</span>;<br><br>cout &lt;&lt; my<span class="hljs-variable">.age</span> &lt;&lt; emdl;<br>cout &lt;&lt; my1 -&gt; age &lt;&lt; endl;<br></code></pre></td></tr></table></figure>
+<h2 id="7-如何访问类的成员"><a href="#7-如何访问类的成员" class="headerlink" title="7. 如何访问类的成员"></a>7. 如何访问类的成员</h2><pre><code class="hljs verilog">student *my = <span class="hljs-keyword">new</span> student;
+my<span class="hljs-variable">.age</span> = <span class="hljs-number">18</span>;
+my -&gt; age = <span class="hljs-number">19</span>;
+
+cout &lt;&lt; my<span class="hljs-variable">.age</span> &lt;&lt; emdl;
+cout &lt;&lt; my1 -&gt; age &lt;&lt; endl;</code></pre>
 
 <p>访问方法和C语言一样，普通变量直接通过 “.” 来访问，指针通过“- &gt;”访问</p>
 <h2 id="8-类的函数成员"><a href="#8-类的函数成员" class="headerlink" title="8. 类的函数成员"></a>8. 类的函数成员</h2><p>因为类的成员不仅可以是变量，也可以是函数</p>
 <p>第一步：在类里面声明</p>
 <p>第二步：实现这个函数。我们可以直接在类的里面写，也可以写在类的外面</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">// 在类里面实现函数</span><br><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	char name [<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age ;<br>	<br>	<span class="hljs-keyword">void</span> test()<br>	&#123;<br>	cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;<br>	&#125;;<br>&#125;;<br><span class="hljs-comment">// 在类的外面实现函数</span><br><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	char name [<span class="hljs-number">64</span>];<br>	<span class="hljs-keyword">int</span> age ;<br>	<span class="hljs-keyword">void</span> test();<br>&#125;;<br><br><span class="hljs-keyword">void</span> student::test() <span class="hljs-comment">// student:: 表示属于这个类里面的函数，不加的话会被识别为普通的函数</span><br>&#123;<br>	cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;<br>&#125; <br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-comment">// 在类里面实现函数</span>
+<span class="hljs-keyword">class</span> student 
+&#123;
+public:
+    char name [<span class="hljs-number">64</span>];
+    <span class="hljs-keyword">int</span> age ;
+    
+    <span class="hljs-keyword">void</span> test()
+    &#123;
+    cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;
+    &#125;;
+&#125;;
+<span class="hljs-comment">// 在类的外面实现函数</span>
+<span class="hljs-keyword">class</span> student 
+&#123;
+public:
+    char name [<span class="hljs-number">64</span>];
+    <span class="hljs-keyword">int</span> age ;
+    <span class="hljs-keyword">void</span> test();
+&#125;;
+
+<span class="hljs-keyword">void</span> student::test() <span class="hljs-comment">// student:: 表示属于这个类里面的函数，不加的话会被识别为普通的函数</span>
+&#123;
+    cout &lt;&lt; <span class="hljs-number">123</span> &lt;&lt; endl;
+&#125;</code></pre>
 
 <h2 id="9-类的访问修饰符"><a href="#9-类的访问修饰符" class="headerlink" title="9. 类的访问修饰符"></a>9. 类的访问修饰符</h2><p>类的访问修饰符就是对类的成员进行权限管理</p>
 <p>public：表示函数和变量是公开的，任何人都能访问。</p>
@@ -129,7 +163,15 @@
 <p>当强行访问private修饰的变量时，需要绕一个弯，也就是通过类里面的函数访问私有的变量，然后通过对象来访问这个函数（通过公有来访问私有）</p>
 <p>protected：表示函数和变量只能在自己的类里面自己访问自己，但是可以被派生类来访问的。</p>
 <h2 id="10-类函数的重载特性"><a href="#10-类函数的重载特性" class="headerlink" title="10. 类函数的重载特性"></a>10. 类函数的重载特性</h2><p>类函数的重载特性就是说我们可以在类里面定义同名的函数，但是参数不同的函数。</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student <br>&#123;<br>public:<br>	<span class="hljs-keyword">void</span> test();<br>	<span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>&#125;;<br><br><span class="hljs-keyword">void</span> student::test()&#123;&#125;;<br><span class="hljs-keyword">void</span> student::test()&#123;&#125;;<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student 
+&#123;
+public:
+    <span class="hljs-keyword">void</span> test();
+    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);
+&#125;;
+
+<span class="hljs-keyword">void</span> student::test()&#123;&#125;;
+<span class="hljs-keyword">void</span> student::test()&#123;&#125;;</code></pre>
 
 <p>重载函数在调用的时候，会自动判断函数的类型从而匹配调用不同的函数</p>
 <h2 id="11-构造函数和析构函数"><a href="#11-构造函数和析构函数" class="headerlink" title="11. 构造函数和析构函数"></a>11. 构造函数和析构函数</h2><p>析构函数：假如我们定义了析构函数，那么当对象被删除或者生命周期结束的时候，就会触发析构函数。</p>
@@ -139,27 +181,162 @@
 <li>析构函数和构造函数的名字必须和类名一模一样。</li>
 <li>析构函数要在前面加上一个”~“</li>
 </ol>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><br><span class="hljs-comment">// 构造函数</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">class</span> student
+&#123;
+public:
+    student();
+    <span class="hljs-keyword">void</span> test();
+    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);
+    ~student();
+
+&#125;;
+
+<span class="hljs-comment">// 构造函数</span>
+student::student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;
+&#125;
+<span class="hljs-comment">// 析构函数</span>
+student::~student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;
+&#125;</code></pre>
 
 <p>其中构造函数是可以被重载的，而析构函数不可以被重载</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;<br><br>using namespace std;<br><br><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    student(<span class="hljs-keyword">int</span> a);<br><br>    <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><br><span class="hljs-comment">// 构造函数1</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 构造函数2</span><br>student::student(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">void</span> student::test()&#123;<br>    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100</span>;<br>    cout &lt;&lt; haha &lt;&lt; endl;<br>&#125;<br><span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">int</span> main()<br>&#123;<br>    student my;<br>    student *my1 = <span class="hljs-keyword">new</span> student(<span class="hljs-number">10</span>);<span class="hljs-comment">// 使用指针来构造对象，传入参数就可以来实现重载构造函数的功能</span><br>    my<span class="hljs-variable">.test</span>(<span class="hljs-number">50</span>);<br>    my<span class="hljs-variable">.test</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;
+
+using namespace std;
+
+<span class="hljs-keyword">class</span> student
+&#123;
+public:
+    student();
+    student(<span class="hljs-keyword">int</span> a);
+
+    <span class="hljs-keyword">void</span> test();
+    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);
+    ~student();
+
+&#125;;
+
+<span class="hljs-comment">// 构造函数1</span>
+student::student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;
+&#125;
+<span class="hljs-comment">// 构造函数2</span>
+student::student(<span class="hljs-keyword">int</span> a)&#123;
+    cout &lt;&lt; a &lt;&lt; endl;
+&#125;
+<span class="hljs-comment">// 析构函数</span>
+student::~student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;
+&#125;
+
+<span class="hljs-keyword">void</span> student::test()&#123;
+    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100</span>;
+    cout &lt;&lt; haha &lt;&lt; endl;
+&#125;
+<span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;
+    cout &lt;&lt; a &lt;&lt; endl;
+&#125;
+
+<span class="hljs-keyword">int</span> main()
+&#123;
+    student my;
+    student *my1 = <span class="hljs-keyword">new</span> student(<span class="hljs-number">10</span>);<span class="hljs-comment">// 使用指针来构造对象，传入参数就可以来实现重载构造函数的功能</span>
+    my<span class="hljs-variable">.test</span>(<span class="hljs-number">50</span>);
+    my<span class="hljs-variable">.test</span>();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;</code></pre>
 
 <h2 id="12-类的继承"><a href="#12-类的继承" class="headerlink" title="12. 类的继承"></a>12. 类的继承</h2><p>什么是类的继承？</p>
 <p>类的继承允许我们在新的类里面继承父类的public还有protected部分，而private是不能继承的。</p>
 <p>当我们觉得这个类不好的时候，就可以使用类的继承，添加我们的功能。</p>
 <p>格式：</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">class</span> 儿子 : public 爸爸&#123;<br>public:<br>	.......<br>	<br><br>&#125;;<br><br>例如：<br><span class="hljs-keyword">class</span> mystudent : public student&#123;<br>public:<br>	<span class="hljs-keyword">int</span> grade;<br>	<br>&#125;;<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">class</span> 儿子 : public 爸爸&#123;
+public:
+    .......
+    
+
+&#125;;
+
+例如：
+<span class="hljs-keyword">class</span> mystudent : public student&#123;
+public:
+    <span class="hljs-keyword">int</span> grade;
+    
+&#125;;</code></pre>
 
 <p>如何在子类里面访问父类里面的成员？</p>
 <p>也是通过“.”或者“- &gt;”来访问的</p>
 <h2 id="13-虚函数和纯虚函数"><a href="#13-虚函数和纯虚函数" class="headerlink" title="13. 虚函数和纯虚函数"></a>13. 虚函数和纯虚函数</h2><p>虚函数：有实际定义的，允许派生类对他进行覆盖式的替换，virtual来修饰</p>
 <p>纯虚函数：没有实际定义的虚函数就是纯虚函数</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test(); <span class="hljs-comment">// 虚函数</span><br><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test1()&#123;&#125;; <span class="hljs-comment">//  纯虚函数</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test(); <span class="hljs-comment">// 虚函数</span>
+<span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test1()&#123;&#125;; <span class="hljs-comment">//  纯虚函数</span></code></pre>
 
 <p>怎么定义一个虚函数</p>
 <p>用virtual来修饰，虚函数是用在类的继承上的。</p>
 <p>例子：</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;<br><br>using namespace std;<br><br><span class="hljs-keyword">class</span> student<br>&#123;<br>public:<br>    student();<br>    student(<span class="hljs-keyword">int</span> a);<br><br>    <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test();<br>    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);<br>    ~student();<br><br>&#125;;<br><span class="hljs-keyword">class</span> mystudent : public student&#123;<br>public:<br>    <span class="hljs-keyword">void</span> test()&#123;<br>        cout &lt;&lt; <span class="hljs-number">123456</span> &lt;&lt; endl;<br>    &#125;<br><br>&#125;;<br><span class="hljs-comment">// 构造函数1</span><br>student::student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 构造函数2</span><br>student::student(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">// 析构函数</span><br>student::~student()&#123;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">void</span> student::test()&#123;<br>    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100000</span>;<br>    cout &lt;&lt; haha &lt;&lt; endl;<br>&#125;<br><span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-keyword">int</span> main()<br>&#123;<br>    student my;<br>    mystudent my2;<br>    my2<span class="hljs-variable">.test</span>();<br>    my<span class="hljs-variable">.test</span>();<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br>输出部分：<br>Hello<br>Hello<br><span class="hljs-number">123456</span><br><span class="hljs-number">100000</span><br>Bye<br>Bye<br><br>可以看到在my2的对象上，test打印出来的内容被覆盖成<span class="hljs-number">123456</span>，原本父类的test打印的内容是<span class="hljs-number">100000</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs verilog">#<span class="hljs-keyword">include</span> &lt;iostream&gt;
+
+using namespace std;
+
+<span class="hljs-keyword">class</span> student
+&#123;
+public:
+    student();
+    student(<span class="hljs-keyword">int</span> a);
+
+    <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> test();
+    <span class="hljs-keyword">void</span> test(<span class="hljs-keyword">int</span> a);
+    ~student();
+
+&#125;;
+<span class="hljs-keyword">class</span> mystudent : public student&#123;
+public:
+    <span class="hljs-keyword">void</span> test()&#123;
+        cout &lt;&lt; <span class="hljs-number">123456</span> &lt;&lt; endl;
+    &#125;
+
+&#125;;
+<span class="hljs-comment">// 构造函数1</span>
+student::student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Hello&quot;</span> &lt;&lt; endl;
+&#125;
+<span class="hljs-comment">// 构造函数2</span>
+student::student(<span class="hljs-keyword">int</span> a)&#123;
+    cout &lt;&lt; a &lt;&lt; endl;
+&#125;
+<span class="hljs-comment">// 析构函数</span>
+student::~student()&#123;
+    cout &lt;&lt; <span class="hljs-string">&quot;Bye&quot;</span> &lt;&lt; endl;
+&#125;
+
+<span class="hljs-keyword">void</span> student::test()&#123;
+    <span class="hljs-keyword">int</span> haha = <span class="hljs-number">100000</span>;
+    cout &lt;&lt; haha &lt;&lt; endl;
+&#125;
+<span class="hljs-keyword">void</span> student::test(<span class="hljs-keyword">int</span> a)&#123;
+    cout &lt;&lt; a &lt;&lt; endl;
+&#125;
+
+<span class="hljs-keyword">int</span> main()
+&#123;
+    student my;
+    mystudent my2;
+    my2<span class="hljs-variable">.test</span>();
+    my<span class="hljs-variable">.test</span>();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;
+输出部分：
+Hello
+Hello
+<span class="hljs-number">123456</span>
+<span class="hljs-number">100000</span>
+Bye
+Bye
+
+可以看到在my2的对象上，test打印出来的内容被覆盖成<span class="hljs-number">123456</span>，原本父类的test打印的内容是<span class="hljs-number">100000</span></code></pre>
 
 <p>虚函数的优点？</p>
 <p>可以使用虚函数预留接口，实现分工合作！</p>

@@ -123,10 +123,308 @@
 <h4 id="流水灯继电器2"><a href="#流水灯继电器2" class="headerlink" title="流水灯继电器2"></a>流水灯继电器2</h4><p>18号引脚，供电5V</p>
 <h4 id="LED"><a href="#LED" class="headerlink" title="LED"></a>LED</h4><p>1号引脚</p>
 <h3 id="程序部分："><a href="#程序部分：" class="headerlink" title="程序部分："></a><strong>程序部分：</strong></h3><p>main.cpp</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">```main.cpp<br><span class="hljs-comment">/* </span><br><span class="hljs-comment">1. 加入温湿度传感器</span><br><span class="hljs-comment">2. 加入可控LED灯</span><br><span class="hljs-comment">3. 加入MQ2气体传感器</span><br><span class="hljs-comment">4. 加入控制电机继电器</span><br><span class="hljs-comment">5. 加入报警流水灯继电器</span><br><span class="hljs-comment">6. 加入报警蜂鸣器效果</span><br><span class="hljs-comment">7. 任意阈值超过设定范围，出发报警效果</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"> */</span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Arduino.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;WiFi.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;PubSubClient.h&quot;</span>   <span class="hljs-comment">////A client library for MQTT messaging.</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;DHT.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ArduinoJson.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;LiquidCrystal.h&gt;</span>  <span class="hljs-comment">// includes the LiquidCrystal Library</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_SSD1306.h&gt;</span> <span class="hljs-comment">// 包含SSD1306 OLED屏幕库</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;SPI.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_GFX.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_SSD1306.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LED 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LED2 2  <span class="hljs-comment">//电机继电器1</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LED3 18 <span class="hljs-comment">//流水灯继电器2</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> buzzerPin 17 <span class="hljs-comment">// 蜂鸣器连接到数字引脚17</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DHTPIN 4  <span class="hljs-comment">// Defines pin number to which the sensor is connected</span></span><br>LiquidCrystal <span class="hljs-title function_">lcd</span><span class="hljs-params">(<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>)</span>;   <span class="hljs-comment">// Creates an LCD object. Parameters: (rs, enable, d4, d5, d6, d7)</span><br><span class="hljs-comment">// 定义MQ-2烟雾传感器连接的模拟输入引脚</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> smokeSensorPin = <span class="hljs-number">10</span>; <br><span class="hljs-comment">// 定义OLED屏幕的宽度和高度（以像素为单位）</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SCREEN_WIDTH 128</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SCREEN_HEIGHT 64</span><br><span class="hljs-comment">// 设置OLED显示屏的I2C地址（通常是0x3C或者0x3D）</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OLED_RESET    -1 <span class="hljs-comment">// 由于ESP32足够智能，可以设置为 -1 使用默认复位引脚</span></span><br><span class="hljs-comment">// 创建一个Adafruit_SSD1306对象。这里传递屏幕宽度、高度、I2C总线指针和复位引脚</span><br>Adafruit_SSD1306 <span class="hljs-title function_">display</span><span class="hljs-params">(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET)</span>;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DHTTYPE DHT11   <span class="hljs-comment">// DHT 22</span></span><br>DHT <span class="hljs-title function_">dht</span><span class="hljs-params">(DHTPIN, DHTTYPE)</span>;  <span class="hljs-comment">// Creats a DHT object</span><br><br><span class="hljs-comment">/* 连接WIFI SSID和密码 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WIFI_SSID         <span class="hljs-string">&quot;abd&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WIFI_PASSWD       <span class="hljs-string">&quot;00000010&quot;</span></span><br><br><span class="hljs-comment">/* 设备的三元组信息*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PRODUCT_KEY       <span class="hljs-string">&quot;a1LG0hp3NmR&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DEVICE_NAME       <span class="hljs-string">&quot;LittleCoke&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DEVICE_SECRET     <span class="hljs-string">&quot;50d122d3e0ec5af748ccf8253f6b6a04&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> REGION_ID         <span class="hljs-string">&quot;cn-shanghai&quot;</span></span><br><br><span class="hljs-comment">/* 线上环境域名和端口号，不需要改 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_SERVER       PRODUCT_KEY<span class="hljs-string">&quot;.iot-as-mqtt.&quot;</span>REGION_ID <span class="hljs-string">&quot;.aliyuncs.com&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_PORT         1883</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_USRNAME      DEVICE_NAME<span class="hljs-string">&quot;&amp;&quot;</span>PRODUCT_KEY</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CLIENT_ID         <span class="hljs-string">&quot;a1LG0hp3NmR.LittleCoke|securemode=2,signmethod=hmacsha256,timestamp=1712915665471|&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_PASSWD       <span class="hljs-string">&quot;07de62017cbc5135916c5f3d205cd40fe41c7e4f0f180cf62e094908d8591a8c&quot;</span></span><br><br><span class="hljs-comment">//宏定义订阅主题</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALINK_BODY_FORMAT         <span class="hljs-string">&quot;&#123;\&quot;id\&quot;:\&quot;LittleCoke\&quot;,\&quot;version\&quot;:\&quot;1.0\&quot;,\&quot;method\&quot;:\&quot;thing.event.property.post\&quot;,\&quot;params\&quot;:%s&#125;&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ALINK_TOPIC_PROP_POST     <span class="hljs-string">&quot;/sys/&quot;</span> PRODUCT_KEY <span class="hljs-string">&quot;/&quot;</span> DEVICE_NAME <span class="hljs-string">&quot;/thing/event/property/post&quot;</span></span><br><br><span class="hljs-type">const</span> <span class="hljs-type">char</span>* TOPIC = <span class="hljs-string">&quot;/sys/a1uGtexAdr7/LittleCoke/thing/service/property/set&quot;</span>; <br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> lastMs = <span class="hljs-number">0</span>;<br><br>WiFiClient espClient;<br>PubSubClient  <span class="hljs-title function_">client</span><span class="hljs-params">(espClient)</span>;<br><span class="hljs-comment">// 函数声明</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">alarmEffect</span><span class="hljs-params">()</span>;<br><span class="hljs-type">float</span> soil_data ;  <br><span class="hljs-type">float</span> tep;  <br><span class="hljs-type">float</span> smokePercentage;<br><span class="hljs-comment">//连接wifi</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">wifiInit</span><span class="hljs-params">()</span><br>&#123;<br>    WiFi.begin(WIFI_SSID, WIFI_PASSWD);<br>    <span class="hljs-keyword">while</span> (WiFi.status() != WL_CONNECTED)<br>    &#123;<br>        delay(<span class="hljs-number">1000</span>);<br>        Serial.println(<span class="hljs-string">&quot;WiFi not Connect&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//mqtt连接</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">mqttCheckConnect</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-keyword">while</span> (!client.connected())<br>    &#123;<br>        Serial.println(<span class="hljs-string">&quot;Connecting to MQTT Server ...&quot;</span>);<br>        <span class="hljs-keyword">if</span>(client.connect(CLIENT_ID, MQTT_USRNAME, MQTT_PASSWD))<br>        &#123;<br>          Serial.println(<span class="hljs-string">&quot;MQTT Connected!&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>           Serial.print(<span class="hljs-string">&quot;MQTT Connect err:&quot;</span>);<br>            Serial.println(client.state());<br>            delay(<span class="hljs-number">5000</span>);<br>          &#125;<br>        <br>    &#125;<br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Arduino.h&gt;</span> <span class="hljs-comment">// 引入Arduino库以使用random函数</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">alarmEffect</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-comment">// 报警效果</span><br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>    tone(buzzerPin, <span class="hljs-number">1000</span>); <span class="hljs-comment">// 1000Hz频率</span><br>    delay(random(<span class="hljs-number">30</span>, <span class="hljs-number">70</span>)); <span class="hljs-comment">// 随机延迟时间</span><br>    noTone(buzzerPin);<br>    delay(random(<span class="hljs-number">30</span>, <span class="hljs-number">70</span>)); <span class="hljs-comment">// 随机延迟时间</span><br>  &#125;<br>&#125;<br><span class="hljs-comment">//上传温湿度、二氧化碳浓度</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">mqttIntervalPost</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">char</span> param[<span class="hljs-number">32</span>];<br>    <span class="hljs-type">char</span> jsonBuf[<span class="hljs-number">128</span>];<br>    <br>    <span class="hljs-comment">//====================upload humidity======================================//</span><br>    soil_data = dht.readHumidity();   <br>    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;humidity\&quot;:%2f&#125;&quot;</span>, soil_data);<br>    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);<br>    Serial.println(jsonBuf);<br>    boolean b = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);<br>    <span class="hljs-keyword">if</span>(b)&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish Humidity success&quot;</span>); <br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish Humidity fail&quot;</span>); <br>    &#125;<br><br>    <span class="hljs-comment">//====================Upload temperature======================================//</span><br>    tep =dht.readTemperature();<br>    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;temperature\&quot;:%2f&#125;&quot;</span>,tep);<br>    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);<br>    Serial.println(jsonBuf);<br>    boolean c = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);<br>    <span class="hljs-keyword">if</span>(c)&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish Temperature success&quot;</span>); <br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish Temperature fail&quot;</span>); <br>    &#125;<br><br>    <span class="hljs-comment">//====================upload qiti======================================//</span><br>    <span class="hljs-type">int</span> smokeValue = analogRead(smokeSensorPin); <span class="hljs-comment">// 读取MQ-2烟雾传感器的模拟值</span><br>    <span class="hljs-comment">// 将模拟值转换为百分比，这里的4095是ESP32 ADC的最大值</span><br>    smokePercentage = (smokeValue / <span class="hljs-number">4095.0</span>) * <span class="hljs-number">100.0</span>;<br>    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;smoke\&quot;:%2f&#125;&quot;</span>, smokePercentage);<br>    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);<br>    Serial.println(jsonBuf);<br>    boolean d = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);<br>    <span class="hljs-keyword">if</span>(d)&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish smoke success&quot;</span>); <br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>      Serial.println(<span class="hljs-string">&quot;publish smoke fail&quot;</span>); <br>    &#125;<br>    <span class="hljs-type">const</span> <span class="hljs-type">float</span> TempThreshold = <span class="hljs-number">30.0</span>; <span class="hljs-comment">// 设置温度阈值</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">float</span> HumThreshold = <span class="hljs-number">60.0</span>;  <span class="hljs-comment">// 设置湿度阈值</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">float</span> smokeThreshold = <span class="hljs-number">60.0</span>; <span class="hljs-comment">// 设置烟雾阈值</span><br>    <span class="hljs-keyword">if</span> ((smokePercentage &gt; smokeThreshold) || (soil_data &gt; HumThreshold) || (tep &gt; TempThreshold)) &#123;<br>        digitalWrite(LED2,HIGH);<br>        digitalWrite(LED3,HIGH);<br>        alarmEffect();<br>    &#125;<br>    <span class="hljs-keyword">else</span>&#123;<br>        digitalWrite(LED2,LOW);<br>        digitalWrite(LED3,LOW);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//回调函数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">char</span>* topic, byte* payload, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> length)</span> &#123;<br>  Serial.print(<span class="hljs-string">&quot;Message arrived [&quot;</span>);<br>  Serial.print(topic);   <span class="hljs-comment">// 打印主题信息</span><br>  Serial.print(<span class="hljs-string">&quot;] &quot;</span>);<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) &#123;<br>    Serial.print((<span class="hljs-type">char</span>)payload[i]); <span class="hljs-comment">// 打印主题内容</span><br>  &#125;<br>  Serial.println();<br><br> DynamicJsonDocument <span class="hljs-title function_">doc</span><span class="hljs-params">(<span class="hljs-number">1024</span>)</span>;  <span class="hljs-comment">//创建了一个名为 doc 的动态 JSON 文档</span><br> deserializeJson(doc, String((<span class="hljs-type">char</span> *)payload));  <span class="hljs-comment">//从一个名为 payload 的数据中解析 JSON 数据并将其填充到 doc 中</span><br><br><span class="hljs-comment">// DynamicJsonDocument params = doc[&quot;params&quot;];</span><br><br><span class="hljs-keyword">if</span>(doc[<span class="hljs-string">&quot;params&quot;</span>].containsKey(<span class="hljs-string">&quot;deng&quot;</span>))<br>&#123;<br>  Serial.println(<span class="hljs-string">&quot;GOT DENG CMD&quot;</span>); <br>  digitalWrite(LED, doc[<span class="hljs-string">&quot;params&quot;</span>][<span class="hljs-string">&quot;deng&quot;</span>]);<br>&#125;<br><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span><br>&#123;<br>  pinMode(LED, OUTPUT);<br>  pinMode(LED2, OUTPUT);<br>  pinMode(LED3, OUTPUT);<br>  pinMode(buzzerPin, OUTPUT);<br><br>  Serial.begin(<span class="hljs-number">115200</span>);<br>  dht.begin();<br>  wifiInit();<br>  client.setServer(MQTT_SERVER, MQTT_PORT);   <span class="hljs-comment">/* 连接MQTT服务器 */</span><br>  client.setCallback(callback);                 <span class="hljs-comment">//设定回调方式，当ESP32收到订阅消息时会调用此方法</span><br>  digitalWrite(LED,LOW);<br>  digitalWrite(LED2,LOW);<br>  digitalWrite(LED3,LOW);<br>  digitalWrite(buzzerPin,LOW);<br>  lcd.begin(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>);  <span class="hljs-comment">// Initializes the interface to the LCD screen, and specifies the dimensions (width and height) of the display</span><br>  pinMode(smokeSensorPin, INPUT); <span class="hljs-comment">// 设置MQ-2传感器所连接的引脚为输入模式</span><br>  <span class="hljs-comment">// 自定义I2C引脚</span><br>  Wire.begin(<span class="hljs-number">11</span>, <span class="hljs-number">12</span>); <span class="hljs-comment">// SDA引脚设为11, SCL引脚设为12</span><br>  <span class="hljs-comment">// 初始化OLED屏幕，传入电源类型和I2C地址</span><br>  <span class="hljs-keyword">if</span>(!display.begin(SSD1306_SWITCHCAPVCC, <span class="hljs-number">0x3C</span>)) &#123; <br>    Serial.println(<span class="hljs-string">&quot;SSD1306初始化失败&quot;</span>);<br>    <span class="hljs-keyword">for</span>(;;); <span class="hljs-comment">// 如果初始化失败，无限循环停在这里</span><br>  &#125;<br><br>  display.clearDisplay(); <span class="hljs-comment">// 清除屏幕内容到默认空状态</span><br>   <span class="hljs-comment">// 在屏幕上绘制一个像素点</span><br>  display.drawPixel(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, SSD1306_WHITE);<br><br>  <span class="hljs-comment">// 设置文本大小和颜色</span><br>  display.setTextSize(<span class="hljs-number">1</span>); <span class="hljs-comment">// 文本大小为1</span><br>  display.setTextColor(SSD1306_WHITE); <span class="hljs-comment">// 文本颜色为白色</span><br><br>  <span class="hljs-comment">// 设置文本开始位置</span><br>  display.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>  display.println(<span class="hljs-string">&quot;Hello! ESP32!&quot;</span>); <span class="hljs-comment">// 在屏幕上打印文本</span><br><br>  <span class="hljs-comment">// 将上述内容更新到显示屏上</span><br>  display.display();<br><br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">if</span> (millis() - lastMs &gt;= <span class="hljs-number">5000</span>) &#123;<br>        lastMs = millis();<br>        mqttCheckConnect(); <br>        mqttIntervalPost();<br>    &#125;<br>    client.loop();<br>    lcd.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>    lcd.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Temp:%.2f &quot;</span>, tep);<br>    lcd.print((<span class="hljs-type">char</span>)<span class="hljs-number">223</span>);<br>    lcd.print(<span class="hljs-string">&quot;C&quot;</span>);<br><br>    lcd.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);<br>    lcd.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Humi:%.2f &quot;</span>, soil_data);<br>    lcd.print(<span class="hljs-string">&quot;%RH&quot;</span>);<br>    <br>    <span class="hljs-comment">// 在OLED屏幕上更新显示</span><br>    display.clearDisplay();  <span class="hljs-comment">// 清除旧的显示内容</span><br>    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>);<br>    display.print(<span class="hljs-string">&quot;Temp: &quot;</span>);<br>    display.print(tep, <span class="hljs-number">2</span>);<br>    display.print((<span class="hljs-type">char</span>)<span class="hljs-number">223</span>);<br>    display.println(<span class="hljs-string">&quot;C&quot;</span>);<br><br>    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">20</span>);<br>    display.print(<span class="hljs-string">&quot;Humi: &quot;</span>);<br>    display.print(soil_data, <span class="hljs-number">2</span>);<br>    display.println(<span class="hljs-string">&quot;%RH&quot;</span>);<br><br>    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">30</span>);<br>    display.print(<span class="hljs-string">&quot;Smoke: &quot;</span>);<br>    display.print(smokePercentage, <span class="hljs-number">2</span>);<br>    display.println(<span class="hljs-string">&quot;%&quot;</span>);<br><br>    display.display();  <span class="hljs-comment">// 实际更新显示内容</span><br><br>    delay(<span class="hljs-number">2000</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs c">```main.cpp
+<span class="hljs-comment">/* </span>
+<span class="hljs-comment">1. 加入温湿度传感器</span>
+<span class="hljs-comment">2. 加入可控LED灯</span>
+<span class="hljs-comment">3. 加入MQ2气体传感器</span>
+<span class="hljs-comment">4. 加入控制电机继电器</span>
+<span class="hljs-comment">5. 加入报警流水灯继电器</span>
+<span class="hljs-comment">6. 加入报警蜂鸣器效果</span>
+<span class="hljs-comment">7. 任意阈值超过设定范围，出发报警效果</span>
+<span class="hljs-comment"></span>
+<span class="hljs-comment"> */</span>
+
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Arduino.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;WiFi.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;PubSubClient.h&quot;</span>   <span class="hljs-comment">////A client library for MQTT messaging.</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;DHT.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ArduinoJson.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;LiquidCrystal.h&gt;</span>  <span class="hljs-comment">// includes the LiquidCrystal Library</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_SSD1306.h&gt;</span> <span class="hljs-comment">// 包含SSD1306 OLED屏幕库</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;SPI.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_GFX.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Adafruit_SSD1306.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> LED 1</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> LED2 2  <span class="hljs-comment">//电机继电器1</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> LED3 18 <span class="hljs-comment">//流水灯继电器2</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> buzzerPin 17 <span class="hljs-comment">// 蜂鸣器连接到数字引脚17</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> DHTPIN 4  <span class="hljs-comment">// Defines pin number to which the sensor is connected</span></span>
+LiquidCrystal <span class="hljs-title function_">lcd</span><span class="hljs-params">(<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>)</span>;   <span class="hljs-comment">// Creates an LCD object. Parameters: (rs, enable, d4, d5, d6, d7)</span>
+<span class="hljs-comment">// 定义MQ-2烟雾传感器连接的模拟输入引脚</span>
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> smokeSensorPin = <span class="hljs-number">10</span>; 
+<span class="hljs-comment">// 定义OLED屏幕的宽度和高度（以像素为单位）</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SCREEN_WIDTH 128</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SCREEN_HEIGHT 64</span>
+<span class="hljs-comment">// 设置OLED显示屏的I2C地址（通常是0x3C或者0x3D）</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> OLED_RESET    -1 <span class="hljs-comment">// 由于ESP32足够智能，可以设置为 -1 使用默认复位引脚</span></span>
+<span class="hljs-comment">// 创建一个Adafruit_SSD1306对象。这里传递屏幕宽度、高度、I2C总线指针和复位引脚</span>
+Adafruit_SSD1306 <span class="hljs-title function_">display</span><span class="hljs-params">(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET)</span>;
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> DHTTYPE DHT11   <span class="hljs-comment">// DHT 22</span></span>
+DHT <span class="hljs-title function_">dht</span><span class="hljs-params">(DHTPIN, DHTTYPE)</span>;  <span class="hljs-comment">// Creats a DHT object</span>
+
+<span class="hljs-comment">/* 连接WIFI SSID和密码 */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> WIFI_SSID         <span class="hljs-string">&quot;abd&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> WIFI_PASSWD       <span class="hljs-string">&quot;00000010&quot;</span></span>
+
+<span class="hljs-comment">/* 设备的三元组信息*/</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> PRODUCT_KEY       <span class="hljs-string">&quot;a1LG0hp3NmR&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> DEVICE_NAME       <span class="hljs-string">&quot;LittleCoke&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> DEVICE_SECRET     <span class="hljs-string">&quot;50d122d3e0ec5af748ccf8253f6b6a04&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> REGION_ID         <span class="hljs-string">&quot;cn-shanghai&quot;</span></span>
+
+<span class="hljs-comment">/* 线上环境域名和端口号，不需要改 */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_SERVER       PRODUCT_KEY<span class="hljs-string">&quot;.iot-as-mqtt.&quot;</span>REGION_ID <span class="hljs-string">&quot;.aliyuncs.com&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_PORT         1883</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_USRNAME      DEVICE_NAME<span class="hljs-string">&quot;&amp;&quot;</span>PRODUCT_KEY</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> CLIENT_ID         <span class="hljs-string">&quot;a1LG0hp3NmR.LittleCoke|securemode=2,signmethod=hmacsha256,timestamp=1712915665471|&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> MQTT_PASSWD       <span class="hljs-string">&quot;07de62017cbc5135916c5f3d205cd40fe41c7e4f0f180cf62e094908d8591a8c&quot;</span></span>
+
+<span class="hljs-comment">//宏定义订阅主题</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> ALINK_BODY_FORMAT         <span class="hljs-string">&quot;&#123;\&quot;id\&quot;:\&quot;LittleCoke\&quot;,\&quot;version\&quot;:\&quot;1.0\&quot;,\&quot;method\&quot;:\&quot;thing.event.property.post\&quot;,\&quot;params\&quot;:%s&#125;&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> ALINK_TOPIC_PROP_POST     <span class="hljs-string">&quot;/sys/&quot;</span> PRODUCT_KEY <span class="hljs-string">&quot;/&quot;</span> DEVICE_NAME <span class="hljs-string">&quot;/thing/event/property/post&quot;</span></span>
+
+<span class="hljs-type">const</span> <span class="hljs-type">char</span>* TOPIC = <span class="hljs-string">&quot;/sys/a1uGtexAdr7/LittleCoke/thing/service/property/set&quot;</span>; 
+<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> lastMs = <span class="hljs-number">0</span>;
+
+WiFiClient espClient;
+PubSubClient  <span class="hljs-title function_">client</span><span class="hljs-params">(espClient)</span>;
+<span class="hljs-comment">// 函数声明</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">alarmEffect</span><span class="hljs-params">()</span>;
+<span class="hljs-type">float</span> soil_data ;  
+<span class="hljs-type">float</span> tep;  
+<span class="hljs-type">float</span> smokePercentage;
+<span class="hljs-comment">//连接wifi</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">wifiInit</span><span class="hljs-params">()</span>
+&#123;
+    WiFi.begin(WIFI_SSID, WIFI_PASSWD);
+    <span class="hljs-keyword">while</span> (WiFi.status() != WL_CONNECTED)
+    &#123;
+        delay(<span class="hljs-number">1000</span>);
+        Serial.println(<span class="hljs-string">&quot;WiFi not Connect&quot;</span>);
+    &#125;
+&#125;
+
+<span class="hljs-comment">//mqtt连接</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">mqttCheckConnect</span><span class="hljs-params">()</span>
+&#123;
+    <span class="hljs-keyword">while</span> (!client.connected())
+    &#123;
+        Serial.println(<span class="hljs-string">&quot;Connecting to MQTT Server ...&quot;</span>);
+        <span class="hljs-keyword">if</span>(client.connect(CLIENT_ID, MQTT_USRNAME, MQTT_PASSWD))
+        &#123;
+          Serial.println(<span class="hljs-string">&quot;MQTT Connected!&quot;</span>);
+        &#125;
+        <span class="hljs-keyword">else</span>&#123;
+           Serial.print(<span class="hljs-string">&quot;MQTT Connect err:&quot;</span>);
+            Serial.println(client.state());
+            delay(<span class="hljs-number">5000</span>);
+          &#125;
+        
+    &#125;
+&#125;
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Arduino.h&gt;</span> <span class="hljs-comment">// 引入Arduino库以使用random函数</span></span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">alarmEffect</span><span class="hljs-params">()</span> &#123;
+  <span class="hljs-comment">// 报警效果</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;
+    tone(buzzerPin, <span class="hljs-number">1000</span>); <span class="hljs-comment">// 1000Hz频率</span>
+    delay(random(<span class="hljs-number">30</span>, <span class="hljs-number">70</span>)); <span class="hljs-comment">// 随机延迟时间</span>
+    noTone(buzzerPin);
+    delay(random(<span class="hljs-number">30</span>, <span class="hljs-number">70</span>)); <span class="hljs-comment">// 随机延迟时间</span>
+  &#125;
+&#125;
+<span class="hljs-comment">//上传温湿度、二氧化碳浓度</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">mqttIntervalPost</span><span class="hljs-params">()</span>
+&#123;
+    <span class="hljs-type">char</span> param[<span class="hljs-number">32</span>];
+    <span class="hljs-type">char</span> jsonBuf[<span class="hljs-number">128</span>];
+    
+    <span class="hljs-comment">//====================upload humidity======================================//</span>
+    soil_data = dht.readHumidity();   
+    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;humidity\&quot;:%2f&#125;&quot;</span>, soil_data);
+    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);
+    Serial.println(jsonBuf);
+    boolean b = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
+    <span class="hljs-keyword">if</span>(b)&#123;
+      Serial.println(<span class="hljs-string">&quot;publish Humidity success&quot;</span>); 
+    &#125;<span class="hljs-keyword">else</span>&#123;
+      Serial.println(<span class="hljs-string">&quot;publish Humidity fail&quot;</span>); 
+    &#125;
+
+    <span class="hljs-comment">//====================Upload temperature======================================//</span>
+    tep =dht.readTemperature();
+    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;temperature\&quot;:%2f&#125;&quot;</span>,tep);
+    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);
+    Serial.println(jsonBuf);
+    boolean c = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
+    <span class="hljs-keyword">if</span>(c)&#123;
+      Serial.println(<span class="hljs-string">&quot;publish Temperature success&quot;</span>); 
+    &#125;<span class="hljs-keyword">else</span>&#123;
+      Serial.println(<span class="hljs-string">&quot;publish Temperature fail&quot;</span>); 
+    &#125;
+
+    <span class="hljs-comment">//====================upload qiti======================================//</span>
+    <span class="hljs-type">int</span> smokeValue = analogRead(smokeSensorPin); <span class="hljs-comment">// 读取MQ-2烟雾传感器的模拟值</span>
+    <span class="hljs-comment">// 将模拟值转换为百分比，这里的4095是ESP32 ADC的最大值</span>
+    smokePercentage = (smokeValue / <span class="hljs-number">4095.0</span>) * <span class="hljs-number">100.0</span>;
+    <span class="hljs-built_in">sprintf</span>(param, <span class="hljs-string">&quot;&#123;\&quot;smoke\&quot;:%2f&#125;&quot;</span>, smokePercentage);
+    <span class="hljs-built_in">sprintf</span>(jsonBuf, ALINK_BODY_FORMAT, param);
+    Serial.println(jsonBuf);
+    boolean d = client.publish(ALINK_TOPIC_PROP_POST, jsonBuf);
+    <span class="hljs-keyword">if</span>(d)&#123;
+      Serial.println(<span class="hljs-string">&quot;publish smoke success&quot;</span>); 
+    &#125;<span class="hljs-keyword">else</span>&#123;
+      Serial.println(<span class="hljs-string">&quot;publish smoke fail&quot;</span>); 
+    &#125;
+    <span class="hljs-type">const</span> <span class="hljs-type">float</span> TempThreshold = <span class="hljs-number">30.0</span>; <span class="hljs-comment">// 设置温度阈值</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">float</span> HumThreshold = <span class="hljs-number">60.0</span>;  <span class="hljs-comment">// 设置湿度阈值</span>
+    <span class="hljs-type">const</span> <span class="hljs-type">float</span> smokeThreshold = <span class="hljs-number">60.0</span>; <span class="hljs-comment">// 设置烟雾阈值</span>
+    <span class="hljs-keyword">if</span> ((smokePercentage &gt; smokeThreshold) || (soil_data &gt; HumThreshold) || (tep &gt; TempThreshold)) &#123;
+        digitalWrite(LED2,HIGH);
+        digitalWrite(LED3,HIGH);
+        alarmEffect();
+    &#125;
+    <span class="hljs-keyword">else</span>&#123;
+        digitalWrite(LED2,LOW);
+        digitalWrite(LED3,LOW);
+    &#125;
+&#125;
+
+<span class="hljs-comment">//回调函数</span>
+<span class="hljs-type">void</span> <span class="hljs-title function_">callback</span><span class="hljs-params">(<span class="hljs-type">char</span>* topic, byte* payload, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> length)</span> &#123;
+  Serial.print(<span class="hljs-string">&quot;Message arrived [&quot;</span>);
+  Serial.print(topic);   <span class="hljs-comment">// 打印主题信息</span>
+  Serial.print(<span class="hljs-string">&quot;] &quot;</span>);
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) &#123;
+    Serial.print((<span class="hljs-type">char</span>)payload[i]); <span class="hljs-comment">// 打印主题内容</span>
+  &#125;
+  Serial.println();
+
+ DynamicJsonDocument <span class="hljs-title function_">doc</span><span class="hljs-params">(<span class="hljs-number">1024</span>)</span>;  <span class="hljs-comment">//创建了一个名为 doc 的动态 JSON 文档</span>
+ deserializeJson(doc, String((<span class="hljs-type">char</span> *)payload));  <span class="hljs-comment">//从一个名为 payload 的数据中解析 JSON 数据并将其填充到 doc 中</span>
+
+<span class="hljs-comment">// DynamicJsonDocument params = doc[&quot;params&quot;];</span>
+
+<span class="hljs-keyword">if</span>(doc[<span class="hljs-string">&quot;params&quot;</span>].containsKey(<span class="hljs-string">&quot;deng&quot;</span>))
+&#123;
+  Serial.println(<span class="hljs-string">&quot;GOT DENG CMD&quot;</span>); 
+  digitalWrite(LED, doc[<span class="hljs-string">&quot;params&quot;</span>][<span class="hljs-string">&quot;deng&quot;</span>]);
+&#125;
+
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span>
+&#123;
+  pinMode(LED, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  Serial.begin(<span class="hljs-number">115200</span>);
+  dht.begin();
+  wifiInit();
+  client.setServer(MQTT_SERVER, MQTT_PORT);   <span class="hljs-comment">/* 连接MQTT服务器 */</span>
+  client.setCallback(callback);                 <span class="hljs-comment">//设定回调方式，当ESP32收到订阅消息时会调用此方法</span>
+  digitalWrite(LED,LOW);
+  digitalWrite(LED2,LOW);
+  digitalWrite(LED3,LOW);
+  digitalWrite(buzzerPin,LOW);
+  lcd.begin(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>);  <span class="hljs-comment">// Initializes the interface to the LCD screen, and specifies the dimensions (width and height) of the display</span>
+  pinMode(smokeSensorPin, INPUT); <span class="hljs-comment">// 设置MQ-2传感器所连接的引脚为输入模式</span>
+  <span class="hljs-comment">// 自定义I2C引脚</span>
+  Wire.begin(<span class="hljs-number">11</span>, <span class="hljs-number">12</span>); <span class="hljs-comment">// SDA引脚设为11, SCL引脚设为12</span>
+  <span class="hljs-comment">// 初始化OLED屏幕，传入电源类型和I2C地址</span>
+  <span class="hljs-keyword">if</span>(!display.begin(SSD1306_SWITCHCAPVCC, <span class="hljs-number">0x3C</span>)) &#123; 
+    Serial.println(<span class="hljs-string">&quot;SSD1306初始化失败&quot;</span>);
+    <span class="hljs-keyword">for</span>(;;); <span class="hljs-comment">// 如果初始化失败，无限循环停在这里</span>
+  &#125;
+
+  display.clearDisplay(); <span class="hljs-comment">// 清除屏幕内容到默认空状态</span>
+   <span class="hljs-comment">// 在屏幕上绘制一个像素点</span>
+  display.drawPixel(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, SSD1306_WHITE);
+
+  <span class="hljs-comment">// 设置文本大小和颜色</span>
+  display.setTextSize(<span class="hljs-number">1</span>); <span class="hljs-comment">// 文本大小为1</span>
+  display.setTextColor(SSD1306_WHITE); <span class="hljs-comment">// 文本颜色为白色</span>
+
+  <span class="hljs-comment">// 设置文本开始位置</span>
+  display.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+  display.println(<span class="hljs-string">&quot;Hello! ESP32!&quot;</span>); <span class="hljs-comment">// 在屏幕上打印文本</span>
+
+  <span class="hljs-comment">// 将上述内容更新到显示屏上</span>
+  display.display();
+
+&#125;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;
+    <span class="hljs-keyword">if</span> (millis() - lastMs &gt;= <span class="hljs-number">5000</span>) &#123;
+        lastMs = millis();
+        mqttCheckConnect(); 
+        mqttIntervalPost();
+    &#125;
+    client.loop();
+    lcd.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);
+    lcd.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Temp:%.2f &quot;</span>, tep);
+    lcd.print((<span class="hljs-type">char</span>)<span class="hljs-number">223</span>);
+    lcd.print(<span class="hljs-string">&quot;C&quot;</span>);
+
+    lcd.setCursor(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+    lcd.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Humi:%.2f &quot;</span>, soil_data);
+    lcd.print(<span class="hljs-string">&quot;%RH&quot;</span>);
+    
+    <span class="hljs-comment">// 在OLED屏幕上更新显示</span>
+    display.clearDisplay();  <span class="hljs-comment">// 清除旧的显示内容</span>
+    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>);
+    display.print(<span class="hljs-string">&quot;Temp: &quot;</span>);
+    display.print(tep, <span class="hljs-number">2</span>);
+    display.print((<span class="hljs-type">char</span>)<span class="hljs-number">223</span>);
+    display.println(<span class="hljs-string">&quot;C&quot;</span>);
+
+    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">20</span>);
+    display.print(<span class="hljs-string">&quot;Humi: &quot;</span>);
+    display.print(soil_data, <span class="hljs-number">2</span>);
+    display.println(<span class="hljs-string">&quot;%RH&quot;</span>);
+
+    display.setCursor(<span class="hljs-number">0</span>, <span class="hljs-number">30</span>);
+    display.print(<span class="hljs-string">&quot;Smoke: &quot;</span>);
+    display.print(smokePercentage, <span class="hljs-number">2</span>);
+    display.println(<span class="hljs-string">&quot;%&quot;</span>);
+
+    display.display();  <span class="hljs-comment">// 实际更新显示内容</span>
+
+    delay(<span class="hljs-number">2000</span>);
+&#125;
+</code></pre>
 
 <p>platformio.ini</p>
-<figure class="highlight autoit"><table><tr><td class="code"><pre><code class="hljs autoit"><span class="hljs-comment">; PlatformIO Project Configuration File</span><br><span class="hljs-comment">;</span><br><span class="hljs-comment">;   Build options: build flags, source filter</span><br><span class="hljs-comment">;   Upload options: custom upload port, speed and extra flags</span><br><span class="hljs-comment">;   Library options: dependencies, extra library storages</span><br><span class="hljs-comment">;   Advanced options: extra scripting</span><br><span class="hljs-comment">;</span><br><span class="hljs-comment">; Please visit documentation for the other options and examples</span><br><span class="hljs-comment">; https://docs.platformio.org/page/projectconf.html</span><br><br>[env:esp32-s3-devkitc<span class="hljs-number">-1</span>]<br>platform = espressif32<br>board = esp32-s3-devkitc<span class="hljs-number">-1</span><br>framework = arduino<br>lib_deps = <br>	knolleary/PubSubClient<span class="hljs-symbol">@^2</span><span class="hljs-number">.8</span><br>	adafruit/Adafruit Unified Sensor<span class="hljs-symbol">@^1</span><span class="hljs-number">.1</span><span class="hljs-number">.13</span><br>	beegee-tokyo/DHT sensor library <span class="hljs-keyword">for</span> ESPx<span class="hljs-symbol">@^1</span><span class="hljs-number">.19</span><br>	adafruit/DHT sensor library<span class="hljs-symbol">@^1</span><span class="hljs-number">.4</span><span class="hljs-number">.4</span><br>	bblanchon/ArduinoJson<span class="hljs-symbol">@^6</span><span class="hljs-number">.21</span><span class="hljs-number">.3</span><br>	arduino-libraries/LiquidCrystal<span class="hljs-symbol">@^1</span><span class="hljs-number">.0</span><span class="hljs-number">.7</span><br>	adafruit/Adafruit SSD1306<span class="hljs-symbol">@^2</span><span class="hljs-number">.5</span><span class="hljs-number">.9</span><br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs plaintext">; PlatformIO Project Configuration File
+;
+;   Build options: build flags, source filter
+;   Upload options: custom upload port, speed and extra flags
+;   Library options: dependencies, extra library storages
+;   Advanced options: extra scripting
+;
+; Please visit documentation for the other options and examples
+; https://docs.platformio.org/page/projectconf.html
+
+[env:esp32-s3-devkitc-1]
+platform = espressif32
+board = esp32-s3-devkitc-1
+framework = arduino
+lib_deps = 
+    knolleary/PubSubClient@^2.8
+    adafruit/Adafruit Unified Sensor@^1.1.13
+    beegee-tokyo/DHT sensor library for ESPx@^1.19
+    adafruit/DHT sensor library@^1.4.4
+    bblanchon/ArduinoJson@^6.21.3
+    arduino-libraries/LiquidCrystal@^1.0.7
+    adafruit/Adafruit SSD1306@^2.5.9
+</code></pre>
 
 <h3 id="应用方法："><a href="#应用方法：" class="headerlink" title="应用方法："></a>应用方法：</h3><ol>
 <li><p>修改注释为&#x2F;* 连接WIFI SSID和密码 *&#x2F;的部分</p>
