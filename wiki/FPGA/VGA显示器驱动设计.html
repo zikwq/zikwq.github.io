@@ -20,15 +20,15 @@
   <title>FPGA：VGA显示器驱动设计 - quincy的日记</title>
 
   
-    <meta name="description" content="实验结果1    所有工程文件均已开源，获取地址：zikwq&#x2F;FPGA_prj: FPGA_prj (github.com) VGA介绍1. 背景VGA(视频图形阵列)，是一种电脑显示标准，是IBM在1987年提出的一个使用类比讯号的电脑显示标准。个人电脑在加载自己独特的驱动程序之前，都必须支持VGA的标准，绝大多数显卡都带有这种接口。 说到VGA接口，相信很多朋友都不会陌生，因为这种接">
+    <meta name="description" content="实验结果1  仿真波形  所有工程文件均已开源，获取地址：zikwq&#x2F;FPGA_prj: FPGA_prj (github.com) VGA介绍1. 背景VGA(视频图形阵列)，是一种电脑显示标准，是IBM在1987年提出的一个使用类比讯号的电脑显示标准。个人电脑在加载自己独特的驱动程序之前，都必须支持VGA的标准，绝大多数显卡都带有这种接口。 说到VGA接口，相信很多朋友都不会陌生，因">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VGA显示器驱动设计">
 <meta property="og:url" content="http://example.com/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html">
 <meta property="og:site_name" content="quincy的日记">
-<meta property="og:description" content="实验结果1    所有工程文件均已开源，获取地址：zikwq&#x2F;FPGA_prj: FPGA_prj (github.com) VGA介绍1. 背景VGA(视频图形阵列)，是一种电脑显示标准，是IBM在1987年提出的一个使用类比讯号的电脑显示标准。个人电脑在加载自己独特的驱动程序之前，都必须支持VGA的标准，绝大多数显卡都带有这种接口。 说到VGA接口，相信很多朋友都不会陌生，因为这种接">
+<meta property="og:description" content="实验结果1  仿真波形  所有工程文件均已开源，获取地址：zikwq&#x2F;FPGA_prj: FPGA_prj (github.com) VGA介绍1. 背景VGA(视频图形阵列)，是一种电脑显示标准，是IBM在1987年提出的一个使用类比讯号的电脑显示标准。个人电脑在加载自己独特的驱动程序之前，都必须支持VGA的标准，绝大多数显卡都带有这种接口。 说到VGA接口，相信很多朋友都不会陌生，因">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504182942.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png%E4%BB%BF%E7%9C%9F%E6%B3%A2%E5%BD%A2">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504174047.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504174547.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504182633.png">
@@ -40,8 +40,8 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504184250.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504184444.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504184723.png">
-<meta property="article:published_time" content="2024-05-04T11:08:36.289Z">
-<meta property="article:modified_time" content="2024-05-04T11:08:36.289Z">
+<meta property="article:published_time" content="2024-05-04T11:17:17.638Z">
+<meta property="article:modified_time" content="2024-05-04T11:17:17.638Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504182942.png">
@@ -101,7 +101,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki">文档</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/FPGA/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html">FPGA</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-04T11:08:36.289Z">2024-05-04</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-04T11:17:17.638Z">2024-05-04</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -114,7 +114,7 @@
   </div>
   </div><article class="md-text content"><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504182942.png" alt="实验结果1"/><a class="image-download blur" style="opacity:0" target="_blank" download="实验结果1" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504182942.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">实验结果1</span></div></div>
 
-<div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png仿真波形"/><a class="image-download blur" style="opacity:0" target="_blank" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div></div>
+<div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png" alt="仿真波形"/><a class="image-download blur" style="opacity:0" target="_blank" download="仿真波形" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240504190807.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">仿真波形</span></div></div>
 
 <p>所有工程文件均已开源，获取地址：<a target="_blank" rel="noopener" href="https://github.com/zikwq/FPGA_prj">zikwq&#x2F;FPGA_prj: FPGA_prj (github.com)</a></p>
 <h1 id="VGA介绍"><a href="#VGA介绍" class="headerlink" title="VGA介绍"></a>VGA介绍</h1><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>VGA(视频图形阵列)，是一种电脑显示标准，是IBM在1987年提出的一个使用类比讯号的电脑显示标准。个人电脑在加载自己独特的驱动程序之前，都必须支持VGA的标准，绝大多数显卡都带有这种接口。</p>
