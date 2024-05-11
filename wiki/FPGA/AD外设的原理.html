@@ -20,20 +20,24 @@
   <title>FPGA：AD外设的原理 - quincy的日记</title>
 
   
-    <meta name="description" content="1. 简介在本节视频中，我们主要来介绍AD（Analog to digital）外设，中文名叫做模拟转数字，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。 因为我们知道，对于任意一个波形或者任意一个物理世界中存在的信号来说，它都不是一个数字信号而是一个实实在在的模拟信号。而模拟信号通过AD芯片可以量化成我们的数字信号 2. AD的基">
+    <meta name="description" content="1. 简介及前言1.1 简介我们主要来介绍AD（Analog to digital）外设，中文名叫做模拟转数字，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。 因为我们知道，对于任意一个波形或者任意一个物理世界中存在的信号来说，它都不是一个数字信号而是一个实实在在的模拟信号。而模拟信号通过AD芯片可以量化成我们的数字信号 将模拟信号">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AD外设的原理">
 <meta property="og:url" content="http://example.com/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html">
 <meta property="og:site_name" content="quincy的日记">
-<meta property="og:description" content="1. 简介在本节视频中，我们主要来介绍AD（Analog to digital）外设，中文名叫做模拟转数字，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。 因为我们知道，对于任意一个波形或者任意一个物理世界中存在的信号来说，它都不是一个数字信号而是一个实实在在的模拟信号。而模拟信号通过AD芯片可以量化成我们的数字信号 2. AD的基">
+<meta property="og:description" content="1. 简介及前言1.1 简介我们主要来介绍AD（Analog to digital）外设，中文名叫做模拟转数字，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。 因为我们知道，对于任意一个波形或者任意一个物理世界中存在的信号来说，它都不是一个数字信号而是一个实实在在的模拟信号。而模拟信号通过AD芯片可以量化成我们的数字信号 将模拟信号">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511155528.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511150253.png">
-<meta property="article:published_time" content="2024-05-11T07:15:42.143Z">
-<meta property="article:modified_time" content="2024-05-11T07:15:42.143Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154725.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154825.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.drawio.png">
+<meta property="article:published_time" content="2024-05-11T11:27:07.570Z">
+<meta property="article:modified_time" content="2024-05-11T11:27:07.570Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511155528.png">
   
   
   
@@ -73,11 +77,11 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper post-list"><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/RS485%E4%B8%B2%E5%8F%A3%E5%8D%8F%E8%AE%AE.html#start"><span class="toc-text">RS485串口协议</span></a><a class="link" href="/wiki/FPGA/%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%8EDDR3.html"><span class="toc-text">摄像头与DDR3</span></a><a class="link" href="/wiki/FPGA/%E6%97%B6%E5%BA%8F%E7%BA%A6%E6%9D%9F.html"><span class="toc-text">时序约束</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AD%A6%E4%B9%A0.html"><span class="toc-text">高速接口的学习</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html"><span class="toc-text">状态机相关知识</span></a><a class="link" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="toc-text">以太网通信</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E5%85%89%E9%80%9A%E4%BF%A1%E9%A1%B9%E7%9B%AE.html"><span class="toc-text">高速光通信项目</span></a><a class="link" href="/wiki/FPGA/demo/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">HDMI显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="toc-text">电路的动态特性</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="toc-text">数字电路基础</span></a><a class="link" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="toc-text">笔试题目汇总</span></a><a class="link" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="toc-text">ROM、RAM、FIFO知识点整理、区分、应用案例</span></a><a class="link" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="toc-text">为什么时序逻辑需要滞后一个时钟周期</span></a><a class="link" href="/wiki/FPGA/demo/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">VGA显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/demo/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html"><span class="toc-text">VGA显示器驱动--字符游走</span></a><a class="link" href="/wiki/FPGA/demo/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="toc-text">锁存器和触发器的理解与整理</span></a><a class="link" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link active" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="toc-text">AD外设的原理</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/RS485%E4%B8%B2%E5%8F%A3%E5%8D%8F%E8%AE%AE.html#start"><span class="toc-text">RS485串口协议</span></a><a class="link" href="/wiki/FPGA/%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%8EDDR3.html"><span class="toc-text">摄像头与DDR3</span></a><a class="link" href="/wiki/FPGA/%E6%97%B6%E5%BA%8F%E7%BA%A6%E6%9D%9F.html"><span class="toc-text">时序约束</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AD%A6%E4%B9%A0.html"><span class="toc-text">高速接口的学习</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html"><span class="toc-text">状态机相关知识</span></a><a class="link" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="toc-text">以太网通信</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E5%85%89%E9%80%9A%E4%BF%A1%E9%A1%B9%E7%9B%AE.html"><span class="toc-text">高速光通信项目</span></a><a class="link" href="/wiki/FPGA/demo/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">HDMI显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="toc-text">电路的动态特性</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="toc-text">数字电路基础</span></a><a class="link" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="toc-text">笔试题目汇总</span></a><a class="link" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="toc-text">ROM、RAM、FIFO知识点整理、区分、应用案例</span></a><a class="link" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="toc-text">为什么时序逻辑需要滞后一个时钟周期</span></a><a class="link" href="/wiki/FPGA/demo/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">VGA显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/demo/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html"><span class="toc-text">VGA显示器驱动--字符游走</span></a><a class="link" href="/wiki/FPGA/demo/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="toc-text">锁存器和触发器的理解与整理</span></a><a class="link" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link active" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="toc-text">AD外设的原理</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/FPGA/FPGA%E4%B8%8ECPLD%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB.html"><span class="toc-text">FPGA与CPLD的区别与联系</span></a></div></widget>
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>AD外设的原理</span></a><a class="item title" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>笔试题目汇总</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数字电路基础</span></a><a class="item title" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>以太网通信</span></a><a class="item title" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>电路的动态特性</span></a><a class="item title" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>基于ROM的VGA图像显示</span></a><a class="item title" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>基于ROM的VGA图像显示</span></a><a class="item title" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>为什么时序逻辑需要滞后一个时钟周期</span></a><a class="item title" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>ROM、RAM、FIFO知识点整理、区分、应用案例</span></a><a class="item title" href="/wiki/FPGA/demo/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>VGA显示器驱动--字符游走</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/FPGA/FPGA%E4%B8%8ECPLD%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>FPGA与CPLD的区别与联系</span></a><a class="item title" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>AD外设的原理</span></a><a class="item title" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>笔试题目汇总</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数字电路基础</span></a><a class="item title" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>以太网通信</span></a><a class="item title" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>电路的动态特性</span></a><a class="item title" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>基于ROM的VGA图像显示</span></a><a class="item title" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>基于ROM的VGA图像显示</span></a><a class="item title" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>为什么时序逻辑需要滞后一个时钟周期</span></a><a class="item title" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>ROM、RAM、FIFO知识点整理、区分、应用案例</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/zikwq" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/github-logo2.png"/></a><a class="social" href="https://space.bilibili.com/500610348" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/bilibili-icon.png"/></a><a class="social" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/38eb2fb5178a08723f3f1dd2974fd73.jpg" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/weChat.png"/></a><a class="social" href="javaScript:void('永夜');" rel="noopener noreferrer"><img class="lazy" id="ThemeM" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Moon.png"/></a><a class="social" href="javaScript:void('永昼');" rel="noopener noreferrer"><img class="lazy" id="ThemeL" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Sun.png"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -90,7 +94,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki">文档</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/FPGA/RS485%E4%B8%B2%E5%8F%A3%E5%8D%8F%E8%AE%AE.html">FPGA</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-11T07:15:42.143Z">2024-05-11</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-11T11:27:07.570Z">2024-05-11</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -101,39 +105,211 @@
     </div>
     
   </div>
-  </div><article class="md-text content"><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>在本节视频中，我们主要来介绍AD（Analog to digital）外设，中文名叫做<strong>模拟转数字</strong>，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。</p>
+  </div><article class="md-text content"><h1 id="1-简介及前言"><a href="#1-简介及前言" class="headerlink" title="1. 简介及前言"></a>1. 简介及前言</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p>我们主要来介绍AD（Analog to digital）外设，中文名叫做<strong>模拟转数字</strong>，主要用于实现从物理的连续模拟信号转变为在芯片中传输的离散数字信号，例如实现一个示波器的、信号采集器等都至关重要。</p>
 <p>因为我们知道，对于任意一个波形或者任意一个物理世界中存在的信号来说，它都不是一个数字信号而是一个实实在在的模拟信号。而模拟信号通过AD芯片可以量化成我们的数字信号</p>
+<p>将模拟信号转变为数字信号的电子元件或者电路，将经过与标准量比较处理后的模拟量转换为以二进制数值表示的离散信号。模拟信号向数字信号转换过程一般分为四个步骤：<strong>采样、保持、量化、编码</strong>。采样与保持，一般是在电路中弯沉，而量化和编码则需要我们这里的AD芯片</p>
+<p>常用的AD芯片的种类及结构有很多中类型：逐次逼近型、流水线型、闪速、积分型、压频、智能等转换器</p>
+<p>AD的外围电路也与很多：信号调理电路、电压基准电路等</p>
+<p>关于很多原理，就需要参考书籍进行学习，例如这里参考的就是《常用A&#x2F;D、D&#x2F;A器件手册》，是我在实验室的书架中看到的一本书</p>
+<h2 id="1-2-前言"><a href="#1-2-前言" class="headerlink" title="1.2 前言"></a>1.2 前言</h2><p>不同的产品尽管在性能指标及体系结构上与差异，但市场上绝大多数的器件都是针对通用领域来设计的，从用户的角度上来讲，不仅价格昂贵，而且很难做选择。</p>
+<p><strong>按照领域细分：</strong>随着工业制造工艺的进步，使得为专门应用设计的器件成为可能。最明显的领域如多媒体数字信号编解码器（CODEC），这一设计针对音频领域专门涉及到高性能数据转换器件。采用$I^2S$接口传输音频数据，采用$I^2C总线作为控制总线等。</p>
+<p><strong>高速度</strong>：这种趋势在两个领域应用中十分明显：一个是软件无线电，另一个是示波器及信号分析设备。所谓软件无线电，就是采用数字信号处理的技术，在可编程控制的通用硬件平台上，利用软件来定义实现无线电台的各部分功能，包括：前端接收、中频处理以及信号的基带处理等。</p>
+<p><strong>高精度</strong>：Σ-Δ型ADC（也称为过采样转换器）是一种高精度的转换器，它采用增量编码方式进行量化编码，最高分辨率达到24位，通过模拟Σ-Δ调制器和数字抽取滤波器来实现高分辨率的数字信号转换。此外，流水线型ADC也是一种高效且强大的模数转换器，它能够提供高速、高分辨率的模数转换，并且具有低功率消耗和较小的芯片尺寸。</p>
+<p><strong>SoC技术的应用及智能转换器：</strong>片上系统（SoC）已经称为继承电路发展的去世。大部分传感器需要进行信号调整以消除潜在的测量误差。这些误差包括增益和偏移误差、环境或固有噪声以及传感器自身传递函数的非线性。这些要求使得A&#x2F;D转换器本身要做的事情不仅是从模拟信号到数字信号的转换，可能还需要完成信号调理、补偿、误差修正、数据格式转换、提供激励源或偏置，甚至在片上系统上集成一个控制器。从用户的角度来看，它们是带有A&#x2F;D转换器及D&#x2F;A转换器的处理器。从数据的角度来看，它们是基于SoC技术的集成了处理器的A&#x2F;D转换器，可以把他们称为“<strong>智能A&#x2F;D转换器</strong>”</p>
 <h1 id="2-AD的基本概述"><a href="#2-AD的基本概述" class="headerlink" title="2. AD的基本概述"></a>2. AD的基本概述</h1><p>从AD的名字可以看出，AD就是将时间连续、幅值也连续的模拟量转换成时间离散、幅值也离散的数字信号。</p>
-<h1 id="3-AD的通信协议"><a href="#3-AD的通信协议" class="headerlink" title="3. AD的通信协议"></a>3. AD的通信协议</h1><h1 id="4-TLC549-AD串行芯片的实战"><a href="#4-TLC549-AD串行芯片的实战" class="headerlink" title="4. TLC549_AD串行芯片的实战"></a>4. TLC549_AD串行芯片的实战</h1><p>它以8位开关电容<strong>逐次逼近型</strong>([1])的方法实现AD转换，其内部具有4MHZ的系统时钟，转换速度小于17us，它允许的最大转换速率为40_000次&#x2F;s，电源为3V-6V，能方便地采用<strong>三线串行接口</strong>方式与各种微处理器进行链连接</p>
-<div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png" alt="TLC549引脚图"/><a class="image-download blur" style="opacity:0" target="_blank" download="TLC549引脚图" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">TLC549引脚图</span></div></div>
+<h1 id="3-AD的通信协议"><a href="#3-AD的通信协议" class="headerlink" title="3. AD的通信协议"></a>3. AD的通信协议</h1><p>TLC549内部具有4MHZ的系统时钟，并且该时钟域I&#x2F;O CLOCK是独立工作的，所以我们无需特殊的速度或相位匹配就可以进行时序的操作</p>
+<h2 id="3-1-AD时序图"><a href="#3-1-AD时序图" class="headerlink" title="3.1 AD时序图"></a>3.1 AD时序图</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511155528.png" alt="AD时序图"/><a class="image-download blur" style="opacity:0" target="_blank" download="AD时序图" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511155528.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">AD时序图</span></div></div>
 
-<h2 id="4-1-引脚含义如下："><a href="#4-1-引脚含义如下：" class="headerlink" title="4.1 引脚含义如下："></a>4.1 引脚含义如下：</h2><ul>
-<li><p>**REF+**：正<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9F%BA%E5%87%86%E7%94%B5%E5%8E%8B/442278?fromModule=lemma_inlink">基准电压</a>输入 2.5V≤REF+≤Vcc+0.1。</p>
+<p>在这里我们需要注意几个问题：</p>
+<ol>
+<li>当CS为高时，转换结果输出串行输出端DATA OUT处于高阻状态，此时I&#x2F;O CLOCK不起作用</li>
+<li>当CS为低时，AD前一次转换数据A的最高位A7立即出现在数据线DATA OUT上，其余的7位数据在I&#x2F;O CLOCK的下降沿一次由时钟同步输出。因此可在I&#x2F;O CLOCK的上升沿读取数据。</li>
+<li>当CS变为低电平到I&#x2F;O CLOCK的第一个时钟到来至少需要1.4us。</li>
+<li>I&#x2F;O CLOCK不能超过1.1MHZ。</li>
+<li>读完8位数据，AD开始转换这次的采样数据，以便下一次读取。转换时片选信号CS必须置高电平，每次转换时间不超过17us，开始于CS变为低电平后I&#x2F;O CLOSK的第8个下降沿，没有转换完成标志信号；也没有启动控制端，只要读取前一次数据后马上开始新的AD转换，转换完成之后进入保持状态。</li>
+</ol>
+<h1 id="4-TLC549-AD串行芯片的实战"><a href="#4-TLC549-AD串行芯片的实战" class="headerlink" title="4. TLC549_AD串行芯片的实战"></a>4. TLC549_AD串行芯片的实战</h1><p>它以8位开关电容<strong>逐次逼近型</strong>[^1]的方法实现AD转换，其内部具有4MHZ的系统时钟，转换速度小于17us，它允许的最大转换速率为40_000次&#x2F;s，电源为3V-6V，能方便地采用<strong>三线串行接口</strong>方式与各种微处理器进行链连接</p>
+<h2 id="4-1-引脚含义如下："><a href="#4-1-引脚含义如下：" class="headerlink" title="4.1 引脚含义如下："></a>4.1 引脚含义如下：</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png" alt="TLC549引脚图"/><a class="image-download blur" style="opacity:0" target="_blank" download="TLC549引脚图" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511145735.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">TLC549引脚图</span></div></div>
+
+<ul>
+<li><p>**REF+**：正基准电压输入 2.5V≤REF+≤Vcc+0.1。</p>
 </li>
 <li><p><strong>REF－</strong>：负基准电压输入端，-0.1V≤REF-≤2.5V。且要求：（REF+）－（REF-）≥1V。</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/VCC/269657?fromModule=lemma_inlink"><strong>VCC</strong></a>：系统电源3V≤<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Vcc/269657?fromModule=lemma_inlink">Vcc</a>≤6V。</p>
+<li><p><strong>VCC</strong>：系统电源3V≤Vcc≤6V。</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/GND/13872188?fromModule=lemma_inlink">GND</a>：接地端。</p>
+<li><p><strong>GND</strong>：接地端。</p>
 </li>
-<li><p><strong>&#x2F;CS</strong>：芯片选择输入端，要求输入<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%AB%98%E7%94%B5%E5%B9%B3/9753092?fromModule=lemma_inlink">高电平</a> VIN≥2V，输入<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%BD%8E%E7%94%B5%E5%B9%B3/6946314?fromModule=lemma_inlink">低电平</a> VIN≤0.8V。</p>
+<li><p><strong>&#x2F;CS</strong>：芯片选择输入端，要求输入高电平 VIN≥2V，输入低电平 VIN≤0.8V。</p>
 </li>
 <li><p><strong>DATA OUT</strong>：转换结果数据串行输出端，与 TTL 电平兼容，输出时高位在前，低位在后。</p>
 </li>
-<li><p><strong>ANALOGIN</strong>：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7/0?fromModule=lemma_inlink">模拟信号</a>输入端，0≤ANALOGIN≤Vcc，当 ANALOGIN≥REF+电压时，转换结果为全“1”(0FFH)，ANALOGIN≤REF-电压时，转换结果为全“0”(00H)。</p>
+<li><p><strong>ANALOGIN</strong>：模拟信号输入端，0≤ANALOGIN≤Vcc，当 ANALOGIN≥REF+电压时，转换结果为全“1”(0FFH)，ANALOGIN≤REF-电压时，转换结果为全“0”(00H)。</p>
 </li>
-<li><p><strong><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/I/O/84718?fromModule=lemma_inlink">I&#x2F;O</a> CLOCK</strong>：外接输入&#x2F;输出<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%97%B6%E9%92%9F/69960?fromModule=lemma_inlink">时钟</a>输入端，同于同步芯片的输入输出操作，无需与芯片内部系统<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5/0?fromModule=lemma_inlink">时钟同步</a>。</p>
+<li><p><strong>I&#x2F;O CLOCK</strong>：外接输入&#x2F;输出时钟输入端，同于同步芯片的输入输出操作，无需与芯片内部系统时钟同步。</p>
 </li>
 </ul>
 <h2 id="4-2-芯片连接原理"><a href="#4-2-芯片连接原理" class="headerlink" title="4.2 芯片连接原理"></a>4.2 芯片连接原理</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511150253.png" alt="芯片连接原理图"/><a class="image-download blur" style="opacity:0" target="_blank" download="芯片连接原理图" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511150253.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">芯片连接原理图</span></div></div>
 
 <p>芯片手册及实验解析文档链接如下：</p>
 <p><a target="_blank" rel="noopener" href="https://zikwq.lanzout.com/b00rn1bf8h">https://zikwq.lanzout.com/b00rn1bf8h</a><br>密码:9q6b</p>
-<h1 id="5-3PA1030双路高速AD并行芯片的实战"><a href="#5-3PA1030双路高速AD并行芯片的实战" class="headerlink" title="5. 3PA1030双路高速AD并行芯片的实战"></a>5. 3PA1030双路高速AD并行芯片的实战</h1><h1 id="6-常见的其他AD芯片知识汇总"><a href="#6-常见的其他AD芯片知识汇总" class="headerlink" title="6. 常见的其他AD芯片知识汇总"></a>6. 常见的其他AD芯片知识汇总</h1><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote>
-<p>[1]:书籍：常用A&#x2F;D、D&#x2F;A器件手册	“张志刚主编”</p>
+<h2 id="4-3-逐次逼近型原理"><a href="#4-3-逐次逼近型原理" class="headerlink" title="4.3 逐次逼近型原理"></a>4.3 逐次逼近型原理</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154725.png" alt="20240511154725"/><a class="image-download blur" style="opacity:0" target="_blank" download="20240511154725" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154725.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">20240511154725</span></div></div>
+
+<h2 id="4-4量化电平"><a href="#4-4量化电平" class="headerlink" title="4.4量化电平"></a>4.4量化电平</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154825.png" alt="20240511154825"/><a class="image-download blur" style="opacity:0" target="_blank" download="20240511154825" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240511154825.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">20240511154825</span></div></div>
+
+<h2 id="4-5-代码模块"><a href="#4-5-代码模块" class="headerlink" title="4.5 代码模块"></a>4.5 代码模块</h2><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.drawio.png" alt="TCL框图"/><a class="image-download blur" style="opacity:0" target="_blank" download="TCL框图" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%BB%98%E5%9B%BE.drawio.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">TCL框图</span></div></div>
+
+<p>框图针对FPGA设计，其中data为AD的输出数据，也就是FPGA的输入端</p>
+<pre><div class="caption"><span>TCL549.v</span></div><code class="hljs verilog"><span class="hljs-keyword">module</span> TLC549(
+                clk,  <span class="hljs-comment">//系统输入时钟</span>
+                ioclk,<span class="hljs-comment">//AD驱动时钟</span>
+                data, <span class="hljs-comment">//TLC549的数据串行输出端，相对于FPGA为输入</span>
+                cs,   <span class="hljs-comment">//AD片选信号</span>
+                rst_n,<span class="hljs-comment">//系统复位</span>
+                segdata,<span class="hljs-comment">//数码管段选</span>
+                segcs<span class="hljs-comment">//数码管位选</span>
+             );
+<span class="hljs-keyword">input</span> clk;
+<span class="hljs-keyword">input</span> data;
+<span class="hljs-keyword">input</span> rst_n;
+
+<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> cs;
+<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> ioclk;
+<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]segdata;
+<span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> [<span class="hljs-number">2</span>:<span class="hljs-number">0</span>]segcs;
+
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] count;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">24</span>:<span class="hljs-number">0</span>]count1ms;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">3</span>:<span class="hljs-number">0</span>] cnt;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">2</span>:<span class="hljs-number">0</span>]number;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] state;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]dataout;
+<span class="hljs-keyword">reg</span>[<span class="hljs-number">15</span>:<span class="hljs-number">0</span>]tenvalue;
+<span class="hljs-keyword">reg</span> clk1ms;
+
+<span class="hljs-keyword">parameter</span> sample=<span class="hljs-number">2&#x27;b00</span>,
+          display=<span class="hljs-number">2&#x27;b01</span>;
+
+<span class="hljs-comment">//-----------数据采集时钟-----------</span>
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> clk)
+  <span class="hljs-keyword">begin</span>
+    <span class="hljs-keyword">if</span>(count&lt;<span class="hljs-number">16&#x27;d1000</span>)   
+      count&lt;=count+<span class="hljs-number">1&#x27;b1</span>;    
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">begin</span> 
+      count&lt;=<span class="hljs-number">0</span>; 
+      ioclk&lt;=~ioclk; 
+      <span class="hljs-keyword">end</span>
+ <span class="hljs-keyword">end</span>
+
+<span class="hljs-comment">//-----------数码管驱动时钟-----------</span>
+ <span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> clk)
+  <span class="hljs-keyword">begin</span> 
+    <span class="hljs-keyword">if</span>(count1ms&gt;<span class="hljs-number">25&#x27;d1000_0</span>)
+      <span class="hljs-keyword">begin</span>
+      clk1ms&lt;=~clk1ms;
+      count1ms&lt;=<span class="hljs-number">0</span>;
+      <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">else</span>
+      count1ms&lt;=count1ms+<span class="hljs-number">1</span>;
+  <span class="hljs-keyword">end</span>
+  
+<span class="hljs-comment">//-----------AD数据采集-----------</span>
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">negedge</span> ioclk)
+   <span class="hljs-keyword">begin</span>
+     <span class="hljs-keyword">case</span>(state)
+        sample:
+            <span class="hljs-keyword">begin</span>
+                cs&lt;=<span class="hljs-number">0</span>;
+                dataout[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]&lt;=&#123;dataout[<span class="hljs-number">6</span>:<span class="hljs-number">0</span>],data&#125;; 
+                <span class="hljs-keyword">if</span>(cnt&gt;<span class="hljs-number">4&#x27;d7</span>) 
+                    <span class="hljs-keyword">begin</span>
+                        cnt&lt;=<span class="hljs-number">0</span>;
+                        state&lt;=display;  
+                    <span class="hljs-keyword">end</span>  
+                <span class="hljs-keyword">else</span>
+                    <span class="hljs-keyword">begin</span>
+                        cnt&lt;=cnt+<span class="hljs-number">1</span>;
+                        state&lt;=sample;
+                    <span class="hljs-keyword">end</span>
+            <span class="hljs-keyword">end</span>
+       display:
+          <span class="hljs-keyword">begin</span>
+                cs&lt;=<span class="hljs-number">1</span>;
+                tenvalue&lt;=(dataout * <span class="hljs-number">1000</span> * <span class="hljs-number">25</span> )/<span class="hljs-number">256</span>;
+                state&lt;=sample;
+          <span class="hljs-keyword">end</span>
+      <span class="hljs-keyword">default</span>: state&lt;=display;
+    <span class="hljs-keyword">endcase</span>
+  <span class="hljs-keyword">end</span>
+
+<span class="hljs-comment">//-----------数码管译码-----------</span>
+<span class="hljs-keyword">function</span>[<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] leddata;
+<span class="hljs-keyword">input</span>[<span class="hljs-number">3</span>:<span class="hljs-number">0</span>]    datain;
+<span class="hljs-keyword">begin</span>
+  <span class="hljs-keyword">case</span>(datain)
+    <span class="hljs-number">4&#x27;d0</span>: leddata=<span class="hljs-number">8&#x27;b11000000</span>;<span class="hljs-comment">//0</span>
+    <span class="hljs-number">4&#x27;d1</span>: leddata=<span class="hljs-number">8&#x27;b11111001</span>;<span class="hljs-comment">//1</span>
+     <span class="hljs-number">4&#x27;d2</span>: leddata=<span class="hljs-number">8&#x27;b10100100</span>;<span class="hljs-comment">//2</span>
+    <span class="hljs-number">4&#x27;d3</span>: leddata=<span class="hljs-number">8&#x27;b10110000</span>;<span class="hljs-comment">//3</span>
+    <span class="hljs-number">4&#x27;d4</span>: leddata=<span class="hljs-number">8&#x27;b10011001</span>;<span class="hljs-comment">//4</span>
+    <span class="hljs-number">4&#x27;d5</span>: leddata=<span class="hljs-number">8&#x27;b10010010</span>;<span class="hljs-comment">//5</span>
+    <span class="hljs-number">4&#x27;d6</span>: leddata=<span class="hljs-number">8&#x27;b10000010</span>;<span class="hljs-comment">//6</span>
+    <span class="hljs-number">4&#x27;d7</span>: leddata=<span class="hljs-number">8&#x27;b11111000</span>;<span class="hljs-comment">//7</span>
+    <span class="hljs-number">4&#x27;d8</span>: leddata=<span class="hljs-number">8&#x27;b10000000</span>;<span class="hljs-comment">//8</span>
+    <span class="hljs-number">4&#x27;d9</span>: leddata=<span class="hljs-number">8&#x27;b10010000</span>;<span class="hljs-comment">//9</span>
+    <span class="hljs-number">4&#x27;d10</span>: leddata=<span class="hljs-number">8&#x27;b10111111</span>;<span class="hljs-comment">//-</span>
+    <span class="hljs-number">4&#x27;d11</span>: leddata=<span class="hljs-number">8&#x27;b01111111</span>;<span class="hljs-comment">//.</span>
+    <span class="hljs-keyword">default</span>:leddata=<span class="hljs-number">8&#x27;bzzzz_zzzz</span>;
+   <span class="hljs-keyword">endcase</span>
+<span class="hljs-keyword">end</span>
+<span class="hljs-keyword">endfunction</span>
+
+<span class="hljs-comment">//-----------数码管扫描-----------</span>
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> clk1ms)
+ <span class="hljs-keyword">begin</span>
+    <span class="hljs-keyword">if</span>(number==<span class="hljs-number">4</span>) number&lt;=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">else</span> 
+    <span class="hljs-keyword">begin</span> 
+        number&lt;=number+<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">case</span>(number) 
+         <span class="hljs-number">4&#x27;d0</span>:
+            <span class="hljs-keyword">begin</span>
+                segdata&lt;=leddata((tenvalue/<span class="hljs-number">10</span>)%<span class="hljs-number">10</span>);<span class="hljs-comment">//个位	        </span>
+                segcs&lt;=<span class="hljs-number">3&#x27;b011</span>;
+            <span class="hljs-keyword">end</span>
+         <span class="hljs-number">4&#x27;d1</span>:
+            <span class="hljs-keyword">begin</span>
+                segdata&lt;=leddata((tenvalue/<span class="hljs-number">100</span>)%<span class="hljs-number">10</span>);<span class="hljs-comment">//十位	       </span>
+                segcs&lt;=<span class="hljs-number">3&#x27;b010</span>;
+            <span class="hljs-keyword">end</span>
+         <span class="hljs-number">4&#x27;d2</span>:
+            <span class="hljs-keyword">begin</span>
+                segdata&lt;=leddata((tenvalue/<span class="hljs-number">1000</span>)%<span class="hljs-number">10</span>); <span class="hljs-comment">//百位	       </span>
+                segcs&lt;=<span class="hljs-number">3&#x27;b001</span>;
+            <span class="hljs-keyword">end</span>
+         <span class="hljs-number">4&#x27;d3</span>:
+            <span class="hljs-keyword">begin</span>
+                segdata&lt;=leddata(tenvalue/<span class="hljs-number">10000</span>);<span class="hljs-comment">//千位	       </span>
+                segcs&lt;=<span class="hljs-number">3&#x27;b000</span>;
+            <span class="hljs-keyword">end</span>
+        <span class="hljs-keyword">endcase</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>    
+ 
+<span class="hljs-keyword">endmodule</span>
+</code></pre>
+
+
+
+<h1 id="5-3PA1030双路高速AD并行芯片的实战"><a href="#5-3PA1030双路高速AD并行芯片的实战" class="headerlink" title="5. 3PA1030双路高速AD并行芯片的实战"></a>5. 3PA1030双路高速AD并行芯片的实战</h1><p>因为当前手中的一个开发板的I&#x2F;O口与正点原子的AD模块的IO口并不兼容，后面需要自己绘制一个转接板进行使用。我打算在转接板上添加一些其他的功能一起打印出来。所以暂时搁置一下</p>
+<p>当前内容后续补充</p>
+<h1 id="6-常见的其他AD芯片知识汇总"><a href="#6-常见的其他AD芯片知识汇总" class="headerlink" title="6. 常见的其他AD芯片知识汇总"></a>6. 常见的其他AD芯片知识汇总</h1><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><blockquote>
+<p>[1]. 书籍：常用A&#x2F;D、D&#x2F;A器件手册-张志刚主编-电子工业出版社出版</p>
+<p>[2]. <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/682927018">https://zhuanlan.zhihu.com/p/682927018</a></p>
 </blockquote>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html">基于ROM的VGA图像显示</a></div><div class="item" id="next"></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%20-%20%E5%89%AF%E6%9C%AC.html">基于ROM的VGA图像显示</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/FPGA/FPGA%E4%B8%8ECPLD%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB.html">FPGA与CPLD的区别与联系</a></div></section></div>
 
 
 
@@ -147,7 +323,7 @@
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="toc-text">1. 简介</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-text">2. AD的基本概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-AD%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-text">3. AD的通信协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-TLC549-AD%E4%B8%B2%E8%A1%8C%E8%8A%AF%E7%89%87%E7%9A%84%E5%AE%9E%E6%88%98"><span class="toc-text">4. TLC549_AD串行芯片的实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%BC%95%E8%84%9A%E5%90%AB%E4%B9%89%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">4.1 引脚含义如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E8%8A%AF%E7%89%87%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86"><span class="toc-text">4.2 芯片连接原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-3PA1030%E5%8F%8C%E8%B7%AF%E9%AB%98%E9%80%9FAD%E5%B9%B6%E8%A1%8C%E8%8A%AF%E7%89%87%E7%9A%84%E5%AE%9E%E6%88%98"><span class="toc-text">5. 3PA1030双路高速AD并行芯片的实战</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%85%B6%E4%BB%96AD%E8%8A%AF%E7%89%87%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB"><span class="toc-text">6. 常见的其他AD芯片知识汇总</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%89%8D%E8%A8%80"><span class="toc-text">1. 简介及前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-text">1.1 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%89%8D%E8%A8%80"><span class="toc-text">1.2 前言</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-text">2. AD的基本概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-AD%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-text">3. AD的通信协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-AD%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="toc-text">3.1 AD时序图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-TLC549-AD%E4%B8%B2%E8%A1%8C%E8%8A%AF%E7%89%87%E7%9A%84%E5%AE%9E%E6%88%98"><span class="toc-text">4. TLC549_AD串行芯片的实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%BC%95%E8%84%9A%E5%90%AB%E4%B9%89%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">4.1 引脚含义如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E8%8A%AF%E7%89%87%E8%BF%9E%E6%8E%A5%E5%8E%9F%E7%90%86"><span class="toc-text">4.2 芯片连接原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E9%80%90%E6%AC%A1%E9%80%BC%E8%BF%91%E5%9E%8B%E5%8E%9F%E7%90%86"><span class="toc-text">4.3 逐次逼近型原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4%E9%87%8F%E5%8C%96%E7%94%B5%E5%B9%B3"><span class="toc-text">4.4量化电平</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-%E4%BB%A3%E7%A0%81%E6%A8%A1%E5%9D%97"><span class="toc-text">4.5 代码模块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-3PA1030%E5%8F%8C%E8%B7%AF%E9%AB%98%E9%80%9FAD%E5%B9%B6%E8%A1%8C%E8%8A%AF%E7%89%87%E7%9A%84%E5%AE%9E%E6%88%98"><span class="toc-text">5. 3PA1030双路高速AD并行芯片的实战</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%85%B6%E4%BB%96AD%E8%8A%AF%E7%89%87%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB"><span class="toc-text">6. 常见的其他AD芯片知识汇总</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.46 1.25h3.08c1.603 0 2.86 0 3.864.095c1.023.098 1.861.3 2.6.752a5.75 5.75 0 0 1 1.899 1.899c.452.738.654 1.577.752 2.6c.095 1.004.095 2.261.095 3.865v1.067c0 1.141 0 2.036-.05 2.759c-.05.735-.153 1.347-.388 1.913a5.75 5.75 0 0 1-3.112 3.112c-.805.334-1.721.408-2.977.43a10.81 10.81 0 0 0-.929.036c-.198.022-.275.054-.32.08c-.047.028-.112.078-.224.232c-.121.166-.258.396-.476.764l-.542.916c-.773 1.307-2.69 1.307-3.464 0l-.542-.916a10.605 10.605 0 0 0-.476-.764c-.112-.154-.177-.204-.224-.232c-.045-.026-.122-.058-.32-.08c-.212-.023-.49-.03-.93-.037c-1.255-.021-2.171-.095-2.976-.429A5.75 5.75 0 0 1 1.688 16.2c-.235-.566-.338-1.178-.389-1.913c-.049-.723-.049-1.618-.049-2.76v-1.066c0-1.604 0-2.86.095-3.865c.098-1.023.3-1.862.752-2.6a5.75 5.75 0 0 1 1.899-1.899c.738-.452 1.577-.654 2.6-.752C7.6 1.25 8.857 1.25 10.461 1.25M6.739 2.839c-.914.087-1.495.253-1.959.537A4.25 4.25 0 0 0 3.376 4.78c-.284.464-.45 1.045-.537 1.96c-.088.924-.089 2.11-.089 3.761v1c0 1.175 0 2.019.046 2.685c.045.659.131 1.089.278 1.441a4.25 4.25 0 0 0 2.3 2.3c.515.214 1.173.294 2.429.316h.031c.398.007.747.013 1.037.045c.311.035.616.104.909.274c.29.17.5.395.682.645c.169.232.342.525.538.856l.559.944a.52.52 0 0 0 .882 0l.559-.944c.196-.331.37-.624.538-.856c.182-.25.392-.476.682-.645c.293-.17.598-.24.909-.274c.29-.032.639-.038 1.037-.045h.032c1.255-.022 1.913-.102 2.428-.316a4.25 4.25 0 0 0 2.3-2.3c.147-.352.233-.782.278-1.441c.046-.666.046-1.51.046-2.685v-1c0-1.651 0-2.837-.089-3.762c-.087-.914-.253-1.495-.537-1.959a4.25 4.25 0 0 0-1.403-1.403c-.464-.284-1.045-.45-1.96-.537c-.924-.088-2.11-.089-3.761-.089h-3c-1.651 0-2.837 0-3.762.089" clip-rule="evenodd"/><path fill="currentColor" d="M9 11a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>参与讨论</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
