@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-10T06:33:33.527Z</updated>
+  <updated>2024-05-12T08:13:36.927Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>都做梦了，还梦这么保守</title>
+    <link href="http://example.com/2024/05/12/%E9%83%BD%E5%81%9A%E6%A2%A6%E4%BA%86%EF%BC%8C%E8%BF%98%E6%A2%A6%E8%BF%99%E4%B9%88%E4%BF%9D%E5%AE%88/"/>
+    <id>http://example.com/2024/05/12/%E9%83%BD%E5%81%9A%E6%A2%A6%E4%BA%86%EF%BC%8C%E8%BF%98%E6%A2%A6%E8%BF%99%E4%B9%88%E4%BF%9D%E5%AE%88/</id>
+    <published>2024-05-12T07:50:20.572Z</published>
+    <updated>2024-05-12T08:13:36.927Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="这些天"><a href="#这些天" class="headerlink" title="这些天"></a>这些天</h2><p>现在，坐在实验室里面，从早上9:30来到实验室开的门，到现在，已经是下午4点整了。一天又要过去了，感觉什么也没有做，就是不知道这么长时间都在做什么，好像好几天都是这样。是不是真的该休息一下了。（弄完就去健身房溜达一圈，也两天没去了）</p><p>这些天，不对，是这段时间都挺累的，emm，也不算累吧，就是感觉比较空加上焦虑。第一就是找不到实习，有很大的挫败感，在实验室待了2年多，几乎把之前的那些娱乐项目全都扔弃了（足球、滑板等），然后吧咱就一直做项目，打比赛，拿奖项，但是到发挥它的作用的时候，竟然一个月给我三四千！！！我不能接受！！真的是“五千块钱的农民工招不到，三千块钱的本科生招一屋子”</p><p>另一个就是关于FPGA了，感觉还是差了点意思，但是现在一动脑子，不是脑子疼就是焦虑情绪涌上来。</p><p>这些天也总是做梦。大部分梦好像也都是在做一些关于FPGA的事情，咱就是说了，既然都是在做梦了，咋还梦这么保守~</p><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240512161127.png" alt="20240512161127"/><a class="image-download blur" style="opacity:0" target="_blank" download="20240512161127" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240512161127.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">20240512161127</span></div></div>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;这些天&quot;&gt;&lt;a href=&quot;#这些天&quot; class=&quot;headerlink&quot; title=&quot;这些天&quot;&gt;&lt;/a&gt;这些天&lt;/h2&gt;&lt;p&gt;现在，坐在实验室里面，从早上9:30来到实验室开的门，到现在，已经是下午4点整了。一天又要过去了，感觉什么也没有做，就是不知道这么长</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>关于“快餐式”的开发</title>
