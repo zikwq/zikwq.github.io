@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-13T11:51:19.861Z</updated>
+  <updated>2024-05-17T12:22:18.866Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>TO DO LIST</title>
+    <link href="http://example.com/2024/05/17/TO%20DO%20LIST/"/>
+    <id>http://example.com/2024/05/17/TO%20DO%20LIST/</id>
+    <published>2024-05-17T11:53:24.571Z</published>
+    <updated>2024-05-17T12:22:18.866Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="2024-5-18"><a href="#2024-5-18" class="headerlink" title="@2024.5.18"></a>@2024.5.18</h1><p>FPGA</p><ul><li><input disabled="" type="checkbox"> 复习ADC、DAC芯片，完成并行和串行芯片的驱动程序</li><li><input disabled="" type="checkbox"> 学习寄存器移位拼接的使用方法</li><li><input disabled="" type="checkbox"> 整理数字示波器中的程序，理解里面的程序以及FFT IP核的使用方法并编写博客文档进行记录</li><li><input disabled="" type="checkbox"> 完成串口协议的专栏分区部分：<a href="https://mp.weixin.qq.com/s/uupIQUnOyQzsdoPNOdLTDA">FPGA面试题系列018：常用通信协议</a></li><li><input disabled="" type="checkbox"> 小白视频传输上位机的学习使用</li></ul><p>生活</p><ul><li><input disabled="" type="checkbox"> 清洗一下自行车</li><li><input disabled="" type="checkbox"> 把宿舍的网线拿过来，准备开始以太网协议的设计与实战项目：FPGA通过UDP协议想PC端发送大量的数据，从PC端观察接收到的数据量</li></ul><h1 id="2024-5-17"><a href="#2024-5-17" class="headerlink" title="@2024.5.17"></a>@2024.5.17</h1><ul><li><p><input checked="" disabled="" type="checkbox"> 学习两个串口通信协议：IIC、 SPI</p></li><li><p><input checked="" disabled="" type="checkbox"> 整理桌面</p></li></ul>]]></content>
+    
+    
+    <summary type="html">每日计划</summary>
+    
+    
+    
+    <category term="blog" scheme="http://example.com/categories/blog/"/>
+    
+    
+    <category term="blog" scheme="http://example.com/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
     <title>AD学习笔记-快捷键</title>
-    <link href="http://example.com/2024/05/13/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0%20-%20%E5%89%AF%E6%9C%AC/"/>
-    <id>http://example.com/2024/05/13/%E5%8D%9A%E5%AE%A2%E5%AD%A6%E4%B9%A0%20-%20%E5%89%AF%E6%9C%AC/</id>
+    <link href="http://example.com/2024/05/13/AD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>http://example.com/2024/05/13/AD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
     <published>2024-05-13T05:11:21.298Z</published>
-    <updated>2024-05-13T11:51:19.861Z</updated>
+    <updated>2024-05-17T12:22:40.645Z</updated>
     
     <content type="html"><![CDATA[<table><thead><tr><th>快捷键</th><th>作用</th></tr></thead><tbody><tr><td>全选+A+P</td><td>控制元器件文本位置</td></tr><tr><td>I+L</td><td>交叉选择模式，在原理图中框选后可以在PCB中运动整个模块</td></tr><tr><td>F5</td><td>设置的焊盘颜色开关</td></tr><tr><td>N</td><td>关闭选择的飞线</td></tr><tr><td>Ctrl+D</td><td>显示设置</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table><p>高速PCB设计的时候，需要通过单端阻抗、差分阻抗来计算线宽线距。</p><p>计算网址：<a href="https://tools.jlc.com/jlcTools/index.html#/impedanceCalculateNew">嘉立创阻抗计算 (jlc.com)</a></p><p>PCB规则及约束编辑器</p><p>差分对的规则</p>]]></content>
     
