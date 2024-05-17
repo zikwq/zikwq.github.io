@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-17T12:22:18.866Z</updated>
+  <updated>2024-05-17T13:29:03.302Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://example.com/2024/05/17/TO%20DO%20LIST/"/>
     <id>http://example.com/2024/05/17/TO%20DO%20LIST/</id>
     <published>2024-05-17T11:53:24.571Z</published>
-    <updated>2024-05-17T12:22:18.866Z</updated>
+    <updated>2024-05-17T13:29:03.302Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="2024-5-18"><a href="#2024-5-18" class="headerlink" title="@2024.5.18"></a>@2024.5.18</h1><p>FPGA</p><ul><li><input disabled="" type="checkbox"> 复习ADC、DAC芯片，完成并行和串行芯片的驱动程序</li><li><input disabled="" type="checkbox"> 学习寄存器移位拼接的使用方法</li><li><input disabled="" type="checkbox"> 整理数字示波器中的程序，理解里面的程序以及FFT IP核的使用方法并编写博客文档进行记录</li><li><input disabled="" type="checkbox"> 完成串口协议的专栏分区部分：<a href="https://mp.weixin.qq.com/s/uupIQUnOyQzsdoPNOdLTDA">FPGA面试题系列018：常用通信协议</a></li><li><input disabled="" type="checkbox"> 小白视频传输上位机的学习使用</li></ul><p>生活</p><ul><li><input disabled="" type="checkbox"> 清洗一下自行车</li><li><input disabled="" type="checkbox"> 把宿舍的网线拿过来，准备开始以太网协议的设计与实战项目：FPGA通过UDP协议想PC端发送大量的数据，从PC端观察接收到的数据量</li></ul><h1 id="2024-5-17"><a href="#2024-5-17" class="headerlink" title="@2024.5.17"></a>@2024.5.17</h1><ul><li><p><input checked="" disabled="" type="checkbox"> 学习两个串口通信协议：IIC、 SPI</p></li><li><p><input checked="" disabled="" type="checkbox"> 整理桌面</p></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="2024-5-18"><a href="#2024-5-18" class="headerlink" title="@2024.5.18"></a>@2024.5.18</h1><p>FPGA</p><ul><li><input disabled="" type="checkbox"> 复习ADC、DAC芯片，完成并行和串行芯片的驱动程序</li><li><input disabled="" type="checkbox"> 学习寄存器移位拼接的使用方法：<a href="https://www.bilibili.com/video/BV1A44y1r7Zb/?spm_id_from=333.337.search-card.all.click">清风电子-数字基础</a></li><li><input disabled="" type="checkbox"> 整理数字示波器中的程序，理解里面的程序以及FFT IP核的使用方法并编写博客文档进行记录</li><li><input disabled="" type="checkbox"> 完成串口协议的专栏分区部分：<a href="https://mp.weixin.qq.com/s/uupIQUnOyQzsdoPNOdLTDA">FPGA面试题系列018：常用通信协议</a></li><li><input disabled="" type="checkbox"> 小白视频传输上位机的学习使用</li></ul><p>生活</p><ul><li><input disabled="" type="checkbox"> 清洗一下自行车</li><li><input disabled="" type="checkbox"> 把宿舍的网线拿过来，准备开始以太网协议的设计与实战项目：FPGA通过UDP协议想PC端发送大量的数据，从PC端观察接收到的数据量</li><li><input disabled="" type="checkbox"> 中午闹铃定时，去预约驾校班车准备练车，在不练车就毕业了！！</li></ul><h1 id="2024-5-17"><a href="#2024-5-17" class="headerlink" title="@2024.5.17"></a>@2024.5.17</h1><ul><li><p><input checked="" disabled="" type="checkbox"> 学习两个串口通信协议：IIC、 SPI</p></li><li><p><input checked="" disabled="" type="checkbox"> 整理桌面</p></li></ul>]]></content>
     
     
     <summary type="html">每日计划</summary>
