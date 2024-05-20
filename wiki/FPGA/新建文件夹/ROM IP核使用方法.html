@@ -17,22 +17,22 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9fafb">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   
-  <title>FPGA：差分对和差分信号 - quincy的日记</title>
+  <title>FPGA：ROM IP核使用方法 - quincy的日记</title>
 
   
-    <meta name="description" content="20240515142253 16px  差分信号是一种在电子学和通信中广泛使用的技术，它通过传输两个等幅、反相的信号来提高信号的抗干扰能力。下面是关于差分信号的基本原理、简介以及应用的详细解释： 基本原理差分信号的核心原理是利用两个信号之间的差异来传输信息，而不是单个信号的绝对值。在差分信号中，有两条线路，一条称为正信号（+），另一条称为负信号（-）。这两条线路上传输的信号是等幅的，但相位相反。">
+    <meta name="description" content="参考链接FPGA实验课8：ROM（IP核）使用实例_fpga的rom的ip如何调用-CSDN博客 Kimi人工智能 1. FPGA中位宽和深度的概念 位宽（Bit Width）： 想象一下，你有一条高速公路，这条高速公路有多个车道。位宽就是指这些车道的数量。比如，一个32位宽的寄存器就像是有32个车道的高速公路，可以同时让32辆车并排行驶。在FPGA中，位宽越大，意味着可以同时处理更多的数据，从而">
 <meta property="og:type" content="website">
-<meta property="og:title" content="差分对和差分信号">
-<meta property="og:url" content="http://example.com/wiki/FPGA/%E5%B7%AE%E5%88%86%E5%AF%B9%E5%92%8C%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7.html">
+<meta property="og:title" content="ROM IP核使用方法">
+<meta property="og:url" content="http://example.com/wiki/FPGA/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/ROM%20IP%E6%A0%B8%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html">
 <meta property="og:site_name" content="quincy的日记">
-<meta property="og:description" content="20240515142253 16px  差分信号是一种在电子学和通信中广泛使用的技术，它通过传输两个等幅、反相的信号来提高信号的抗干扰能力。下面是关于差分信号的基本原理、简介以及应用的详细解释： 基本原理差分信号的核心原理是利用两个信号之间的差异来传输信息，而不是单个信号的绝对值。在差分信号中，有两条线路，一条称为正信号（+），另一条称为负信号（-）。这两条线路上传输的信号是等幅的，但相位相反。">
+<meta property="og:description" content="参考链接FPGA实验课8：ROM（IP核）使用实例_fpga的rom的ip如何调用-CSDN博客 Kimi人工智能 1. FPGA中位宽和深度的概念 位宽（Bit Width）： 想象一下，你有一条高速公路，这条高速公路有多个车道。位宽就是指这些车道的数量。比如，一个32位宽的寄存器就像是有32个车道的高速公路，可以同时让32辆车并排行驶。在FPGA中，位宽越大，意味着可以同时处理更多的数据，从而">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515142253.png">
-<meta property="article:published_time" content="2024-05-15T06:29:30.920Z">
-<meta property="article:modified_time" content="2024-05-15T06:29:30.920Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240520201706.png">
+<meta property="article:published_time" content="2024-05-20T13:17:45.410Z">
+<meta property="article:modified_time" content="2024-05-20T13:17:45.410Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515142253.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240520201706.png">
   
   
   
@@ -74,7 +74,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">FPGA项目</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html#start"><span class="toc-text">VGA显示器驱动--字符游走</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%A4%BA%E6%B3%A2%E5%99%A8.html"><span class="toc-text">数字示波器</span></a></div><div class="widget-header dis-select"><span class="name">学习笔记</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="toc-text">AD外设的原理</span></a><a class="link" href="/wiki/FPGA/FPGA%E4%B8%8ECPLD%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB.html"><span class="toc-text">FPGA与CPLD的区别与联系</span></a><a class="link" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">VGA显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="toc-text">锁存器和触发器的理解与整理</span></a><a class="link" href="/wiki/FPGA/DDR3%E8%AF%BB%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="toc-text">DDR3读写控制器的设计与验证</span></a><a class="link active" href="/wiki/FPGA/%E5%B7%AE%E5%88%86%E5%AF%B9%E5%92%8C%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7.html"><span class="toc-text">差分对和差分信号</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div><div class="widget-header dis-select"><span class="name">待完成</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="toc-text">电路的动态特性</span></a><a class="link" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="toc-text">笔试题目汇总</span></a><a class="link" href="/wiki/FPGA/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">HDMI显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="toc-text">ROM、RAM、FIFO知识点整理、区分、应用案例</span></a><a class="link" href="/wiki/FPGA/RS485%E4%B8%B2%E5%8F%A3%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">RS485串口协议</span></a><a class="link" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="toc-text">为什么时序逻辑需要滞后一个时钟周期</span></a><a class="link" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="toc-text">以太网通信</span></a><a class="link" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E5%85%89%E9%80%9A%E4%BF%A1%E9%A1%B9%E7%9B%AE.html"><span class="toc-text">高速光通信项目</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AD%A6%E4%B9%A0.html"><span class="toc-text">高速接口的学习</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="toc-text">数字电路基础</span></a><a class="link" href="/wiki/FPGA/%E6%97%B6%E5%BA%8F%E7%BA%A6%E6%9D%9F.html"><span class="toc-text">时序约束</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html"><span class="toc-text">状态机相关知识</span></a><a class="link" href="/wiki/FPGA/%E8%87%AA%E5%AE%9A%E4%B9%89IP%E5%B0%81%E8%A3%85.html"><span class="toc-text">自定义IP封装</span></a><a class="link" href="/wiki/FPGA/FPGA%E5%AE%9E%E7%8E%B0CAN%E9%80%9A%E4%BF%A1.html"><span class="toc-text">FPGA实现CAN通信</span></a></div><div class="widget-header dis-select"><span class="name">...</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/I2C%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">I2C协议</span></a><a class="link" href="/wiki/FPGA/SPI%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">SPI协议</span></a><a class="link" href="/wiki/FPGA/%E5%B9%B6%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%BD%AC%E4%B8%BA%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE.html"><span class="toc-text">并行数据转为串行数据</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA.html"><span class="toc-text">数码管动态显示</span></a><a class="link" href="/wiki/FPGA/%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="toc-text">简易频率计的设计与验证</span></a><a class="link" href="/wiki/FPGA/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/ROM%20IP%E6%A0%B8%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html"><span class="toc-text">ROM IP核使用方法</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">FPGA项目</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html#start"><span class="toc-text">VGA显示器驱动--字符游走</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%A4%BA%E6%B3%A2%E5%99%A8.html"><span class="toc-text">数字示波器</span></a></div><div class="widget-header dis-select"><span class="name">学习笔记</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/AD%E5%A4%96%E8%AE%BE%E7%9A%84%E5%8E%9F%E7%90%86.html"><span class="toc-text">AD外设的原理</span></a><a class="link" href="/wiki/FPGA/FPGA%E4%B8%8ECPLD%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB.html"><span class="toc-text">FPGA与CPLD的区别与联系</span></a><a class="link" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">VGA显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="toc-text">锁存器和触发器的理解与整理</span></a><a class="link" href="/wiki/FPGA/DDR3%E8%AF%BB%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="toc-text">DDR3读写控制器的设计与验证</span></a><a class="link" href="/wiki/FPGA/%E5%B7%AE%E5%88%86%E5%AF%B9%E5%92%8C%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7.html"><span class="toc-text">差分对和差分信号</span></a></div><div class="widget-header dis-select"><span class="name">待完成</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html"><span class="toc-text">电路的动态特性</span></a><a class="link" href="/wiki/FPGA/%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E6%B1%87%E6%80%BB.html"><span class="toc-text">笔试题目汇总</span></a><a class="link" href="/wiki/FPGA/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="toc-text">HDMI显示器驱动设计</span></a><a class="link" href="/wiki/FPGA/ROM%E3%80%81RAM%E3%80%81FIFO%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%E3%80%81%E5%8C%BA%E5%88%86%E3%80%81%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B.html"><span class="toc-text">ROM、RAM、FIFO知识点整理、区分、应用案例</span></a><a class="link" href="/wiki/FPGA/RS485%E4%B8%B2%E5%8F%A3%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">RS485串口协议</span></a><a class="link" href="/wiki/FPGA/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E9%9C%80%E8%A6%81%E6%BB%9E%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F.html"><span class="toc-text">为什么时序逻辑需要滞后一个时钟周期</span></a><a class="link" href="/wiki/FPGA/%E4%BB%A5%E5%A4%AA%E7%BD%91%E9%80%9A%E4%BF%A1.html"><span class="toc-text">以太网通信</span></a><a class="link" href="/wiki/FPGA/%E5%9F%BA%E4%BA%8EROM%E7%9A%84VGA%E5%9B%BE%E5%83%8F%E6%98%BE%E7%A4%BA.html"><span class="toc-text">基于ROM的VGA图像显示</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E5%85%89%E9%80%9A%E4%BF%A1%E9%A1%B9%E7%9B%AE.html"><span class="toc-text">高速光通信项目</span></a><a class="link" href="/wiki/FPGA/%E9%AB%98%E9%80%9F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AD%A6%E4%B9%A0.html"><span class="toc-text">高速接口的学习</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E5%9F%BA%E7%A1%80.html"><span class="toc-text">数字电路基础</span></a><a class="link" href="/wiki/FPGA/%E6%97%B6%E5%BA%8F%E7%BA%A6%E6%9D%9F.html"><span class="toc-text">时序约束</span></a><a class="link" href="/wiki/FPGA/%E7%8A%B6%E6%80%81%E6%9C%BA%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html"><span class="toc-text">状态机相关知识</span></a><a class="link" href="/wiki/FPGA/%E8%87%AA%E5%AE%9A%E4%B9%89IP%E5%B0%81%E8%A3%85.html"><span class="toc-text">自定义IP封装</span></a><a class="link" href="/wiki/FPGA/FPGA%E5%AE%9E%E7%8E%B0CAN%E9%80%9A%E4%BF%A1.html"><span class="toc-text">FPGA实现CAN通信</span></a></div><div class="widget-header dis-select"><span class="name">...</span></div><div class="widget-body fs14"><a class="link" href="/wiki/FPGA/I2C%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">I2C协议</span></a><a class="link" href="/wiki/FPGA/SPI%E5%8D%8F%E8%AE%AE.html"><span class="toc-text">SPI协议</span></a><a class="link" href="/wiki/FPGA/%E5%B9%B6%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%BD%AC%E4%B8%BA%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE.html"><span class="toc-text">并行数据转为串行数据</span></a><a class="link" href="/wiki/FPGA/%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA.html"><span class="toc-text">数码管动态显示</span></a><a class="link" href="/wiki/FPGA/%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="toc-text">简易频率计的设计与验证</span></a><a class="link active" href="/wiki/FPGA/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/ROM%20IP%E6%A0%B8%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html"><span class="toc-text">ROM IP核使用方法</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
 
 
 
@@ -91,48 +91,208 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki">文档</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html">FPGA</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-15T06:29:30.920Z">2024-05-15</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-20T13:17:45.410Z">2024-05-20</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>差分对和差分信号</span></h1>
+        <h1 class="text title"><span>ROM IP核使用方法</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515142253.png" alt="20240515142253 16px"/><a class="image-download blur" style="opacity:0" target="_blank" download="20240515142253 16px" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515142253.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">20240515142253 16px</span></div></div>
-
-<p>差分信号是一种在电子学和通信中广泛使用的技术，它通过传输两个等幅、反相的信号来提高信号的抗干扰能力。下面是关于差分信号的基本原理、简介以及应用的详细解释：</p>
-<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>差分信号的核心原理是利用两个信号之间的差异来传输信息，而不是单个信号的绝对值。在差分信号中，有两条线路，一条称为正信号（+），另一条称为负信号（-）。这两条线路上传输的信号是等幅的，但相位相反。</p>
-<p>例如，如果正信号是 <code>V</code>，那么负信号就是 <code>-V</code>。当接收端接收到这两个信号时，它会计算两者之间的差值。由于外界的干扰（如电磁干扰）通常同时影响两条线路，因此差值不会受到干扰的影响，从而提高了信号的可靠性。</p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>差分信号的概念可以追溯到19世纪，但直到20世纪末，随着电子设备速度的提高和对信号完整性要求的增加，差分信号在高速通信和数据传输中变得越来越重要。</p>
-<p>差分信号有以下几个关键特点：</p>
-<ul>
-<li><strong>抗干扰性</strong>：由于差分信号的抗干扰特性，它在长距离传输和高速数据传输中非常有用。</li>
-<li><strong>信号完整性</strong>：差分信号有助于保持信号的完整性，减少信号失真。</li>
-<li><strong>功率效率</strong>：在某些情况下，差分信号可以提高功率传输效率。</li>
-<li><strong>简化设计</strong>：差分信号可以简化电路设计，因为不需要复杂的匹配或平衡技术。</li>
+  </div><article class="md-text content"><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44852369/article/details/111085880">FPGA实验课8：ROM（IP核）使用实例_fpga的rom的ip如何调用-CSDN博客</a></p>
+<p>Kimi人工智能</p>
+<h2 id="1-FPGA中位宽和深度的概念"><a href="#1-FPGA中位宽和深度的概念" class="headerlink" title="1. FPGA中位宽和深度的概念"></a>1. FPGA中位宽和深度的概念</h2><ol>
+<li><strong>位宽（Bit Width）</strong>：<ul>
+<li>想象一下，你有一条高速公路，这条高速公路有多个车道。位宽就是指这些车道的数量。比如，一个32位宽的寄存器就像是有32个车道的高速公路，可以同时让32辆车并排行驶。在FPGA中，位宽越大，意味着可以同时处理更多的数据，从而提高计算速度。</li>
 </ul>
-<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>差分信号在许多领域都有应用，包括但不限于：</p>
-<ol>
-<li><strong>高速串行通信</strong>：如USB、SATA、Ethernet等，它们利用差分信号来提高数据传输速率和可靠性。</li>
-<li><strong>无线通信</strong>：在无线通信中，差分信号可以提高信号的接收质量。</li>
-<li><strong>模拟信号传输</strong>：在模拟信号传输中，差分信号用于减少噪声和提高信号的信噪比。</li>
-<li><strong>医疗设备</strong>：在医疗成像和监测设备中，差分信号有助于提高信号的准确性和稳定性。</li>
-<li><strong>消费电子</strong>：在消费电子产品中，如音频和视频传输，差分信号可以减少电磁干扰，提高音质和画质。</li>
+</li>
+<li><strong>深度（Depth）</strong>：<ul>
+<li>现在，想象你有一座多层的停车场。深度就是指这座停车场有多少层。比如，一个深度为1024的存储器就像是有1024层的停车场，每一层都可以停放一辆车。在FPGA中，深度越大，意味着可以存储更多的数据。</li>
+</ul>
+</li>
 </ol>
-<h3 id="差分对"><a href="#差分对" class="headerlink" title="差分对"></a>差分对</h3><p>差分对是实现差分信号的物理基础，它由一对平行的导线组成，这两条导线上传输的信号是等幅反相的。差分对的设计需要考虑许多因素，包括导线的长度、间距、阻抗匹配等，以确保信号的完整性和最小化串扰。</p>
-<p>在设计差分信号系统时，工程师会特别注意差分对的布局和走线，以减少串扰和提高信号的抗干扰能力。</p>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>差分信号是一种强大的技术，它通过传输两个等幅反相的信号来提高信号的抗干扰能力和可靠性。这种技术在高速和长距离数据传输中尤为重要，并且在现代电子和通信系统中得到了广泛的应用。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/695468728">技术干货 | 细说差分信号 - 知乎 (zhihu.com)</a></li>
-<li>Kimi人工智能</li>
-<li></li>
-</ol>
+<p>总结一下：</p>
+<ul>
+<li><strong>位宽</strong>：一次操作可以处理的数据量。位宽越大，数据处理能力越强。</li>
+<li><strong>深度</strong>：可以存储的数据总量。深度越大，存储容量越大。</li>
+</ul>
+<h2 id="2-ROM-IP核的使用方法"><a href="#2-ROM-IP核的使用方法" class="headerlink" title="2. ROM IP核的使用方法"></a>2. ROM IP核的使用方法</h2><h3 id="2-1-仿真结果"><a href="#2-1-仿真结果" class="headerlink" title="2.1 仿真结果"></a>2.1 仿真结果</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240520201706.png"></p>
+<pre><div class="caption"><span>rom_ip.v</span></div><code class="hljs verilog"><span class="hljs-keyword">module</span> ROM_IP(
+    <span class="hljs-keyword">input</span> sys_clk,
+    <span class="hljs-keyword">input</span> sys_rst_n,
+     
+    <span class="hljs-comment">// TLC5620的引脚</span>
+    <span class="hljs-keyword">output</span>  <span class="hljs-keyword">wire</span>            da_clk      ,   <span class="hljs-comment">// 时钟信号</span>
+    <span class="hljs-keyword">output</span>  <span class="hljs-keyword">wire</span>            da_data     ,   <span class="hljs-comment">// 数据信号</span>
+    <span class="hljs-keyword">output</span>  <span class="hljs-keyword">wire</span>            da_ldac     ,   <span class="hljs-comment">// LDAC信号</span>
+    <span class="hljs-keyword">output</span>  <span class="hljs-keyword">wire</span>            da_load     ,   <span class="hljs-comment">// LOAD信号</span>
+     <span class="hljs-keyword">output</span>  <span class="hljs-keyword">wire</span>    [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>]    wave
+     
+);
+
+
+<span class="hljs-comment">// rom地址控制模块</span>
+<span class="hljs-keyword">reg</span> [<span class="hljs-number">12</span>:<span class="hljs-number">0</span>] addr;
+<span class="hljs-keyword">always</span> @(<span class="hljs-keyword">posedge</span> sys_clk <span class="hljs-keyword">or</span> <span class="hljs-keyword">negedge</span> sys_rst_n) <span class="hljs-keyword">begin</span>
+    <span class="hljs-keyword">if</span>(!sys_rst_n)
+        addr &lt;= <span class="hljs-number">13&#x27;d0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(addr == <span class="hljs-number">13&#x27;d4095</span>)
+        addr &lt;= <span class="hljs-number">13&#x27;d0</span>;
+    <span class="hljs-keyword">else</span> 
+        addr &lt;= addr + <span class="hljs-number">1&#x27;d1</span>;
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment">// 实例化ROM IP核</span>
+rom    rom_inst (
+    <span class="hljs-variable">.address</span> ( addr ),
+    <span class="hljs-variable">.clock</span>   ( sys_clk ),
+    <span class="hljs-variable">.q</span>       ( wave )
+    );
+
+    
+<span class="hljs-comment">// 实例化tlc5620驱动模块</span>
+tlc_5620 tlc_5620_inst
+(
+    <span class="hljs-variable">.CLOCK_50</span>(sys_clk),     <span class="hljs-comment">// 系统时钟</span>
+    <span class="hljs-variable">.RST_N</span>(sys_rst_n),      <span class="hljs-comment">// 复位信号</span>
+    <span class="hljs-variable">.da_enable</span>(<span class="hljs-number">1&#x27;b1</span>),       <span class="hljs-comment">// 使能信号，始终使能</span>
+    <span class="hljs-variable">.da_range</span>(<span class="hljs-number">1&#x27;b0</span>),        <span class="hljs-comment">// 输出范围选择，根据需要设置</span>
+    <span class="hljs-variable">.da0_data</span>(wave),        <span class="hljs-comment">// 将dac_data连接到DA0通道</span>
+    <span class="hljs-variable">.da1_data</span>(<span class="hljs-number">8&#x27;b0</span>),        <span class="hljs-comment">// 其他通道暂时不使用，置为0</span>
+    <span class="hljs-variable">.da2_data</span>(<span class="hljs-number">8&#x27;b0</span>),        <span class="hljs-comment">// 其他通道暂时不使用，置为0</span>
+    <span class="hljs-variable">.da3_data</span>(<span class="hljs-number">8&#x27;b0</span>),        <span class="hljs-comment">// 其他通道暂时不使用，置为0</span>
+    <span class="hljs-variable">.SCK</span>(da_clk),           <span class="hljs-comment">// 连接到外部引脚</span>
+    <span class="hljs-variable">.SDI</span>(da_data),          <span class="hljs-comment">// 连接到外部引脚</span>
+    <span class="hljs-variable">.LOAD</span>(da_load)          <span class="hljs-comment">// 连接到外部引脚</span>
+);
+<span class="hljs-comment">// TLC5620的LDAC信号通常需要保持低电平以更新输出电压</span>
+<span class="hljs-keyword">assign</span> da_ldac = <span class="hljs-number">1&#x27;b0</span>;
+<span class="hljs-keyword">endmodule</span></code></pre>
+
+
+
+<pre><div class="caption"><span>tlc5620.v</span></div><code class="hljs verilog"><span class="hljs-keyword">module</span> tlc_5620
+(
+    <span class="hljs-keyword">input</span> CLOCK_50,
+    <span class="hljs-keyword">input</span> RST_N,
+    <span class="hljs-comment">//</span>
+    <span class="hljs-keyword">input</span> da_enable,
+    <span class="hljs-keyword">input</span> da_range, <span class="hljs-comment">// 0, 1倍参考电压; 1, 2倍参考电压</span>
+    <span class="hljs-keyword">input</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] da0_data, <span class="hljs-comment">// 0~255</span>
+    <span class="hljs-keyword">input</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] da1_data, <span class="hljs-comment">// 0~255</span>
+    <span class="hljs-keyword">input</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] da2_data, <span class="hljs-comment">// 0~255</span>
+    <span class="hljs-keyword">input</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] da3_data, <span class="hljs-comment">// 0~255</span>
+    <span class="hljs-comment">// </span>
+    <span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> SCK,
+    <span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> SDI,
+    <span class="hljs-keyword">output</span> <span class="hljs-keyword">reg</span> LOAD
+);
+ 
+<span class="hljs-keyword">function</span> <span class="hljs-keyword">integer</span> log2(<span class="hljs-keyword">input</span> <span class="hljs-keyword">integer</span> n);
+    <span class="hljs-keyword">integer</span> i;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; <span class="hljs-number">2</span>**i &lt;=n; i=i+<span class="hljs-number">1</span>) log2=i+<span class="hljs-number">1</span>;
+<span class="hljs-keyword">endfunction</span>
+ 
+<span class="hljs-comment">/**************************************</span>
+<span class="hljs-comment">* 生成140ns的tick时钟</span>
+<span class="hljs-comment">**************************************/</span>
+<span class="hljs-keyword">reg</span> [log2(<span class="hljs-number">7</span>):<span class="hljs-number">1</span>]cnt_140ns;
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> CLOCK_50, <span class="hljs-keyword">negedge</span> RST_N) 
+    <span class="hljs-keyword">if</span>(!RST_N) cnt_140ns &lt;= <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span>
+        <span class="hljs-keyword">if</span>(cnt_140ns &lt; <span class="hljs-number">6</span>) 
+            cnt_140ns &lt;= cnt_140ns + <span class="hljs-number">1&#x27;b1</span>;
+        <span class="hljs-keyword">else</span> cnt_140ns &lt;= <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">wire</span> tick_140ns = (cnt_140ns == <span class="hljs-number">6</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
+ 
+<span class="hljs-comment">/**************************************</span>
+<span class="hljs-comment">* 根据tick时钟生成da基准计数器</span>
+<span class="hljs-comment">**************************************/</span>
+<span class="hljs-keyword">reg</span> [log2(<span class="hljs-number">48</span>):<span class="hljs-number">1</span>] da_ref_cnt; <span class="hljs-comment">// [0,47]</span>
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> CLOCK_50, <span class="hljs-keyword">negedge</span> RST_N)
+    <span class="hljs-keyword">if</span>(!RST_N) da_ref_cnt &lt;= <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span>
+        <span class="hljs-keyword">if</span>(!da_enable) da_ref_cnt &lt;= <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span>
+            <span class="hljs-keyword">if</span>(tick_140ns) <span class="hljs-keyword">begin</span>
+                <span class="hljs-keyword">if</span>(da_ref_cnt &lt; <span class="hljs-number">47</span>) 
+                    da_ref_cnt &lt;= da_ref_cnt + <span class="hljs-number">1&#x27;b1</span>;
+                <span class="hljs-keyword">else</span> da_ref_cnt &lt;= <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">end</span>
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">wire</span> tick_6720ns = (da_ref_cnt == <span class="hljs-number">47</span>) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
+ 
+<span class="hljs-keyword">reg</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] da_sel_cnt;
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> CLOCK_50, <span class="hljs-keyword">negedge</span> RST_N)
+    <span class="hljs-keyword">if</span>(!RST_N) da_sel_cnt &lt;= <span class="hljs-number">2&#x27;b0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (tick_6720ns) <span class="hljs-keyword">begin</span>
+        <span class="hljs-keyword">if</span>(da_sel_cnt &lt; <span class="hljs-number">3</span>)
+            da_sel_cnt &lt;= da_sel_cnt + <span class="hljs-number">1&#x27;b1</span>;
+        <span class="hljs-keyword">else</span> da_sel_cnt &lt;= <span class="hljs-number">2&#x27;b0</span>;
+    <span class="hljs-keyword">end</span>
+         
+<span class="hljs-comment">/**************************************</span>
+<span class="hljs-comment">* 根据基准计数器生成串行信号</span>
+<span class="hljs-comment">**************************************/</span>
+<span class="hljs-keyword">reg</span> [<span class="hljs-number">7</span>:<span class="hljs-number">0</span>] da_data;
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> CLOCK_50, <span class="hljs-keyword">negedge</span> RST_N)
+    <span class="hljs-keyword">if</span>(!RST_N) da_data &lt;= <span class="hljs-number">8&#x27;b0</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span>
+        <span class="hljs-keyword">case</span>(da_sel_cnt)
+            <span class="hljs-number">2&#x27;b00</span>: da_data &lt;= da0_data;
+            <span class="hljs-number">2&#x27;b01</span>: da_data &lt;= da1_data;
+            <span class="hljs-number">2&#x27;b10</span>: da_data &lt;= da2_data;
+            <span class="hljs-number">2&#x27;b11</span>: da_data &lt;= da3_data;
+        <span class="hljs-keyword">endcase</span>
+    <span class="hljs-keyword">end</span>
+ 
+<span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> CLOCK_50, <span class="hljs-keyword">negedge</span> RST_N)
+    <span class="hljs-keyword">if</span>(!RST_N) <span class="hljs-keyword">begin</span>
+        SCK &lt;= <span class="hljs-number">0</span>;
+        SDI &lt;= <span class="hljs-number">0</span>;
+        LOAD &lt;= <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">begin</span>
+        <span class="hljs-keyword">if</span>(tick_140ns) <span class="hljs-keyword">begin</span>
+            <span class="hljs-comment">// 生成SCK信号</span>
+            <span class="hljs-keyword">case</span>(da_ref_cnt)
+                <span class="hljs-number">2</span>,<span class="hljs-number">6</span>,<span class="hljs-number">10</span>,<span class="hljs-number">14</span>,<span class="hljs-number">18</span>,<span class="hljs-number">22</span>,<span class="hljs-number">26</span>,<span class="hljs-number">30</span>,<span class="hljs-number">34</span>,<span class="hljs-number">38</span>,<span class="hljs-number">42</span>: SCK &lt;= <span class="hljs-number">1</span>;
+                <span class="hljs-number">4</span>,<span class="hljs-number">8</span>,<span class="hljs-number">12</span>,<span class="hljs-number">16</span>,<span class="hljs-number">20</span>,<span class="hljs-number">24</span>,<span class="hljs-number">28</span>,<span class="hljs-number">32</span>,<span class="hljs-number">36</span>,<span class="hljs-number">40</span>,<span class="hljs-number">44</span>: SCK &lt;= <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">default</span> : ; <span class="hljs-comment">// 缺省不操作</span>
+            <span class="hljs-keyword">endcase</span>
+            <span class="hljs-comment">// 生成LOAD信号</span>
+            <span class="hljs-keyword">case</span>(da_ref_cnt)
+                <span class="hljs-number">0</span>: LOAD &lt;= <span class="hljs-number">1</span>;
+                <span class="hljs-number">46</span>: LOAD &lt;= <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">default</span> : ; <span class="hljs-comment">// 缺省不操作</span>
+            <span class="hljs-keyword">endcase</span>
+            <span class="hljs-comment">// 送入串型数据</span>
+            <span class="hljs-keyword">case</span>(da_ref_cnt)
+                <span class="hljs-number">3</span>,<span class="hljs-number">4</span>: SDI &lt;= da_sel_cnt[<span class="hljs-number">1</span>];
+                <span class="hljs-number">7</span>,<span class="hljs-number">8</span>: SDI &lt;= da_sel_cnt[<span class="hljs-number">0</span>];
+                <span class="hljs-number">11</span>,<span class="hljs-number">12</span>: SDI &lt;= da_range;
+                <span class="hljs-number">15</span>,<span class="hljs-number">16</span>: SDI &lt;= da_data[<span class="hljs-number">7</span>];
+                <span class="hljs-number">19</span>,<span class="hljs-number">20</span>: SDI &lt;= da_data[<span class="hljs-number">6</span>];
+                <span class="hljs-number">23</span>,<span class="hljs-number">24</span>: SDI &lt;= da_data[<span class="hljs-number">5</span>];
+                <span class="hljs-number">27</span>,<span class="hljs-number">28</span>: SDI &lt;= da_data[<span class="hljs-number">4</span>];
+                <span class="hljs-number">31</span>,<span class="hljs-number">32</span>: SDI &lt;= da_data[<span class="hljs-number">3</span>];
+                <span class="hljs-number">35</span>,<span class="hljs-number">36</span>: SDI &lt;= da_data[<span class="hljs-number">2</span>];
+                <span class="hljs-number">39</span>,<span class="hljs-number">40</span>: SDI &lt;= da_data[<span class="hljs-number">1</span>];
+                <span class="hljs-number">43</span>,<span class="hljs-number">44</span>: SDI &lt;= da_data[<span class="hljs-number">0</span>];
+                <span class="hljs-keyword">default</span> : SDI &lt;= <span class="hljs-number">1&#x27;b1</span>;
+            <span class="hljs-keyword">endcase</span>
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+ 
+<span class="hljs-keyword">endmodule</span></code></pre>
+
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/FPGA/DDR3%E8%AF%BB%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html">DDR3读写控制器的设计与验证</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/FPGA/%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E7%89%B9%E6%80%A7.html">电路的动态特性</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/FPGA/%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html">简易频率计的设计与验证</a></div><div class="item" id="next"></div></section></div>
 
 
 
@@ -146,7 +306,7 @@
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-text">应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%AE%E5%88%86%E5%AF%B9"><span class="toc-text">差分对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-FPGA%E4%B8%AD%E4%BD%8D%E5%AE%BD%E5%92%8C%E6%B7%B1%E5%BA%A6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">1. FPGA中位宽和深度的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ROM-IP%E6%A0%B8%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">2. ROM IP核的使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%BF%E7%9C%9F%E7%BB%93%E6%9E%9C"><span class="toc-text">2.1 仿真结果</span></a></li></ol></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.46 1.25h3.08c1.603 0 2.86 0 3.864.095c1.023.098 1.861.3 2.6.752a5.75 5.75 0 0 1 1.899 1.899c.452.738.654 1.577.752 2.6c.095 1.004.095 2.261.095 3.865v1.067c0 1.141 0 2.036-.05 2.759c-.05.735-.153 1.347-.388 1.913a5.75 5.75 0 0 1-3.112 3.112c-.805.334-1.721.408-2.977.43a10.81 10.81 0 0 0-.929.036c-.198.022-.275.054-.32.08c-.047.028-.112.078-.224.232c-.121.166-.258.396-.476.764l-.542.916c-.773 1.307-2.69 1.307-3.464 0l-.542-.916a10.605 10.605 0 0 0-.476-.764c-.112-.154-.177-.204-.224-.232c-.045-.026-.122-.058-.32-.08c-.212-.023-.49-.03-.93-.037c-1.255-.021-2.171-.095-2.976-.429A5.75 5.75 0 0 1 1.688 16.2c-.235-.566-.338-1.178-.389-1.913c-.049-.723-.049-1.618-.049-2.76v-1.066c0-1.604 0-2.86.095-3.865c.098-1.023.3-1.862.752-2.6a5.75 5.75 0 0 1 1.899-1.899c.738-.452 1.577-.654 2.6-.752C7.6 1.25 8.857 1.25 10.461 1.25M6.739 2.839c-.914.087-1.495.253-1.959.537A4.25 4.25 0 0 0 3.376 4.78c-.284.464-.45 1.045-.537 1.96c-.088.924-.089 2.11-.089 3.761v1c0 1.175 0 2.019.046 2.685c.045.659.131 1.089.278 1.441a4.25 4.25 0 0 0 2.3 2.3c.515.214 1.173.294 2.429.316h.031c.398.007.747.013 1.037.045c.311.035.616.104.909.274c.29.17.5.395.682.645c.169.232.342.525.538.856l.559.944a.52.52 0 0 0 .882 0l.559-.944c.196-.331.37-.624.538-.856c.182-.25.392-.476.682-.645c.293-.17.598-.24.909-.274c.29-.032.639-.038 1.037-.045h.032c1.255-.022 1.913-.102 2.428-.316a4.25 4.25 0 0 0 2.3-2.3c.147-.352.233-.782.278-1.441c.046-.666.046-1.51.046-2.685v-1c0-1.651 0-2.837-.089-3.762c-.087-.914-.253-1.495-.537-1.959a4.25 4.25 0 0 0-1.403-1.403c-.464-.284-1.045-.45-1.96-.537c-.924-.088-2.11-.089-3.761-.089h-3c-1.651 0-2.837 0-3.762.089" clip-rule="evenodd"/><path fill="currentColor" d="M9 11a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>参与讨论</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
