@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-23T11:58:55.435Z</updated>
+  <updated>2024-05-25T08:01:49.913Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>黄执中《情绪沟通》</title>
+    <link href="http://example.com/2024/05/25/%E9%BB%84%E6%89%A7%E4%B8%AD%E3%80%8A%E6%83%85%E7%BB%AA%E6%B2%9F%E9%80%9A%E3%80%8B/"/>
+    <id>http://example.com/2024/05/25/%E9%BB%84%E6%89%A7%E4%B8%AD%E3%80%8A%E6%83%85%E7%BB%AA%E6%B2%9F%E9%80%9A%E3%80%8B/</id>
+    <published>2024-05-25T07:57:10.809Z</published>
+    <updated>2024-05-25T08:01:49.913Z</updated>
+    
+    <content type="html"><![CDATA[<div class="tag-plugin image"><div class="image-bg" style="background:white;padding:16px;"><img src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240525160118.png" alt="20240525160118" style="width:200px;"/><a class="image-download blur" style="opacity:0" target="_blank" download="20240525160118" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240525160118.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">20240525160118</span></div></div><p><a href="https://zhuanlan.zhihu.com/p/84540541">黄执中《情绪沟通》——学习笔记 - 知乎 (zhihu.com)</a></p><p><a href="https://www.bilibili.com/video/BV1jG411z7YU/?p=6&spm_id_from=pageDriver&vd_source=0b1c8d67ad5702d24738bcdbd2cca82c">2018-10-06-5混沌学霸说_哔哩哔哩_bilibili</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;tag-plugin image&quot;&gt;&lt;div class=&quot;image-bg&quot; style=&quot;background:white;padding:16px;&quot;&gt;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/zikwq/Blog_</summary>
+      
+    
+    
+    
+    <category term="软实力提升" scheme="http://example.com/categories/%E8%BD%AF%E5%AE%9E%E5%8A%9B%E6%8F%90%E5%8D%87/"/>
+    
+    
+    <category term="情绪沟通、软实力" scheme="http://example.com/tags/%E6%83%85%E7%BB%AA%E6%B2%9F%E9%80%9A%E3%80%81%E8%BD%AF%E5%AE%9E%E5%8A%9B/"/>
+    
+  </entry>
   
   <entry>
     <title>小插曲</title>
