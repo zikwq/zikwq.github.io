@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-05-30T07:18:47.783Z</updated>
+  <updated>2024-06-03T12:03:17.348Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>画了一块非常丑陋的PCB</title>
+    <link href="http://example.com/2024/06/03/%E7%94%BB%E4%BA%86%E4%B8%80%E5%9D%97%E9%9D%9E%E5%B8%B8%E4%B8%91%E9%99%8B%E7%9A%84PCB/"/>
+    <id>http://example.com/2024/06/03/%E7%94%BB%E4%BA%86%E4%B8%80%E5%9D%97%E9%9D%9E%E5%B8%B8%E4%B8%91%E9%99%8B%E7%9A%84PCB/</id>
+    <published>2024-06-03T11:49:40.088Z</published>
+    <updated>2024-06-03T12:03:17.348Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-给米联客FPGA的FEP接口画了一个转接板"><a href="#1-给米联客FPGA的FEP接口画了一个转接板" class="headerlink" title="1. 给米联客FPGA的FEP接口画了一个转接板"></a>1. 给米联客FPGA的FEP接口画了一个转接板</h2><p>在淘宝上购买的一块米联客的FPGA开发板，但是它的底板使用了自定义的FEP接口，网上的资料少之又少。在这块开发板上不能像至芯的那块开发板一样去开发IO，然后我就去询问客服：</p><p><img src="https://jsd.cdn.zzko.cn/gh/zikwq/Blog_Pic/20240603195613.png"></p><p>然后淘宝上：</p><div class="tag-plugin grid"  style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));"><div class="cell" style="">    <div class="tag-plugin image"><div class="image-bg" style="background:white;"><img src="https://jsd.cdn.zzko.cn/gh/zikwq/Blog_Pic/6177bc2dfad0c5a2709eaf32c487a3a.jpg" alt="米联客旗舰店转接卡"/><a class="image-download blur" style="opacity:0" target="_blank" download="米联客旗舰店转接卡" href="https://jsd.cdn.zzko.cn/gh/zikwq/Blog_Pic/6177bc2dfad0c5a2709eaf32c487a3a.jpg"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">米联客旗舰店转接卡</span></div></div><div class="tag-plugin image"><div class="image-bg" style="background:white;"><img src="https://jsd.cdn.zzko.cn/gh/zikwq/Blog_Pic/8d6121fdd4d3cc2382cdc9e4891048e.jpg" alt="fep-cepx3模块"/><a class="image-download blur" style="opacity:0" target="_blank" download="fep-cepx3模块" href="https://jsd.cdn.zzko.cn/gh/zikwq/Blog_Pic/8d6121fdd4d3cc2382cdc9e4891048e.jpg"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div><div class="image-meta"><span class="image-caption center">fep-cepx3模块</span></div></div>    </div>    </div><p>好好好，都这么贵是吧，就你一家！！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-给米联客FPGA的FEP接口画了一个转接板&quot;&gt;&lt;a href=&quot;#1-给米联客FPGA的FEP接口画了一个转接板&quot; class=&quot;headerlink&quot; title=&quot;1. 给米联客FPGA的FEP接口画了一个转接板&quot;&gt;&lt;/a&gt;1. 给米联客FPGA的FEP接</summary>
+      
+    
+    
+    
+    <category term="blog" scheme="http://example.com/categories/blog/"/>
+    
+    
+    <category term="blog" scheme="http://example.com/tags/blog/"/>
+    
+  </entry>
   
   <entry>
     <title>毕业</title>
