@@ -1,0 +1,24 @@
+.search {
+    border: solid;
+    border-radius: 12px;
+}
+
+img {
+    border-radius: 14px;
+    width: 100%;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    margin-bottom: 20px; /* 为图片之间添加垂直间距 */
+}
+
+.waterfall_folw {
+    column-gap: 5mm;
+    column-count: 3;
+    margin: 80px;
+    line-height: 3rem;
+    align-items: center;
+}
+
+img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
