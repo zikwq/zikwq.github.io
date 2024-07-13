@@ -20,12 +20,12 @@
   <title>FPGA：DDR3读写控制器的设计与验证 - quincy的日记</title>
 
   
-    <meta name="description" content="DDR的迭代图  1. 上板验证 ··· 关于上板，需要搁置一段落，我看的野火教程并没有更新到上板验证的部分，所以需要去观看其他相关的实操视频来填坑~~ 2. 理论学习2.1 DDR3 SDRAM的基本概念 DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。 在每一页（bank">
+    <meta name="description" content="DDR的迭代图  1. 上板验证 ··· 关于上板，需要搁置一段落，我看的野火教程并没有更新到上板验证的部分，所以需要去观看其他相关的实操视频来填坑~~ 2. 理论学习2.1 DDR3 SDRAM的基本概念 DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。  在每一页（ban">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DDR3读写控制器的设计与验证">
 <meta property="og:url" content="http://example.com/wiki/FPGA/DDR3%E8%AF%BB%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html">
 <meta property="og:site_name" content="quincy的日记">
-<meta property="og:description" content="DDR的迭代图  1. 上板验证 ··· 关于上板，需要搁置一段落，我看的野火教程并没有更新到上板验证的部分，所以需要去观看其他相关的实操视频来填坑~~ 2. 理论学习2.1 DDR3 SDRAM的基本概念 DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。 在每一页（bank">
+<meta property="og:description" content="DDR的迭代图  1. 上板验证 ··· 关于上板，需要搁置一段落，我看的野火教程并没有更新到上板验证的部分，所以需要去观看其他相关的实操视频来填坑~~ 2. 理论学习2.1 DDR3 SDRAM的基本概念 DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。  在每一页（ban">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515143620.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240516163152.png">
@@ -33,9 +33,28 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515150452.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515150955.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240516124009.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712093158.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//ddr3_test.drawio.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712112403.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113015.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113214.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113315.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712114349.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712114634.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115131.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115637.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115918.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092342.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092509.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092747.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092838.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713093011.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713093442.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713094225.png">
+<meta property="og:image" content="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713095119.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240516131838.png">
-<meta property="article:published_time" content="2024-05-16T08:33:23.191Z">
-<meta property="article:modified_time" content="2024-05-16T08:33:23.191Z">
+<meta property="article:published_time" content="2024-07-13T03:19:34.207Z">
+<meta property="article:modified_time" content="2024-07-13T03:19:34.207Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240515143620.png">
@@ -84,7 +103,7 @@
 
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/FPGA/TestBench%E7%BC%96%E5%86%99%E6%8A%80%E5%B7%A7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>TestBench编写技巧</span></a><a class="item title" href="/wiki/FPGA/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>HDMI显示器驱动设计</span></a><a class="item title" href="/wiki/FPGA/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>锁存器和触发器的理解与整理</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%A4%BA%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数字示波器设计</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数码管动态显示</span></a><a class="item title" href="/wiki/FPGA/%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>简易频率计的设计与验证</span></a><a class="item title" href="/wiki/FPGA/%E5%B7%AE%E5%88%86%E5%AF%B9%E5%92%8C%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>差分对和差分信号</span></a><a class="item title" href="/wiki/FPGA/fpga%E7%9A%84mt9v034%E6%91%84%E5%83%8F%E5%A4%B4%E9%85%8D%E7%BD%AE%E5%8F%8Ahdmi%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>fpga的mt9v034摄像头配置及hdmi显示输出</span></a><a class="item title" href="/wiki/FPGA/%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE/I2C%E5%8D%8F%E8%AE%AE.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>I2C协议</span></a><a class="item title" href="/wiki/FPGA/%E5%B8%B8%E7%94%A8IP%E6%A0%B8/FFT%20IP%E6%A0%B8%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>FFT IP核使用方法</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/wiki/FPGA/DDR3%E8%AF%BB%E5%86%99%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>DDR3读写控制器的设计与验证</span></a><a class="item title" href="/wiki/FPGA/TestBench%E7%BC%96%E5%86%99%E6%8A%80%E5%B7%A7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>TestBench编写技巧</span></a><a class="item title" href="/wiki/FPGA/HDMI%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>HDMI显示器驱动设计</span></a><a class="item title" href="/wiki/FPGA/%E9%94%81%E5%AD%98%E5%99%A8%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%95%B4%E7%90%86.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>锁存器和触发器的理解与整理</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E5%AD%97%E7%A4%BA%E6%B3%A2%E5%99%A8%E8%AE%BE%E8%AE%A1.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数字示波器设计</span></a><a class="item title" href="/wiki/FPGA/%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8A%A8%E6%80%81%E6%98%BE%E7%A4%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>数码管动态显示</span></a><a class="item title" href="/wiki/FPGA/%E7%AE%80%E6%98%93%E9%A2%91%E7%8E%87%E8%AE%A1%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>简易频率计的设计与验证</span></a><a class="item title" href="/wiki/FPGA/%E5%B7%AE%E5%88%86%E5%AF%B9%E5%92%8C%E5%B7%AE%E5%88%86%E4%BF%A1%E5%8F%B7.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>差分对和差分信号</span></a><a class="item title" href="/wiki/FPGA/fpga%E7%9A%84mt9v034%E6%91%84%E5%83%8F%E5%A4%B4%E9%85%8D%E7%BD%AE%E5%8F%8Ahdmi%E6%98%BE%E7%A4%BA%E8%BE%93%E5%87%BA.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>fpga的mt9v034摄像头配置及hdmi显示输出</span></a><a class="item title" href="/wiki/FPGA/%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE/I2C%E5%8D%8F%E8%AE%AE.html"><span class="title"><strong>FPGA</strong><span class="dot"></span>I2C协议</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/zikwq" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/github-logo2.png"/></a><a class="social" href="https://space.bilibili.com/500610348" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/bilibili-icon.png"/></a><a class="social" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/38eb2fb5178a08723f3f1dd2974fd73.jpg" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/weChat.png"/></a><a class="social" href="javaScript:void('永夜');" rel="noopener noreferrer"><img class="lazy" id="ThemeM" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Moon.png"/></a><a class="social" href="javaScript:void('永昼');" rel="noopener noreferrer"><img class="lazy" id="ThemeL" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://upyun.thatcdn.cn/public/img/icon/Sun.png"/></a></div></footer>
 </div></aside><div class="l_main" id="main">
@@ -97,7 +116,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki">文档</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/FPGA/VGA%E6%98%BE%E7%A4%BA%E5%99%A8%E9%A9%B1%E5%8A%A8--%E5%AD%97%E7%AC%A6%E6%B8%B8%E8%B5%B0.html">FPGA</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-05-16T08:33:23.191Z">2024-05-16</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">更新于：<time datetime="2024-07-13T03:19:34.207Z">2024-07-13</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -113,7 +132,7 @@
 <h2 id="1-上板验证"><a href="#1-上板验证" class="headerlink" title="1. 上板验证"></a>1. 上板验证</h2><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240516163152.png" alt="仿真波形：IP Example Design"></p>
 <p>··· 关于上板，需要搁置一段落，我看的野火教程并没有更新到上板验证的部分，所以需要去观看其他相关的实操视频来填坑~~</p>
 <h2 id="2-理论学习"><a href="#2-理论学习" class="headerlink" title="2. 理论学习"></a>2. 理论学习</h2><h3 id="2-1-DDR3-SDRAM的基本概念"><a href="#2-1-DDR3-SDRAM的基本概念" class="headerlink" title="2.1 DDR3 SDRAM的基本概念"></a>2.1 DDR3 SDRAM的基本概念</h3><blockquote>
-<p>DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。</p>
+<p>DDR3内存条就像一本由多个页面组成的书。在这本书中，每一页都代表内存中的一个逻辑单元，也就是一个bank。每个bank是内存的一个独立部分，可以独立地进行数据的读写操作。 </p>
 <p>在每一页（bank）中，数据被组织成行和列，类似于表格。通过行地址和列地址，我们可以定位到这个表格中的一个特定单元格，这个单元格就是内存中的基本逻辑单元。这个单元格可以存储一个字（word），其大小由DDR3内存条的位宽决定。例如，如果内存条的位宽是64位，那么这个字就可以存储64位二进制数据。</p>
 <p>位宽是内存条的一个重要参数，它决定了内存一次能够传输的数据量。位宽越大，单次传输的数据量就越多，从而提高内存的带宽和性能。</p>
 <p>内存的总容量是由所有bank的容量总和决定的。每个bank的容量乘以bank的数量，再乘以每个存储单元的位数，就得到了整个内存条的总容量。因此，内存条的容量可以通过增加bank的数量或增加每个bank的容量来提升。</p>
@@ -148,7 +167,8 @@
 <p>DDR3数据手册下载地址</p>
 <p>MT41K128M16JT：<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/MT41K128M16JT.pdf">https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/MT41K128M16JT.pdf</a></p>
 <p>4Gb_DDR3L：<a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/4Gb_DDR3L.pdf">https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/4Gb_DDR3L.pdf</a></p>
-<h3 id="2-3-DDR3-SDRAM器件引脚说明"><a href="#2-3-DDR3-SDRAM器件引脚说明" class="headerlink" title="2.3 DDR3 SDRAM器件引脚说明"></a>2.3 DDR3 SDRAM器件引脚说明</h3><table>
+<h3 id="2-3-DDR3-SDRAM器件引脚说明"><a href="#2-3-DDR3-SDRAM器件引脚说明" class="headerlink" title="2.3 DDR3 SDRAM器件引脚说明"></a>2.3 DDR3 SDRAM器件引脚说明</h3><p>注意，此处引脚说明并非实例化时所使用的引脚，而是器件的x16 Ball Descriptions引脚说明，是总DataSheet中翻译过来的。****</p>
+<table>
 <thead>
 <tr>
 <th>引脚</th>
@@ -238,7 +258,80 @@
 <p><strong>用户端时钟：</strong>MIG IP核输出给用户端的时钟，命名为ui_clk</p>
 <p>在DDR3芯片工作的时钟与用户端时钟有一个比例关系：</p>
 <p>DDR3芯片的工作频率：用户端时钟频率为4:1或者2:1，当DDR3芯片的工作时钟为800MHZ的时候，比例只能是2:1。</p>
-<h3 id="2-5-MIG-DDR-IP核配置"><a href="#2-5-MIG-DDR-IP核配置" class="headerlink" title="2.5 MIG DDR IP核配置"></a>2.5 MIG DDR IP核配置</h3><p>用户端接口与两种：Native接口和AXI4接口</p>
+<h3 id="2-5-DDR3的模块实验"><a href="#2-5-DDR3的模块实验" class="headerlink" title="2.5 DDR3的模块实验"></a>2.5 DDR3的模块实验</h3><p>用户端接口与两种：Native接口和AXI4接口，接下来我们使用AXI4接口进行实验</p>
+<p><strong>实验目标：我们通过MIG IP核对DDR3写入1024个数据，然后进行读取出来的实验，并使用ila在线逻辑分析仪，对数据进行抓取</strong></p>
+<p> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712093158.png"></p>
+<p>从我们的原理图中可以看到，我们在PL端使用的ddr3型号是MT41K256M16RE-125。</p>
+<p>通过前面的讲解介绍，DDR3的存储容量4Gb的存储容量。图中可以看出来，我们PL端是并联了2片DDR3，PL 端 2 片内存组成 32bit 数据接口，也就是4Gb的存储容量&#x3D;1GB内存大小 ，</p>
+<h4 id="2-5-1-模块框图绘制"><a href="#2-5-1-模块框图绘制" class="headerlink" title="2.5.1 模块框图绘制"></a>2.5.1 模块框图绘制</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//ddr3_test.drawio.png"></p>
+<p>在上面的框图中，我们的axi_ddr_top还需要实例化四个模块，分别是：读写控制模块、读模块、写模块、还有MIG IP核。下面进行我们mig ip核的配置</p>
+<h4 id="2-5-2-MIG-DDR-IP核配置"><a href="#2-5-2-MIG-DDR-IP核配置" class="headerlink" title="2.5.2 MIG DDR IP核配置"></a>2.5.2 MIG DDR IP核配置</h4><ol>
+<li>点击后在右边搜索栏目搜索“MIG”，直接双击打开，这里显示的是我们fpga 工程的相关信息，点击下一步</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712112403.png"></p>
+<ol start="2">
+<li>基本信息的配置</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113015.png"></p>
+<ol start="3">
+<li>引脚信息</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113214.png"></p>
+<ol start="4">
+<li>控制器的选择</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712113315.png"></p>
+<ol start="5">
+<li>控制器的基本配置</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712114349.png"></p>
+<ol start="6">
+<li>AXI总线的配置</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712114634.png"></p>
+<ol start="7">
+<li>内存设置–对应的阻抗可以在数据手册中搜索：“output drive strength”</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115131.png"></p>
+<ol start="8">
+<li>FPGA选项</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115637.png"></p>
+<ol start="9">
+<li>引脚选择</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240712115918.png"></p>
+<p>到这里都已经完成了，后面就是正常默认完成就行</p>
+<h4 id="2-5-3-声明两个FIFO-IP核"><a href="#2-5-3-声明两个FIFO-IP核" class="headerlink" title="2.5.3 声明两个FIFO IP核"></a>2.5.3 声明两个FIFO IP核</h4><ol>
+<li>打开我们的ip核目录，在搜索框里面搜索<strong>FIFO</strong></li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092342.png"></p>
+<ol start="2">
+<li>配置基本信息</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092509.png"></p>
+<ol start="3">
+<li>配置常规接口</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092747.png"></p>
+<ol start="4">
+<li>配置标志信号</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713092838.png"></p>
+<ol start="5">
+<li>配置数据计数器</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713093011.png"></p>
+<p>下面是读FIFO的配置，跟写FIFO类似只有下面一张图的配置跟写FIFO不一样</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713093442.png"></p>
+<h4 id="2-5-4-PLL锁相环IP核配置"><a href="#2-5-4-PLL锁相环IP核配置" class="headerlink" title="2.5.4 PLL锁相环IP核配置"></a>2.5.4 PLL锁相环IP核配置</h4><ol>
+<li>打开目标锁相环</li>
+</ol>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713094225.png"></p>
+<ol start="2">
+<li>配置输入输出时钟，这里我们输入是100MHZ，输出320MHZ的DDR3工作时钟</li>
+</ol>
+<h4 id="2-5-6-RTL视图"><a href="#2-5-6-RTL视图" class="headerlink" title="2.5.6 RTL视图"></a>2.5.6 RTL视图</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic//20240713095119.png"></p>
 <h2 id="3-Native接口概述"><a href="#3-Native接口概述" class="headerlink" title="3. Native接口概述"></a>3. Native接口概述</h2><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/zikwq/Blog_Pic/20240516131838.png" alt="Native接口"></p>
 <h2 id="4-AXI接口概述"><a href="#4-AXI接口概述" class="headerlink" title="4. AXI接口概述"></a>4. AXI接口概述</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96804919">AXI总线你需要知道的事儿 - 知乎 (zhihu.com)</a></p>
 <p>AXI的英文全称“Advancede Xtensible Interface” ,即为高级可扩展接口，他是ARM公司所提出的AMBA协议（高级微控制器总线框架协议，包含了四种不同的总线标准：AHB、ASB、APB、AXI）的一部分</p>
@@ -309,7 +402,7 @@ show_runtime();
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%8A%E6%9D%BF%E9%AA%8C%E8%AF%81"><span class="toc-text">1. 上板验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0"><span class="toc-text">2. 理论学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DDR3-SDRAM%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">2.1 DDR3 SDRAM的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-DDR3-SDRAM%E6%95%B0%E6%8D%AE%E5%AD%98%E5%8F%96%E5%8E%9F%E7%90%86"><span class="toc-text">2.2 DDR3 SDRAM数据存取原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-DDR3-SDRAM%E5%99%A8%E4%BB%B6%E5%BC%95%E8%84%9A%E8%AF%B4%E6%98%8E"><span class="toc-text">2.3 DDR3 SDRAM器件引脚说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-DDR3-%E6%97%B6%E9%92%9F%E5%88%86%E6%9E%90"><span class="toc-text">2.4 DDR3 时钟分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-MIG-DDR-IP%E6%A0%B8%E9%85%8D%E7%BD%AE"><span class="toc-text">2.5 MIG DDR IP核配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Native%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%BF%B0"><span class="toc-text">3. Native接口概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-AXI%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%BF%B0"><span class="toc-text">4. AXI接口概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-AXI%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">2.5.1 AXI接口的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-AXI%E6%8E%A5%E5%8F%A3%E5%88%86%E7%B1%BB"><span class="toc-text">2.5.2 AXI接口分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-3-%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%98%E5%82%A8%E6%98%A0%E5%B0%84"><span class="toc-text">2.5.3 什么是存储映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-4-AXI%E6%97%B6%E5%BA%8F"><span class="toc-text">2.5.4 AXI时序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%8A%E6%9D%BF%E9%AA%8C%E8%AF%81"><span class="toc-text">1. 上板验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0"><span class="toc-text">2. 理论学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DDR3-SDRAM%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">2.1 DDR3 SDRAM的基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-DDR3-SDRAM%E6%95%B0%E6%8D%AE%E5%AD%98%E5%8F%96%E5%8E%9F%E7%90%86"><span class="toc-text">2.2 DDR3 SDRAM数据存取原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-DDR3-SDRAM%E5%99%A8%E4%BB%B6%E5%BC%95%E8%84%9A%E8%AF%B4%E6%98%8E"><span class="toc-text">2.3 DDR3 SDRAM器件引脚说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-DDR3-%E6%97%B6%E9%92%9F%E5%88%86%E6%9E%90"><span class="toc-text">2.4 DDR3 时钟分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-DDR3%E7%9A%84%E6%A8%A1%E5%9D%97%E5%AE%9E%E9%AA%8C"><span class="toc-text">2.5 DDR3的模块实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-%E6%A8%A1%E5%9D%97%E6%A1%86%E5%9B%BE%E7%BB%98%E5%88%B6"><span class="toc-text">2.5.1 模块框图绘制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-MIG-DDR-IP%E6%A0%B8%E9%85%8D%E7%BD%AE"><span class="toc-text">2.5.2 MIG DDR IP核配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-3-%E5%A3%B0%E6%98%8E%E4%B8%A4%E4%B8%AAFIFO-IP%E6%A0%B8"><span class="toc-text">2.5.3 声明两个FIFO IP核</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-4-PLL%E9%94%81%E7%9B%B8%E7%8E%AFIP%E6%A0%B8%E9%85%8D%E7%BD%AE"><span class="toc-text">2.5.4 PLL锁相环IP核配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-6-RTL%E8%A7%86%E5%9B%BE"><span class="toc-text">2.5.6 RTL视图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Native%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%BF%B0"><span class="toc-text">3. Native接口概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-AXI%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%BF%B0"><span class="toc-text">4. AXI接口概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-AXI%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">2.5.1 AXI接口的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-AXI%E6%8E%A5%E5%8F%A3%E5%88%86%E7%B1%BB"><span class="toc-text">2.5.2 AXI接口分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-3-%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%98%E5%82%A8%E6%98%A0%E5%B0%84"><span class="toc-text">2.5.3 什么是存储映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-4-AXI%E6%97%B6%E5%BA%8F"><span class="toc-text">2.5.4 AXI时序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.46 1.25h3.08c1.603 0 2.86 0 3.864.095c1.023.098 1.861.3 2.6.752a5.75 5.75 0 0 1 1.899 1.899c.452.738.654 1.577.752 2.6c.095 1.004.095 2.261.095 3.865v1.067c0 1.141 0 2.036-.05 2.759c-.05.735-.153 1.347-.388 1.913a5.75 5.75 0 0 1-3.112 3.112c-.805.334-1.721.408-2.977.43a10.81 10.81 0 0 0-.929.036c-.198.022-.275.054-.32.08c-.047.028-.112.078-.224.232c-.121.166-.258.396-.476.764l-.542.916c-.773 1.307-2.69 1.307-3.464 0l-.542-.916a10.605 10.605 0 0 0-.476-.764c-.112-.154-.177-.204-.224-.232c-.045-.026-.122-.058-.32-.08c-.212-.023-.49-.03-.93-.037c-1.255-.021-2.171-.095-2.976-.429A5.75 5.75 0 0 1 1.688 16.2c-.235-.566-.338-1.178-.389-1.913c-.049-.723-.049-1.618-.049-2.76v-1.066c0-1.604 0-2.86.095-3.865c.098-1.023.3-1.862.752-2.6a5.75 5.75 0 0 1 1.899-1.899c.738-.452 1.577-.654 2.6-.752C7.6 1.25 8.857 1.25 10.461 1.25M6.739 2.839c-.914.087-1.495.253-1.959.537A4.25 4.25 0 0 0 3.376 4.78c-.284.464-.45 1.045-.537 1.96c-.088.924-.089 2.11-.089 3.761v1c0 1.175 0 2.019.046 2.685c.045.659.131 1.089.278 1.441a4.25 4.25 0 0 0 2.3 2.3c.515.214 1.173.294 2.429.316h.031c.398.007.747.013 1.037.045c.311.035.616.104.909.274c.29.17.5.395.682.645c.169.232.342.525.538.856l.559.944a.52.52 0 0 0 .882 0l.559-.944c.196-.331.37-.624.538-.856c.182-.25.392-.476.682-.645c.293-.17.598-.24.909-.274c.29-.032.639-.038 1.037-.045h.032c1.255-.022 1.913-.102 2.428-.316a4.25 4.25 0 0 0 2.3-2.3c.147-.352.233-.782.278-1.441c.046-.666.046-1.51.046-2.685v-1c0-1.651 0-2.837-.089-3.762c-.087-.914-.253-1.495-.537-1.959a4.25 4.25 0 0 0-1.403-1.403c-.464-.284-1.045-.45-1.96-.537c-.924-.088-2.11-.089-3.761-.089h-3c-1.651 0-2.837 0-3.762.089" clip-rule="evenodd"/><path fill="currentColor" d="M9 11a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><span>参与讨论</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
