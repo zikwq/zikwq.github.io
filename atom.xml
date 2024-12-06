@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-12-01T05:07:34.705Z</updated>
+  <updated>2024-11-26T07:08:15.992Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>网站后台爆破的实验并写的开源小工具和参考密码本记录</title>
-    <link href="http://example.com/2024/12/01/%E7%BD%91%E7%AB%99%E5%90%8E%E5%8F%B0%E7%88%86%E7%A0%B4%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B6%E5%86%99%E7%9A%84%E5%BC%80%E6%BA%90%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%92%8C%E5%8F%82%E8%80%83%E5%AF%86%E7%A0%81%E6%9C%AC%E8%AE%B0%E5%BD%95/"/>
-    <id>http://example.com/2024/12/01/%E7%BD%91%E7%AB%99%E5%90%8E%E5%8F%B0%E7%88%86%E7%A0%B4%E7%9A%84%E5%AE%9E%E9%AA%8C%E5%B9%B6%E5%86%99%E7%9A%84%E5%BC%80%E6%BA%90%E5%B0%8F%E5%B7%A5%E5%85%B7%E5%92%8C%E5%8F%82%E8%80%83%E5%AF%86%E7%A0%81%E6%9C%AC%E8%AE%B0%E5%BD%95/</id>
-    <published>2024-11-30T16:00:00.000Z</published>
-    <updated>2024-12-01T05:07:34.705Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>距离开始考研还有差不多20天，实在是在教室坐着浑身不舒服，最近胃病犯了加上久坐，肚子天天难受和胀气的厉害，所以今天跑到宿舍折腾一些小玩意给自己玩，我并不是在这方面的专家，这篇文章中或许会出现很多不正确的地方，所以仅供大家参考。为了能够验证这个工具的可用性，我特意用我的学生身份在阿里云免费租用并搭建了wordpress主题博客框架，在下面我工具的验证（本想着这个主题可以留着给读者练习使用，但发现这个服务器是按照流量使用计费的，以免被恶意DDOS攻击，决定还是不提供这个服务了，大家可以在自己本地搭建一下相关的框架用来验证）。总的来说，工具使用并不复杂，但是考虑到没有接触过的朋友，还是有几点需要注意的地方，那么我们废话不多说。</p><p>项目已开源到<a href="https://github.com/zikwq/web_login/tree/main">https://github.com/zikwq/web_login/tree/main</a></p><p>欢迎使用给个Star!</p><p><strong>本次实验均已使用我的服务器作为目标网站进行密码爆破，教程仅供学习，请勿违法操作！！！</strong></p><h1 id="2-实验"><a href="#2-实验" class="headerlink" title="2 实验"></a>2 实验</h1><p>工具使用python并借助人工智能辅助进行编写，运行后有简洁的用户交互界面，方便大家使用</p><p><img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-11-30%20212502.png" alt="工具截图"></p><h2 id="2-1-填写后台地址：http-39-105-167-163-wp-login-php"><a href="#2-1-填写后台地址：http-39-105-167-163-wp-login-php" class="headerlink" title="2.1 填写后台地址：http://39.105.167.163/wp-login.php"></a>2.1 <strong>填写后台地址：<a href="http://39.105.167.163/wp-login.php">http://39.105.167.163/wp-login.php</a></strong></h2><p>不知道后台地址可以自己在网站域名后面输入admin或者wp-admin碰碰运气，进去之后对链接复制到工具的URL输入框当中。一般对于博客网站，站长网络安全素质参差不齐，我尝试了很多个他们的博客，除了像我这种静态的，一般都可以直接试出来。但是对于安全意识更强的站长，他们一般不会将后台地址设置的这么简单，需要使用更专业的工具对网站进行扫描，其实我这个小工具，稍微进行修改一下程序，就可以改成网站目录扫描的工具了，有精力的朋友可以进行尝试</p><p>除此之外，很多网站在接入百度或者其他的搜索引擎时，在网站根目录会放置robots.txt文件，在这个文件中网站管理者可以声明该网站中不想被搜索引擎收录并被搜索到的部分，或者指定搜索引擎只收录指定的内容。大家可以访问<a href="http://39.105.167.163/robots.txt">http://39.105.167.163/robots.txt</a> 获取此文件的内容加以判断，说不定就会有意外之喜！</p><h2 id="2-2-第二个框就是我们的需要进行登录的用户名字典了，与第三个框相比，当第三个框框有值时，也就是在你指定了用于登录的用户名，那么第二个用户名字典框框中的值将不再起作用。"><a href="#2-2-第二个框就是我们的需要进行登录的用户名字典了，与第三个框相比，当第三个框框有值时，也就是在你指定了用于登录的用户名，那么第二个用户名字典框框中的值将不再起作用。" class="headerlink" title="2.2 第二个框就是我们的需要进行登录的用户名字典了，与第三个框相比，当第三个框框有值时，也就是在你指定了用于登录的用户名，那么第二个用户名字典框框中的值将不再起作用。"></a>2.2 <strong>第二个框就是我们的需要进行登录的用户名字典了，与第三个框相比，当第三个框框有值时，也就是在你指定了用于登录的用户名，那么第二个用户名字典框框中的值将不再起作用。</strong></h2><p>在我们进行网络爆破的时候，我建议是指定一下用户名，因为这样密码的组合会几何倍的降低，例如你的用户名字典有3个用户名，密码字典中有3个密码，总共的匹配量就等于3*3&#x3D;9，但是我们指定用户名，总的匹配量就只有3个密码的量</p><p>怎么找到网站的用户名呐？这里我给大家一个两个常用的小方法</p><p>第一个，在以前我搭建博客的时候，网站后台账户通常设置成域名，比如<a href="http://www.guaishou.shop/">www.guaishou.shop</a> ,这里你就可以尝试用guaishou作为用户名，随便输入一个密码尝试自己登录一次。接着，我们利用很多网站都会忽略的一个非常严重的BUG，当用户名不存在的时候，网站会提醒你例如“<strong>用户名aaa未在本站点注册</strong>”，</p><p><img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-11-30%20215825.png"></p><p>当你输入正确的用户名时，网站的反应时这样的“为用户名 <strong>admin</strong> 指定的密码不正确”</p><p><img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig20241130220021.png"></p><p>这时候我们就可以确定，这个网站后台存在一个用户名为：admin的</p><p>第二个则使用使用我的这个小工具进行暴力用户名和密码破解，在工具的第四个输入框（跳过用户名正则 (可选)）地方加上“未注册”、“不存在”等关键词，具体看网站反馈给你的信息，从中判断并提取关键词，当使用这个功能的时候，在导入的用户名字典中用户没有在网站注册则会直接舍弃这个用户名，达到尽可能的减少匹配的次数。这个我目前还没有确认其功能是否正常，如果不正常，欢迎在github的issue中反馈问题</p><h2 id="2-3-导入密码字典"><a href="#2-3-导入密码字典" class="headerlink" title="2.3 导入密码字典"></a>2.3 导入密码字典</h2><p>网络上的字典很难找到一个质量较高的密码字典，这里推荐一个大佬开源的社工字典生成器，根据对方的信息和自定义生成规则，可以生成具有针对性的密码字典，开源链接放到下方参考链接部分<img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig20241201122937.png"></p><h2 id="2-4-填写验证失败关键词"><a href="#2-4-填写验证失败关键词" class="headerlink" title="2.4 填写验证失败关键词"></a>2.4 填写验证失败关键词</h2><p>鬼知道登录成功后，网站会显示“登录成功”还是“欢迎回来”亦或者是“welcome”，咱们就直接判断登录失败的关键词，毕竟我们随便尝试登录一次后，可以直接从网站中提起到“密码错误”、“不正确”之类确定的关键词，我认为这样更方便大家直接上手操作.</p><p>为了防止一些突发情况，这里找到密码后程序并不会停止，所以在登录日志中明显的区分了“登录成功”和“登录失败”的字样，方便使用者可以快速定位</p><h2 id="2-5-线程数量设置"><a href="#2-5-线程数量设置" class="headerlink" title="2.5 线程数量设置"></a>2.5 线程数量设置</h2><p>此设置在有多个用户名时使用，当线程设置为4时，工具会同时向网站请求不同的四个用户名对应同一个密码这种信息。线程越多，同时进行的用户名数量就越多，发送的数据包更多，网站更容易把你的IP拉入黑名单（如果站长一点防护意识的话）</p><h2 id="2-6-实际运行情况"><a href="#2-6-实际运行情况" class="headerlink" title="2.6 实际运行情况"></a>2.6 实际运行情况</h2><p>这里我给大家演示了一下实际使用的情况，并使用Fiddler Classic进行抓包，查看数据发送是否成功</p>  <div class="tag-plugin video" style="max-width:100%;">  <video controls preload>  <source src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig20241201_125437.mp4" type="video/mp4">Your browser does not support the video tag.  </video>  </div>  <h1 id="3-重点注意事项"><a href="#3-重点注意事项" class="headerlink" title="3. 重点注意事项"></a>3. 重点注意事项</h1><p>这个登录器运行后可以直接对wordpress主题博客框架后台进行爆破，但是想要对其他框架后台博客进行爆破时需要注意在python源代码的111行，修改发送数据包的字段“log”和“pwd”，因为不同的网站接收账户密码的字段可能是不同的</p><p><img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig20241201124022.png"></p><p>我们可以在浏览器中打开调试调试工具进行判别，如下：</p><p><img src="https://cdn.jsdmirror.com/gh/zikwq/Blog_Pic/new_mig20241201124406.png"></p><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://github.com/zgjx6/SocialEngineeringDictionaryGenerator">zgjx6&#x2F;SocialEngineeringDictionaryGenerator: 社会工程学密码生成器，是一个利用个人信息生成密码的工具</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;1-前言&quot;&gt;&lt;a href=&quot;#1-前言&quot; class=&quot;headerlink&quot; title=&quot;1 前言&quot;&gt;&lt;/a&gt;1 前言&lt;/h1&gt;&lt;p&gt;距离开始考研还有差不多20天，实在是在教室坐着浑身不舒服，最近胃病犯了加上久坐，肚子天天难受和胀气的厉害，所以今天跑到宿舍折</summary>
-      
-    
-    
-    
-    <category term="网站攻击" scheme="http://example.com/categories/%E7%BD%91%E7%AB%99%E6%94%BB%E5%87%BB/"/>
-    
-    
-    <category term="网站爆破" scheme="http://example.com/tags/%E7%BD%91%E7%AB%99%E7%88%86%E7%A0%B4/"/>
-    
-  </entry>
   
   <entry>
     <title>25天考试倒计时</title>
@@ -480,6 +456,39 @@
       
     <summary type="html">&lt;p&gt;&lt;a href=&quot;https://xaoxuu.com/wiki/stellar/#start&quot;&gt;Stellar：开始您全新的博客之旅 - XAOXUU&lt;/a&gt;&lt;/p&gt;
 </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AD学习笔记-快捷键</title>
+    <link href="http://example.com/2024/08/31/AD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>http://example.com/2024/08/31/AD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
+    <published>2024-08-31T12:11:56.155Z</published>
+    <updated>2024-08-31T12:11:56.610Z</updated>
+    
+    <content type="html"><![CDATA[<table><thead><tr><th>快捷键</th><th>作用</th></tr></thead><tbody><tr><td>全选+A+P</td><td>控制元器件文本位置</td></tr><tr><td>I+L</td><td>交叉选择模式，在原理图中框选后可以在PCB中运动整个模块</td></tr><tr><td>F5</td><td>设置的焊盘颜色开关</td></tr><tr><td>N</td><td>关闭选择的飞线</td></tr><tr><td>Ctrl+D</td><td>显示设置</td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table><p>高速PCB设计的时候，需要通过单端阻抗、差分阻抗来计算线宽线距。</p><p>计算网址：<a href="https://tools.jlc.com/jlcTools/index.html#/impedanceCalculateNew">嘉立创阻抗计算 (jlc.com)</a></p><p>PCB规则及约束编辑器</p><p>差分对的规则</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;快捷键&lt;/th&gt;
+&lt;th&gt;作用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;全选+A+P&lt;/td&gt;
+&lt;td&gt;控制元器件文本位置&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;I+L&lt;/td&gt;
+&lt;td&gt;交叉选择</summary>
       
     
     
