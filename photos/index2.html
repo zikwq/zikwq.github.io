@@ -11,210 +11,212 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-    body { margin: 0; overflow: hidden; background-color: #000000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-    #ui-layer { position: absolute; z-index: 10; pointer-events: none; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; box-sizing: border-box; }
-    .pointer-events-auto { pointer-events: auto; }
+        #ui-layer { position: absolute; z-index: 10; pointer-events: none; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; box-sizing: border-box; }
+        .pointer-events-auto { pointer-events: auto; }
 
-    #video-preview { 
-        position: absolute; bottom: 20px; right: 20px; width: 160px; height: 120px; 
-        border-radius: 12px; border: 2px solid rgba(255,255,255,0.2); 
-        transform: scaleX(-1);
-        background: #000;
-        opacity: 0.6;
-        transition: opacity 0.3s, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
-        display: none; 
-        z-index: 20;
-    }
-    #video-preview.active { display: block; }
-    #video-preview:hover { opacity: 1; }
+        #video-preview { 
+            position: absolute; bottom: 20px; right: 20px; width: 160px; height: 120px; 
+            border-radius: 12px; border: 2px solid rgba(255,255,255,0.2); 
+            transform: scaleX(-1);
+            background: #000;
+            opacity: 0.6;
+            transition: opacity 0.3s, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+            display: none; 
+            z-index: 20;
+        }
+        #video-preview.active { display: block; }
+        #video-preview:hover { opacity: 1; }
 
-    .glass-panel {
-        background: rgba(10, 10, 10, 0.75);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
 
-    .btn {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 8px 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        color: #ccc;
-        font-size: 0.85rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-    .btn.active { background: rgba(99, 102, 241, 0.2); border-color: #6366f1; color: #818cf8; box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
+        .btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #ccc;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
+        .btn.active { background: rgba(99, 102, 241, 0.2); border-color: #6366f1; color: #818cf8; box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); }
 
-    input[type="range"] { accent-color: #6366f1; }
-    
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
-    .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+        input[type="range"] { accent-color: #6366f1; }
+        
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
-    #loader {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: #000; z-index: 100;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        transition: opacity 0.8s ease;
-        pointer-events: none;
-    }
-    .spinner {
-        width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.1);
-        border-radius: 50%; border-top-color: #818cf8;
-        animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    
-    #retry-cam-btn {
-        display: none; margin-top: 5px; background: #ef4444; color: white;
-        font-size: 10px; padding: 4px 8px; border-radius: 4px; cursor: pointer;
-    }
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+        .spinner {
+            width: 60px; height: 60px; border: 3px solid rgba(255,255,255,0.1);
+            border-radius: 50%; border-top-color: #818cf8;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        #retry-cam-btn {
+            display: none; margin-top: 5px; background: #ef4444; color: white;
+            font-size: 10px; padding: 4px 8px; border-radius: 4px; cursor: pointer;
+        }
 
-    /* UI隐藏时的样式 */
-    #ui-layer.ui-hidden {
-        transform: translateY(-100%);
-        opacity: 0;
-        pointer-events: none;
-    }
+        /* UI隐藏时的样式 */
+        #ui-layer.ui-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
 
-    #video-preview.ui-hidden {
-        transform: translateX(100%) scaleX(-1);
-        opacity: 0;
-    }
+        #video-preview.ui-hidden {
+            transform: translateX(100%) scaleX(-1);
+            opacity: 0;
+        }
 
-    /* UI隐藏/显示提示 */
-    #ui-toggle-hint {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-size: 12px;
-        z-index: 1000;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: opacity 0.3s, transform 0.3s;
-        pointer-events: none;
-        opacity: 0;
-        white-space: nowrap;
-    }
+        /* UI隐藏/显示提示 */
+        #ui-toggle-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            opacity: 0;
+            white-space: nowrap;
+        }
 
-    #ui-toggle-hint.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
+        #ui-toggle-hint.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
 
-    #ui-toggle-hint.hide {
-        opacity: 0;
-        transform: translateX(-50%) translateY(10px);
-    }
-</style>
+        #ui-toggle-hint.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+        }
+    </style>
 </head>
 <body>
 
-<div id="loader">
-    <div class="spinner"></div>
-    <p class="mt-6 text-gray-300 font-light tracking-widest text-sm">QUANTUM PARTICLES</p>
-    <p class="text-xs text-gray-500 mt-2">Initializing 100 Models...</p>
-</div>
-
-<!-- UI隐藏提示 -->
-<div id="ui-toggle-hint">按 U 键显示/隐藏界面</div>
-
-<div id="canvas-container"></div>
-<div id="ui-layer">
-    <div class="flex justify-between items-start pointer-events-auto">
-        <div class="glass-panel border-l-4 border-indigo-500">
-            <h1 class="text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 filter drop-shadow-lg">
-                NEON MORPH
-            </h1>
-            <p class="text-[10px] text-indigo-200/70 mt-1 uppercase tracking-widest">Ultimate Edition (100 Shapes)</p>
-        </div>
-
-        <div class="glass-panel flex gap-2">
-            <button id="btn-audio" class="btn">🎵 律动</button>
-            <button id="btn-bloom" class="btn active">✨ 辉光</button>
-            <button id="btn-fullscreen" class="btn">⛶ 全屏</button>
-            <button id="btn-snapshot" class="btn">📸 截图</button>
-        </div>
+    <div id="loader">
+        <div class="spinner"></div>
+        <p class="mt-6 text-gray-300 font-light tracking-widest text-sm">QUANTUM PARTICLES</p>
+        <p class="text-xs text-gray-500 mt-2">Initializing 100 Models...</p>
     </div>
-    <div class="absolute top-28 left-5 glass-panel w-72 pointer-events-auto flex flex-col gap-4 max-h-[75vh] overflow-hidden border border-white/5">
-        <div class="flex-1 overflow-y-auto custom-scroll pr-2">
-            <label class="text-[10px] uppercase text-indigo-300/80 font-bold mb-3 block sticky top-0 bg-[#0a0a0a]/90 backdrop-blur-md z-10 py-2 border-b border-white/5">
-                Geometries (100)
-            </label>
-            <div class="grid grid-cols-2 gap-2" id="shape-buttons">
+
+    <!-- UI隐藏提示 -->
+    <div id="ui-toggle-hint">按 U 键显示/隐藏界面</div>
+
+    <div id="canvas-container"></div>
+    <div id="ui-layer">
+        <div class="flex justify-between items-start pointer-events-auto">
+            <div class="glass-panel border-l-4 border-indigo-500">
+                <h1 class="text-2xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 filter drop-shadow-lg">
+                    NEON MORPH
+                </h1>
+                <p class="text-[10px] text-indigo-200/70 mt-1 uppercase tracking-widest">Ultimate Edition (100 Shapes)</p>
+            </div>
+
+            <div class="glass-panel flex gap-2">
+                <button id="btn-audio" class="btn">🎵 律动</button>
+                <button id="btn-bloom" class="btn active">✨ 辉光</button>
+                <button id="btn-fullscreen" class="btn">⛶ 全屏</button>
+                <button id="btn-snapshot" class="btn">📸 截图</button>
             </div>
         </div>
-
-        <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full"></div>
-        <div class="flex-shrink-0">
-            <label class="text-[10px] uppercase text-indigo-300/80 font-bold mb-3 block">Appearance</label>
-            
-            <div class="mb-4">
-                 <div class="flex justify-between text-xs text-gray-400 mb-1">
-                    <span>Particle Size</span>
-                    <span id="size-val">0.12</span>
+        <div class="absolute top-28 left-5 glass-panel w-72 pointer-events-auto flex flex-col gap-4 max-h-[75vh] overflow-hidden border border-white/5">
+            <div class="flex-1 overflow-y-auto custom-scroll pr-2">
+                <label class="text-[10px] uppercase text-indigo-300/80 font-bold mb-3 block sticky top-0 bg-[#0a0a0a]/90 backdrop-blur-md z-10 py-2 border-b border-white/5">
+                    Geometries (100)
+                </label>
+                <div class="grid grid-cols-2 gap-2" id="shape-buttons">
                 </div>
-                <input type="range" id="size-slider" min="0.01" max="0.4" step="0.01" value="0.12" class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
             </div>
 
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs text-gray-400">Base Color</span>
-                <input type="color" id="color-picker" value="#6366f1" class="bg-transparent border-0 w-8 h-6 cursor-pointer rounded overflow-hidden">
-            </div>
-        </div>
-        
-        <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full"></div>
-
-        <div class="flex-shrink-0">
-            <div class="flex justify-between items-end">
-                <div class="text-[10px] text-gray-500 font-mono">
-                    <div>FPS: <span id="fps-counter" class="text-green-400">--</span></div>
-                    <div>OBJ: <span class="text-indigo-400">30k</span></div>
-                </div>
-                <div class="flex flex-col items-end">
-                    <div id="status-gesture" class="text-xs px-2 py-1 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
-                        LOADING AI...
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full"></div>
+            <div class="flex-shrink-0">
+                <label class="text-[10px] uppercase text-indigo-300/80 font-bold mb-3 block">Appearance</label>
+                
+                <div class="mb-4">
+                     <div class="flex justify-between text-xs text-gray-400 mb-1">
+                        <span>Particle Size</span>
+                        <span id="size-val">0.12</span>
                     </div>
-                    <button id="retry-cam-btn">Manual Start</button>
+                    <input type="range" id="size-slider" min="0.01" max="0.4" step="0.01" value="0.12" class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-gray-400">Base Color</span>
+                    <input type="color" id="color-picker" value="#6366f1" class="bg-transparent border-0 w-8 h-6 cursor-pointer rounded overflow-hidden">
                 </div>
             </div>
-            <div id="camera-tip" class="text-[9px] text-gray-500 mt-1 text-right">
-                * AI 加载中，请先使用鼠标
+            
+            <div class="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full"></div>
+
+            <div class="flex-shrink-0">
+                <div class="flex justify-between items-end">
+                    <div class="text-[10px] text-gray-500 font-mono">
+                        <div>FPS: <span id="fps-counter" class="text-green-400">--</span></div>
+                        <div>OBJ: <span class="text-indigo-400">30k</span></div>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <div id="status-gesture" class="text-xs px-2 py-1 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
+                            LOADING AI...
+                        </div>
+                        <button id="retry-cam-btn">Manual Start</button>
+                        <!-- 手动复位按钮 -->
+                        <button id="btn-reset" class="btn justify-center text-[10px] py-2 mt-2">🔄 复位粒子</button>
+                    </div>
+                </div>
+                <div id="camera-tip" class="text-[9px] text-gray-500 mt-1 text-right">
+                    * AI 加载中，请先使用鼠标
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<video id="video-preview" class="pointer-events-auto" playsinline></video>
+    <video id="video-preview" class="pointer-events-auto" playsinline></video>
 
 <script>
 
@@ -668,22 +670,6 @@ document.getElementById('size-slider').oninput = (e) => {
 document.getElementById('color-picker').oninput = (e) => {
 
 };
-document.getElementById('btn-audio').onclick = initAudio;
-document.getElementById('btn-bloom').onclick = function() {
-    STATE.bloomEnabled = !STATE.bloomEnabled;
-    this.classList.toggle('active');
-};
-document.getElementById('btn-fullscreen').onclick = () => {
-    if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
-    else document.exitFullscreen().catch(()=>{});
-};
-document.getElementById('btn-snapshot').onclick = () => {
-    renderer.render(scene, camera);
-    const link = document.createElement('a');
-    link.download = 'neon-particles.png';
-    link.href = renderer.domElement.toDataURL('image/png');
-    link.click();
-};
 
 // UI隐藏/显示功能
 const uiLayer = document.getElementById('ui-layer');
@@ -727,14 +713,55 @@ document.addEventListener('keydown', (event) => {
 
 // 初始显示提示
 setTimeout(() => {
-    showHint("按 U 键隐藏/显示界面");
+    showHint("按 U 键显示/隐藏界面");
 }, 3000);
 
-// 添加手动复位按钮
-const resetButton = document.createElement('button');
-resetButton.className = 'btn justify-center text-[10px] py-2 mt-2';
-resetButton.innerHTML = '🔄 复位粒子';
-resetButton.onclick = () => {
+// 修改全屏按钮功能：全屏时自动隐藏UI
+document.getElementById('btn-fullscreen').onclick = () => {
+    if(!document.fullscreenElement) {
+        // 进入全屏前先隐藏UI
+        if (STATE.uiVisible) {
+            toggleUI(); // 隐藏UI
+        }
+        
+        // 延迟一点时间再进入全屏，确保UI隐藏动画完成
+        setTimeout(() => {
+            document.documentElement.requestFullscreen().catch(()=>{
+                console.log("Fullscreen request failed");
+            });
+        }, 300);
+    } else {
+        document.exitFullscreen().catch(()=>{
+            console.log("Exit fullscreen failed");
+        });
+    }
+};
+
+// 监听全屏状态变化，退出全屏时保持UI状态（如果之前是隐藏的，保持隐藏）
+document.addEventListener('fullscreenchange', () => {
+    if(!document.fullscreenElement) {
+        // 退出全屏时，可以在这里添加逻辑
+        // 例如：如果需要退出全屏时自动显示UI，可以取消注释下面一行
+        // if (!STATE.uiVisible) toggleUI();
+    }
+});
+
+// 其他按钮功能
+document.getElementById('btn-audio').onclick = initAudio;
+document.getElementById('btn-bloom').onclick = function() {
+    STATE.bloomEnabled = !STATE.bloomEnabled;
+    this.classList.toggle('active');
+};
+document.getElementById('btn-snapshot').onclick = () => {
+    renderer.render(scene, camera);
+    const link = document.createElement('a');
+    link.download = 'neon-particles.png';
+    link.href = renderer.domElement.toDataURL('image/png');
+    link.click();
+};
+
+// 复位粒子按钮
+document.getElementById('btn-reset').onclick = () => {
     STATE.targetScale = 1;
     STATE.explosionIntensity = 0;
     STATE.maintainExplosion = false;
@@ -747,8 +774,6 @@ resetButton.onclick = () => {
         }
     }, 1000);
 };
-// 将复位按钮添加到UI中
-document.querySelector('.flex.flex-col.items-end').appendChild(resetButton);
 
 // 鼠标控制爆炸效果
 window.addEventListener('mousemove', (e) => {
